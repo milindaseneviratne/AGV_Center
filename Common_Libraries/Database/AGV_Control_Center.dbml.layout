@@ -2,16 +2,16 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="AGV_Control_Center">
   <DataContextMoniker Name="/AGV_Control_CenterDataContext" />
   <nestedChildShapes>
-    <classShape Id="2ec0919a-260d-4f6f-a32b-acd013c78ef7" absoluteBounds="0.75, 0.75, 2, 2.1554996744791666">
-      <DataClassMoniker Name="/AGV_Control_CenterDataContext/dbApplicationErrorLog" />
-      <nestedChildShapes>
-        <elementListCompartment Id="76dc187d-e05c-4ef5-90fc-d7877d89cc6d" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="67230eb7-edab-49a3-9f10-b65d95822b53" absoluteBounds="3.75, 0.75, 2, 1.5785953776041666">
+    <classShape Id="2141b8f3-9c40-46c7-9344-459d6df59c3d" absoluteBounds="0.75, 0.75, 2, 1.5785953776041666">
       <DataClassMoniker Name="/AGV_Control_CenterDataContext/dbUsers" />
       <nestedChildShapes>
-        <elementListCompartment Id="437eeb47-6613-4735-8681-ef4451be538d" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="1a951e41-a088-43ac-b77a-2228ab918c59" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="68d969bb-6094-4de1-a985-932aa05bf202" absoluteBounds="3.75, 0.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/AGV_Control_CenterDataContext/dbApplicationErrorLog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c5e676bf-4314-4923-ac81-ab08ef1b3865" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

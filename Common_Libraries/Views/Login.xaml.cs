@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Common_Libraries.Models;
+using Common_Libraries.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,21 @@ namespace Common_Libraries
     /// </summary>
     public partial class Login : Window
     {
+        private LoginViewModel loginVM = new LoginViewModel();
+        private ApplicationUser user = new ApplicationUser();
         public Login()
         {
             InitializeComponent();
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            user.Name = txtUsername.Text;
+            user.Password = txtPassword.Password;
+            if (loginVM.Login(user)) 
+            {
+                this.Close();
+            }
         }
     }
 }

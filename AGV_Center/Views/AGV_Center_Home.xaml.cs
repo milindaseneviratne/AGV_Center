@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AGV_CIMCenter
+namespace AGV_Center
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AGV_Center_Home : Window
     {
-        public MainWindow()
+        public AGV_Center_Home()
         {
             InitializeComponent();
         }

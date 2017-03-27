@@ -32,10 +32,10 @@ namespace Common_Lib.Lib
         /// </summary>
         /// <param name="TitleMsg"></param>
         /// <param name="txtMsg"></param>
-        public static void ExceptionHandle(string TitleMsg, string txtMsg)
-        {
-            new frmMsgBox(TitleMsg, txtMsg).ShowDialog();
-        }
+        //public static void ExceptionHandle(string TitleMsg, string txtMsg)
+        //{
+        //    new frmMsgBox(TitleMsg, txtMsg).ShowDialog();
+        //}
 
         /// <summary>
         /// ExceptionHandle Type 2
@@ -61,7 +61,7 @@ namespace Common_Lib.Lib
         /// <param name="txtMsg"></param>
         public static void ErrorHandle(string TitleMsg, string txtMsg)
         {
-            new frmMsgBox(TitleMsg, txtMsg).ShowDialog();
+            //new frmMsgBox(TitleMsg, txtMsg).ShowDialog();
         }
 
         /// <summary>

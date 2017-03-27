@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AGV_Control_Center" Class="AGV_Control_CenterDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=C8810\SQLEXPRESS;Initial Catalog=AGV_Control_Center;Integrated Security=True" SettingsObjectName="Common_Libraries.Properties.Settings" SettingsPropertyName="AGV_Control_CenterConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.dbApplicationErrorLog" Member="dbApplicationErrorLogs">
+    <Type Name="dbApplicationErrorLog">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="HelpLink" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Source" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="StackTrace" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="HashCode" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Dump]" Member="Dump" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.dbUsers" Member="dbUsers">
+    <Type Name="dbUsers">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Group]" Member="Group" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>

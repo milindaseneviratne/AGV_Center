@@ -23,5 +23,10 @@ namespace Common_Libraries.Views
         {
             InitializeComponent();
         }
+
+        public MessageBox(Exception ex)
+        {
+            InitializeComponent();
+        }
     }
 }

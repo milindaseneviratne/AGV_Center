@@ -55,20 +55,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AGV_Control_Center.cs">
-      <DependentUpon>AGV_Control_Center.dbml</DependentUpon>
-    </Compile>
-    <Compile Include="AGV_Control_Center.designer.cs">
+    <Compile Include="Database\AGV_Control_Center.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AGV_Control_Center.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Enumerations\UserGroups.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Acount.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\ConstArg.cs" />
     <Compile Include="Models\ErrorHandle.cs" />
+    <Compile Include="Models\ErrorLogger.cs" />
     <Compile Include="Models\Files.cs" />
+    <Compile Include="Models\SQLCommunicator.cs" />
     <Compile Include="Models\sqlDatabase.cs" />
     <Compile Include="Models\sqlHelper.cs" />
     <Compile Include="Models\TestResult.cs" />
@@ -120,14 +123,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="AGV_Control_Center.dbml.layout">
+    <None Include="Database\AGV_Control_Center.dbml.layout">
       <DependentUpon>AGV_Control_Center.dbml</DependentUpon>
     </None>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="AGV_Control_Center.dbml">
+    <None Include="Database\AGV_Control_Center.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>AGV_Control_Center.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>

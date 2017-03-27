@@ -701,7 +701,7 @@ namespace Common_Lib.Lib
                     }
                     catch (Exception eMsg)
                     {
-                        Error.ExceptionHandle(Error.Exception_TitleMsg, eMsg.ToString());
+                        //Error.ExceptionHandle(Error.Exception_TitleMsg, eMsg.ToString());
                     }
                     finally
                     {
@@ -785,7 +785,7 @@ namespace Common_Lib.Lib
                 }
                 catch (Exception eMsg)
                 {
-                    Error.ExceptionHandle(Error.Exception_TitleMsg, eMsg.ToString());
+                    //Error.ExceptionHandle(Error.Exception_TitleMsg, eMsg.ToString());
                 }
                 finally
                 {
@@ -818,7 +818,7 @@ namespace Common_Lib.Lib
 
             if (myDataTable == null)
             {
-                MessageBox.Show("DataTable == Null", "Error", MessageBoxButtons.OK);
+                // MessageBox.Show("DataTable == Null", "Error", MessageBoxButtons.OK);
                 return;
             }
             else
@@ -966,7 +966,7 @@ namespace Common_Lib.Lib
                     }
                     catch (Exception eMsg)
                     {
-                        Error.ExceptionHandle(Error.Exception_TitleMsg, eMsg.ToString());
+                        //Error.ExceptionHandle(Error.Exception_TitleMsg, eMsg.ToString());
                     }
                     finally
                     {
@@ -1174,7 +1174,7 @@ namespace Common_Lib.Lib
                 }
                 catch (Exception eMsg)
                 {
-                    Error.ExceptionHandle(Error.Exception_TitleMsg, eMsg.ToString());
+                    //Error.ExceptionHandle(Error.Exception_TitleMsg, eMsg.ToString());
                 }
                 finally
                 {
@@ -1208,7 +1208,7 @@ namespace Common_Lib.Lib
                         }
                         catch (Exception eMsg)
                         {
-                            Error.ExceptionHandle(Error.Exception_TitleMsg, eMsg.ToString());
+                            //Error.ExceptionHandle(Error.Exception_TitleMsg, eMsg.ToString());
                         }
                         finally
                         {

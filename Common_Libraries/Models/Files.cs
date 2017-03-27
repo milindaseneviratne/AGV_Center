@@ -64,7 +64,7 @@ namespace Common_Lib.Lib
         /// <summary>
         /// Static Arguments
         /// </summary>        
-        public static string ConfigFileName = Application.StartupPath + "\\" + caINIFileName;
+        public static string ConfigFileName = Directory.GetCurrentDirectory() + "\\" + caINIFileName;
         public static string SectionName = string.Empty;
         public static string KeyName = string.Empty;
         public static string KeyValue = string.Empty;

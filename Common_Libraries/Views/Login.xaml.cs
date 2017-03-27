@@ -18,9 +18,9 @@ namespace Common_Libraries
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class About : Window
+    public partial class Login : Window
     {
-        public About()
+        public Login()
         {
             InitializeComponent();
         }

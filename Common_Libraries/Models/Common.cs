@@ -75,34 +75,34 @@ namespace Common_Lib.Lib
         /// <param name="cbboxObject"></param>
         /// <param name="Datasource"></param>
         /// <param name="SelectedItem"></param>
-        public static void Reset_ComboBox(ComboBox cbboxObject, string[] Datasource, string SelectedItem)
-        {
-            //this.cbboxStation.Items.Clear();
-            //this.cbboxStation.DataSource = ODBC.Config.List_Stations;
-            //this.cbboxStation.SelectedItem = INIFile.Initial.StationName;
-            try
-            {
-                cbboxObject.Items.Clear();
-                cbboxObject.DataSource = Datasource;
+        //public static void Reset_ComboBox(ComboBox cbboxObject, string[] Datasource, string SelectedItem)
+        //{
+        //    //this.cbboxStation.Items.Clear();
+        //    //this.cbboxStation.DataSource = ODBC.Config.List_Stations;
+        //    //this.cbboxStation.SelectedItem = INIFile.Initial.StationName;
+        //    try
+        //    {
+        //        cbboxObject.Items.Clear();
+        //        cbboxObject.DataSource = Datasource;
 
-                if (SelectedItem != string.Empty)
-                {
-                    cbboxObject.SelectedItem = SelectedItem;
-                }
-                else
-                {
-                    cbboxObject.SelectedIndex = 0;
-                }
+        //        if (SelectedItem != string.Empty)
+        //        {
+        //            cbboxObject.SelectedItem = SelectedItem;
+        //        }
+        //        else
+        //        {
+        //            cbboxObject.SelectedIndex = 0;
+        //        }
 
                 
-            }
-            catch (Exception eMsg)
-            {
+        //    }
+        //    catch (Exception eMsg)
+        //    {
 
-                Error.ExceptionHandle(Error.Exception_TitleMsg, eMsg.ToString());
-            }
+        //        Error.ExceptionHandle(Error.Exception_TitleMsg, eMsg.ToString());
+        //    }
 
-        }
+        //}
 
         #region "Timer Method"
         private static System.Timers.Timer myTimer;

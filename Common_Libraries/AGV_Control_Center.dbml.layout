@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="AGV_Control_Center">
+  <DataContextMoniker Name="/AGV_Control_CenterDataContext" />
+  <nestedChildShapes>
+    <classShape Id="0fded011-fd91-429a-8349-b5aa0666fdc6" absoluteBounds="3.125, 1.875, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/AGV_Control_CenterDataContext/Users" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8f7322f1-9542-4449-a320-42b74e959d72" absoluteBounds="3.14, 2.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

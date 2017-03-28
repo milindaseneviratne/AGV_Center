@@ -13,5 +13,11 @@ namespace Common_Libraries
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            Bootstrapper prismBootstrapper = new Bootstrapper();
+            prismBootstrapper.Run();
+        }
     }
 }

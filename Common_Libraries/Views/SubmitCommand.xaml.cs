@@ -17,7 +17,7 @@ namespace Common_Libraries.Views
     /// <summary>
     /// Interaction logic for SubmitCommand.xaml
     /// </summary>
-    public partial class SubmitCommand : Window
+    public partial class SubmitCommand : UserControl
     {
         public SubmitCommand()
         {

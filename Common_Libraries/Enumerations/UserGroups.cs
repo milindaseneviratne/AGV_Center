@@ -8,7 +8,7 @@ namespace Common_Libraries.Enumerations
 {
     public enum UserGroups
     {
-        Operator,
+        Operator = 1,
         User,
         Administrator        
     }

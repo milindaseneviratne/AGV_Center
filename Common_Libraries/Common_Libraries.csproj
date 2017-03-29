@@ -110,8 +110,13 @@
     <Compile Include="Models\TestResult.cs" />
     <Compile Include="Navigation\RegionNames.cs" />
     <Compile Include="Navigation\ViewNames.cs" />
+    <Compile Include="ViewModels\ApplicationExplorerViewModel.cs" />
     <Compile Include="ViewModels\ApplicationShellViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\SubmitCommandViewModel.cs" />
+    <Compile Include="Views\ApplicationExplorer.xaml.cs">
+      <DependentUpon>ApplicationExplorer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ApplicationShell.xaml.cs">
       <DependentUpon>ApplicationShell.xaml</DependentUpon>
     </Compile>
@@ -121,6 +126,10 @@
     <Compile Include="Views\SubmitCommand.xaml.cs">
       <DependentUpon>SubmitCommand.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\ApplicationExplorer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ApplicationShell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

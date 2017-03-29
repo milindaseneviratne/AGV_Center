@@ -1,6 +1,7 @@
 ﻿using AGV_CIMCenter;
 using Common_Libraries.Extensions;
 using Common_Libraries.Models;
+using Common_Libraries.Navigation;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -85,7 +86,7 @@ namespace Common_Libraries.ViewModels
                 UserProperty.Name = dbUserInfo.Name;
                 UserProperty.Password = dbUserInfo.Password;
                 UserProperty.Group = dbUserInfo.Group.ToUserGroup();
-                //navigate to next page
+                _regionManager.RequestNavigate(RegionNames.ListContentRegion, ViewNames.ApplicationExplorer);
             }
         }
     }

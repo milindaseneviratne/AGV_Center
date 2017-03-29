@@ -1,4 +1,5 @@
-﻿using Common_Libraries.Views;
+﻿using Common_Libraries.Navigation;
+using Common_Libraries.Views;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -38,7 +39,8 @@ namespace Common_Libraries.ViewModels
 
             Title = "AGV Control Center | Version : 0.0.0";
 
-            _regionManager.RegisterViewWithRegion("PrimaryContentRegion", typeof(Login));
+            _regionManager.RegisterViewWithRegion(RegionNames.PrimaryContentRegion, typeof(Login));
+            _regionManager.RegisterViewWithRegion(RegionNames.ListContentRegion, typeof(ApplicationExplorer));
         }
 
     }

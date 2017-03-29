@@ -27,6 +27,8 @@ namespace Common_Libraries
             base.ConfigureContainer();
             Container.RegisterTypeForNavigation<Login>(ViewNames.LoginPage);
             Container.RegisterTypeForNavigation<ApplicationExplorer>(ViewNames.ApplicationExplorer);
+            Container.RegisterTypeForNavigation<SubmitCommand>(ViewNames.SubmitCommand);
+            Container.RegisterTypeForNavigation<CommandServer>(ViewNames.CommandServer);
         }
     }
 }

@@ -120,6 +120,9 @@
     <Compile Include="Views\ApplicationShell.xaml.cs">
       <DependentUpon>ApplicationShell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CommandServer.xaml.cs">
+      <DependentUpon>CommandServer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ApplicationShell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CommandServer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

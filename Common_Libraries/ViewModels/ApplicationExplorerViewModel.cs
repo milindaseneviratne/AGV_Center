@@ -15,8 +15,8 @@ namespace Common_Libraries.ViewModels
 {
     class ApplicationExplorerViewModel : BindableBase, IRegionMemberLifetime
     {
-        private readonly RegionManager _regionManager;
-        private readonly EventAggregator _eventAggregator;
+        private readonly IRegionManager _regionManager;
+        private readonly IEventAggregator _eventAggregator;
         public bool KeepAlive
         {
             get
@@ -24,29 +24,34 @@ namespace Common_Libraries.ViewModels
                 return true;
             }
         }
-        private List<string> applicationsListProperty;
 
-        public List<string> ApplicationsListProperty
+        private string someTextProperty;
+
+        public string SomeTextProperty
         {
-            get { return applicationsListProperty; }
-            set { SetProperty(ref applicationsListProperty, value); }
+            get { return someTextProperty; }
+            set { SetProperty(ref someTextProperty, value); }
         }
 
-        public ApplicationExplorerViewModel(RegionManager regionManager, EventAggregator eventAggregator)
+        private List<string> items;
+
+        public List<string> Items
         {
-            _regionManager = regionManager;
+            get { return items; }
+            set { SetProperty( ref items, value); }
+        }
+
+        public ApplicationExplorerViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
+        {
             _eventAggregator = eventAggregator;
+            _regionManager = regionManager;
+            Items = new List<string>();
 
-            //foreach (var propertyName in typeof(ViewNames).GetProperties())
-            //{
-            //    ApplicationsListProperty.Add(propertyName.Name);
-            //}
-
-            applicationsListProperty.Add("Sample1");
-            applicationsListProperty.Add("Sample2");
-            applicationsListProperty.Add("Sample3");
-            applicationsListProperty.Add("Sample4");
-            applicationsListProperty.Add("Sample5");
+            foreach (var propertyName in typeof(ViewNames).GetProperties())
+            {
+                Items.Add(propertyName.Name);
+            }
+            SomeTextProperty = "Selection";
         }
 
     }

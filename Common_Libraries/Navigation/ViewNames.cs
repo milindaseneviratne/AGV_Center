@@ -34,15 +34,22 @@ namespace Common_Libraries.Navigation
                 return typeof(ApplicationExplorer).Name;
             }
         }
-        public static IEnumerator GetEnumerator()
+        public static string CommandServer 
         {
-            Type type = typeof(ViewNames);
-            PropertyInfo[] properties = type.GetProperties();
-
-            foreach (PropertyInfo property in properties)
+            get
             {
-                yield return property;
+                return typeof(CommandServer).Name;
             }
         }
+        //public static IEnumerator GetEnumerator()
+        //{
+        //    Type type = typeof(ViewNames);
+        //    PropertyInfo[] properties = type.GetProperties();
+
+        //    foreach (PropertyInfo property in properties)
+        //    {
+        //        yield return property;
+        //    }
+        //}
     }
 }

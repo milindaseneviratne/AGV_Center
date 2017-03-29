@@ -1,17 +1,18 @@
 ﻿<UserControl x:Class="Common_Libraries.Views.ApplicationExplorer"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Common_Libraries.Views"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:views="clr-namespace:Common_Libraries.Views"
-             xmlns:prism="http://prismlibrary.com/"
-             prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" 
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:Common_Libraries.Views"
+                xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                xmlns:views="clr-namespace:Common_Libraries.Views"
+                xmlns:prism="http://prismlibrary.com/"
+                prism:ViewModelLocator.AutoWireViewModel="True"
+                mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="200">
     <Grid>
-        <ListBox x:Name="listbox" ItemsSource="{Binding ApplicationsListProperty}" HorizontalAlignment="Left" Height="590" Margin="10,0,0,0" VerticalAlignment="Top" Width="180">
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,3,0,0" TextWrapping="Wrap" Text="{Binding SomeTextProperty}" VerticalAlignment="Top"/>
+        <ListBox Margin="20" ItemsSource="{Binding Items}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

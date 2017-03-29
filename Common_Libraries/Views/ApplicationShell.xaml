@@ -85,7 +85,7 @@
         </DockPanel>
         <Grid x:Name="InnerContentGrid" Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" x:Name="SelectMenuColumn"/>
+                <ColumnDefinition Width="200" x:Name="ListContentRegion"/>
                 <ColumnDefinition Width="*" x:Name="PrimaryContentRegion"/>
             </Grid.ColumnDefinitions>
             <GridSplitter HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" ResizeBehavior="PreviousAndNext" Width="4" Background="Gray"/>

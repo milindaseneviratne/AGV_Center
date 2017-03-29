@@ -40,7 +40,6 @@ namespace Common_Libraries.ViewModels
             Title = "AGV Control Center | Version : 0.0.0";
 
             _regionManager.RegisterViewWithRegion(RegionNames.PrimaryContentRegion, typeof(Login));
-            _regionManager.RegisterViewWithRegion(RegionNames.ListContentRegion, typeof(ApplicationExplorer));
         }
 
     }

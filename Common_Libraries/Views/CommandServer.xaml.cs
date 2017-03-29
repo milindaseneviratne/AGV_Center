@@ -1,6 +1,4 @@
-﻿using Common_Libraries.Models;
-using Common_Libraries.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +16,11 @@ using System.Windows.Shapes;
 namespace Common_Libraries.Views
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for CommandServer.xaml
     /// </summary>
-    public partial class Login : UserControl
+    public partial class CommandServer : UserControl
     {
-        public Login()
+        public CommandServer()
         {
             InitializeComponent();
         }

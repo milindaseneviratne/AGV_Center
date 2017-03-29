@@ -6,12 +6,13 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using AGV_Center.Views;
 
 namespace Common_Libraries.Navigation
 {
     public static class ViewNames
     {
-        public static string LoginPage
+        public static string Login
         {
             get
             {
@@ -34,13 +35,21 @@ namespace Common_Libraries.Navigation
                 return typeof(ApplicationExplorer).Name;
             }
         }
-        public static string CommandServer 
+        public static string CommandServer
         {
             get
             {
                 return typeof(CommandServer).Name;
             }
         }
+        public static string AGV_CIMCenter_Home
+        {
+            get
+            {
+                return typeof(AGV_Center_Home).Name;
+            }
+        }
+
         //public static IEnumerator GetEnumerator()
         //{
         //    Type type = typeof(ViewNames);

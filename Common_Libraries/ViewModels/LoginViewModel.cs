@@ -44,7 +44,7 @@ namespace Common_Libraries.ViewModels
         {
             get
             {
-                return false;
+                return true;
             }
         }
 
@@ -72,22 +72,26 @@ namespace Common_Libraries.ViewModels
             PasswordBox pwdBox = sender as PasswordBox;
             UserProperty.Password = pwdBox.Password;
 
-            var dbUserInfo = sqldbCommunicator.GetuserInfo(UserProperty);
+            //var dbUserInfo = sqldbCommunicator.GetuserInfo(UserProperty);
 
-            if (dbUserInfo == null)
-            {
-                LoginFailedMessage = "Incorrect username/password, please try again!";
-            }
-            else
-            {
-                LoginFailedMessage = string.Empty;
+            //var dbUserInfo = sqldbCommunicator.GetuserInfo(UserProperty);
 
-                UserProperty.Id = dbUserInfo.Id;
-                UserProperty.Name = dbUserInfo.Name;
-                UserProperty.Password = dbUserInfo.Password;
-                UserProperty.Group = dbUserInfo.Group.ToUserGroup();
-                _regionManager.RequestNavigate(RegionNames.ListContentRegion, ViewNames.ApplicationExplorer);
-            }
+            //if (dbUserInfo == null)
+            //{
+            //    LoginFailedMessage = "Incorrect username/password, please try again!";
+            //}
+            //else
+            //{
+            //    LoginFailedMessage = string.Empty;
+
+            //    UserProperty.Id = dbUserInfo.Id;
+            //    UserProperty.Name = dbUserInfo.Name;
+            //    UserProperty.Password = dbUserInfo.Password;
+            //    UserProperty.Group = dbUserInfo.Group.ToUserGroup();
+            //    _regionManager.RequestNavigate(RegionNames.ListContentRegion, ViewNames.ApplicationExplorer);
+            //}
+            _regionManager.RequestNavigate(RegionNames.ListContentRegion, ViewNames.ApplicationExplorer);
+
         }
     }
 }

@@ -4,7 +4,7 @@
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:local="clr-namespace:Common_Libraries.Views"
-                xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                xmlns:ie="http://schemas.microsoft.com/expression/2010/interactivity"
                 xmlns:views="clr-namespace:Common_Libraries.Views"
                 xmlns:prism="http://prismlibrary.com/"
                 prism:ViewModelLocator.AutoWireViewModel="True"
@@ -12,7 +12,14 @@
              d:DesignHeight="600" d:DesignWidth="200">
     <Grid>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,3,0,0" TextWrapping="Wrap" Text="{Binding SomeTextProperty}" VerticalAlignment="Top"/>
-        <ListBox Margin="20" ItemsSource="{Binding Items}">
+        <ListBox x:Name="viewList" Margin="20" ItemsSource="{Binding Items}">
+            
+            <ie:Interaction.Triggers>
+                <ie:EventTrigger EventName="SelectionChanged">
+                    <ie:InvokeCommandAction Command="{Binding NavigateCommand}"  CommandParameter="{Binding ElementName=viewList,Path=SelectedItem}"/>
+                </ie:EventTrigger>
+            </ie:Interaction.Triggers>
+            
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

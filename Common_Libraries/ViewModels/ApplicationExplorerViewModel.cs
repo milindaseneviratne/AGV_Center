@@ -1,5 +1,6 @@
 ﻿using Common_Libraries.Navigation;
 using Common_Libraries.Views;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -41,6 +42,8 @@ namespace Common_Libraries.ViewModels
             set { SetProperty( ref items, value); }
         }
 
+        public DelegateCommand<object>NavigateCommand { get; set; }
+
         public ApplicationExplorerViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             _eventAggregator = eventAggregator;
@@ -51,8 +54,16 @@ namespace Common_Libraries.ViewModels
             {
                 Items.Add(propertyName.Name);
             }
+
+            Items.Remove(Items.Where(x => x.Equals(typeof(ApplicationExplorer).Name)).FirstOrDefault());
             SomeTextProperty = "Selection";
+
+            NavigateCommand = new DelegateCommand<object>(exNavigateCmd);
         }
 
+        private void exNavigateCmd(object obj)
+        {
+            _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, obj.ToString());
+        }
     }
 }

@@ -206,9 +206,25 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AGV_Center\AGV_Center.csproj">
+      <Project>{929d3751-e4cf-4feb-8112-cd9fbfdf66c7}</Project>
+      <Name>AGV_Center</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AGV_CIMCenter\AGV_CIMCenter.csproj">
       <Project>{275E234F-827B-4E0D-B93E-B59D8E979AFF}</Project>
       <Name>AGV_CIMCenter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Socket_Client\Socket_Client.csproj">
+      <Project>{54cab49f-4cde-4de2-9316-cb78290a541f}</Project>
+      <Name>Socket_Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Socket_Libraries\Socket_Libraries.csproj">
+      <Project>{e7db7084-5c9c-4341-973a-9a4f1e2b47f4}</Project>
+      <Name>Socket_Libraries</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Socket_Server\Socket_Server.csproj">
+      <Project>{9a4763d2-83bb-44ff-b078-6d1fc73fcb40}</Project>
+      <Name>Socket_Server</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using Common_Libraries.Enumerations;
+using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;

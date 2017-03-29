@@ -94,6 +94,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\AGV_Center_HomeViewModel.cs" />
     <Compile Include="Views\AGV_Center_Home.xaml.cs">
       <DependentUpon>AGV_Center_Home.xaml</DependentUpon>
       <SubType>Code</SubType>

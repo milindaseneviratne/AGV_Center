@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace AGV_Center.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AGV_Center_Home.xaml
     /// </summary>
     public partial class AGV_Center_Home : UserControl
     {

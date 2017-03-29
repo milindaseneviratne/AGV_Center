@@ -42,7 +42,7 @@ namespace Common_Libraries.Navigation
                 return typeof(CommandServer).Name;
             }
         }
-        public static string AGV_CIMCenter_Home
+        public static string AGV_Center_Home
         {
             get
             {

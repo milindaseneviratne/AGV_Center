@@ -94,6 +94,7 @@
       <DependentUpon>AGV_Control_Center.dbml</DependentUpon>
     </Compile>
     <Compile Include="Enumerations\UserGroups.cs" />
+    <Compile Include="Events\UserCredentialsDTO.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Models\About.cs" />

@@ -1,4 +1,5 @@
 ﻿using AGV_CIMCenter;
+using Common_Libraries.Events;
 using Common_Libraries.Extensions;
 using Common_Libraries.Models;
 using Common_Libraries.Navigation;
@@ -21,6 +22,7 @@ namespace Common_Libraries.ViewModels
         private readonly RegionManager _regionManager;
         private readonly EventAggregator _eventAggregator;
 
+        private readonly UserCredentialsDTO userCredentials = new UserCredentialsDTO();
         private SQLCommunicator sqldbCommunicator = new SQLCommunicator();
 
         private ApplicationUser userProperty;
@@ -38,7 +40,6 @@ namespace Common_Libraries.ViewModels
             get { return loginFailedMessage; }
             set { SetProperty(ref loginFailedMessage, value); }
         }
-
 
         public bool KeepAlive
         {
@@ -60,6 +61,7 @@ namespace Common_Libraries.ViewModels
             ExitCommand = new DelegateCommand(exBackCmd);
 
             UserProperty = new ApplicationUser();
+
         }
 
         private void exBackCmd()
@@ -74,8 +76,6 @@ namespace Common_Libraries.ViewModels
 
             //var dbUserInfo = sqldbCommunicator.GetuserInfo(UserProperty);
 
-            //var dbUserInfo = sqldbCommunicator.GetuserInfo(UserProperty);
-
             //if (dbUserInfo == null)
             //{
             //    LoginFailedMessage = "Incorrect username/password, please try again!";
@@ -86,11 +86,16 @@ namespace Common_Libraries.ViewModels
 
             //    UserProperty.Id = dbUserInfo.Id;
             //    UserProperty.Name = dbUserInfo.Name;
-            //    UserProperty.Password = dbUserInfo.Password;
+            //    UserProperty.Password = dbUserInfo.Password; // Delete this for security reasons once prduction version is launched.
+
             //    UserProperty.Group = dbUserInfo.Group.ToUserGroup();
             //    _regionManager.RequestNavigate(RegionNames.ListContentRegion, ViewNames.ApplicationExplorer);
             //}
+            userCredentials.User = UserProperty;
+            _eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
+
             _regionManager.RequestNavigate(RegionNames.ListContentRegion, ViewNames.ApplicationExplorer);
+            _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, ViewNames.AGV_Center_Home);
 
         }
     }

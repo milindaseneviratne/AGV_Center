@@ -11,7 +11,8 @@
         mc:Ignorable="d"
         Height="350" Width="525">
     <Grid>
-        <Button x:Name="button" Content="Exit" HorizontalAlignment="Left" Margin="432,291,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="button" Content="Exit" HorizontalAlignment="Left" Margin="400,295,0,0" VerticalAlignment="Top" Width="75"/>
         <Label x:Name="label" Content="AGV_Center_Home: under Construction" HorizontalAlignment="Left" Margin="135,115,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="82,30,0,0" TextWrapping="Wrap" Text="You have successfully logged into the AGV Control System! This is the Home page." VerticalAlignment="Top" FontSize="18"/>
     </Grid>
 </UserControl>

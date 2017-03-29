@@ -30,7 +30,7 @@ namespace Common_Libraries
             Container.RegisterTypeForNavigation<ApplicationExplorer>(ViewNames.ApplicationExplorer);
             Container.RegisterTypeForNavigation<SubmitCommand>(ViewNames.SubmitCommand);
             Container.RegisterTypeForNavigation<CommandServer>(ViewNames.CommandServer);
-            Container.RegisterTypeForNavigation<AGV_Center_Home>(ViewNames.AGV_CIMCenter_Home);
+            Container.RegisterTypeForNavigation<AGV_Center_Home>(ViewNames.AGV_Center_Home);
         }
     }
 }

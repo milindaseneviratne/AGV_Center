@@ -42,7 +42,6 @@ namespace AGV_Center.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            navigationContext.Parameters.Add(typeof(Common_Libraries.Models.ApplicationUser),);
         }
     }
 }

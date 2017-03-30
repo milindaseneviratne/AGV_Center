@@ -1,7 +1,7 @@
-﻿using Common_Libraries.Events;
-using Common_Libraries.Models;
-using Common_Libraries.Navigation;
-using Common_Libraries.Views;
+﻿using AGV_Control_Center.Events;
+using AGV_Control_Center.Models;
+using AGV_Control_Center.Navigation;
+using AGV_Control_Center.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Common_Libraries.ViewModels
+namespace AGV_Control_Center.ViewModels
 {
     class ApplicationShellViewModel : BindableBase, IRegionMemberLifetime
     {

@@ -1,5 +1,5 @@
-﻿using Common_Libraries.Navigation;
-using Common_Libraries.Views;
+﻿using AGV_Control_Center.Navigation;
+using AGV_Control_Center.Views;
 using Prism.Unity;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using AGV_Center.Views;
 
-namespace Common_Libraries
+namespace AGV_Control_Center
 {
     class Bootstrapper :UnityBootstrapper
     {

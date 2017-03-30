@@ -1,5 +1,5 @@
-﻿using Common_Libraries.Models;
-using Common_Libraries.ViewModels;
+﻿using AGV_Control_Center.Models;
+using AGV_Control_Center.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Common_Libraries.Views
+namespace AGV_Control_Center.Views
 {
     /// <summary>
     /// Interaction logic for Login.xaml

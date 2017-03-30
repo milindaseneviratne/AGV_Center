@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Common_Libraries
+namespace AGV_Control_Center
 {
     /// <summary>
     /// Interaction logic for App.xaml

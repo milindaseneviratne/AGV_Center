@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common_Libraries.Enumerations
+namespace AGV_Control_Center.Enumerations
 {
     public enum UserGroups
     {

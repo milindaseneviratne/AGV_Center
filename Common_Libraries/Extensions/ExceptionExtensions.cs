@@ -1,12 +1,12 @@
-﻿using Common_Libraries.Models;
-using Common_Libraries.Views;
+﻿using AGV_Control_Center.Models;
+using AGV_Control_Center.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common_Libraries.Extensions
+namespace AGV_Control_Center.Extensions
 {
     public static class ExceptionExtensions
     {

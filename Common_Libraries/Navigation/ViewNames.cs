@@ -1,4 +1,4 @@
-﻿using Common_Libraries.Views;
+﻿using AGV_Control_Center.Views;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AGV_Center.Views;
 
-namespace Common_Libraries.Navigation
+namespace AGV_Control_Center.Navigation
 {
     public static class ViewNames
     {

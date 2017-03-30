@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Common_Libraries.Database
+namespace AGV_Control_Center.Database
 {
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
@@ -42,7 +42,7 @@ namespace Common_Libraries.Database
     #endregion
 		
 		public AGV_Control_CenterDataContext() : 
-				base(global::Common_Libraries.Properties.Settings.Default.AGV_Control_CenterConnectionString, mappingSource)
+				base(global::AGV_Control_Center.Properties.Settings.Default.AGV_Control_CenterConnectionString, mappingSource)
 		{
 			OnCreated();
 		}

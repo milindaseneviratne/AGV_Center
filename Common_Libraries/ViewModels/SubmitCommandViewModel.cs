@@ -1,6 +1,6 @@
-﻿using Common_Libraries.Enumerations;
-using Common_Libraries.Events;
-using Common_Libraries.Models;
+﻿using AGV_Control_Center.Enumerations;
+using AGV_Control_Center.Events;
+using AGV_Control_Center.Models;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common_Libraries.ViewModels
+namespace AGV_Control_Center.ViewModels
 {
     class SubmitCommandViewModel : BindableBase, INavigationAware, IRegionMemberLifetime
     {

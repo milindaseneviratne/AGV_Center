@@ -1,9 +1,9 @@
 ﻿using AGV_CIMCenter;
-using Common_Libraries.Enumerations;
-using Common_Libraries.Events;
-using Common_Libraries.Extensions;
-using Common_Libraries.Models;
-using Common_Libraries.Navigation;
+using AGV_Control_Center.Enumerations;
+using AGV_Control_Center.Events;
+using AGV_Control_Center.Extensions;
+using AGV_Control_Center.Models;
+using AGV_Control_Center.Navigation;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Common_Libraries.ViewModels
+namespace AGV_Control_Center.ViewModels
 {
     public class LoginViewModel :BindableBase, IRegionMemberLifetime, INavigationAware
     {

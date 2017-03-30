@@ -20,7 +20,7 @@
         <elementListCompartment Id="482c21ef-33d4-42bd-8410-e1b15a2293cc" absoluteBounds="3.3899999999999997, 2.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.375 : 2.41429768880208); (2.75 : 2.41429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.375 : 2.41429768880208); (2.75 : 2.41429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AGV_Control_CenterDataContext/dbUser/dbUser_dbUserLog" />
       <nodes>
         <classShapeMoniker Id="bdec9287-6369-40f8-9060-381e4adb160e" />

@@ -1,5 +1,5 @@
-﻿using Common_Libraries.Navigation;
-using Common_Libraries.Views;
+﻿using AGV_Control_Center.Navigation;
+using AGV_Control_Center.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Common_Libraries.ViewModels
+namespace AGV_Control_Center.ViewModels
 {
     class ApplicationExplorerViewModel : BindableBase, IRegionMemberLifetime
     {

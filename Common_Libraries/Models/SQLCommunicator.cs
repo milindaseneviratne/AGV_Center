@@ -1,13 +1,13 @@
-﻿using Common_Libraries.Database;
-using Common_Libraries.Enumerations;
-using Common_Libraries.Extensions;
+﻿using AGV_Control_Center.Database;
+using AGV_Control_Center.Enumerations;
+using AGV_Control_Center.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common_Libraries.Models
+namespace AGV_Control_Center.Models
 {
     class SQLCommunicator
     {
@@ -15,22 +15,9 @@ namespace Common_Libraries.Models
 
         public dbUser GetuserInfo(ApplicationUser user)
         {
-            //var userLocal = new ApplicationUser();
-            //var dbUserLocal = new dbUsers();
-
             var query = (from row in dbContext.dbUsers
                          where row.Name == user.Name && row.Password == user.Password
-                         select row).FirstOrDefault();
-
-            //if (query != null)
-            //{
-            //    dbUserLocal = query;
-
-            //    userLocal.Id = dbUserLocal.Id;
-            //    userLocal.Name = dbUserLocal.Name;
-            //    userLocal.Password = dbUserLocal.Password;
-            //    userLocal.Group = dbUserLocal.Group.ToUserGroup();
-            //}           
+                         select row).FirstOrDefault();         
 
             return query;
         }

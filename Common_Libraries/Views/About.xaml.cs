@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Common_Libraries
+namespace AGV_Control_Center
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

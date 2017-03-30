@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Common_Libraries.Properties {
+namespace AGV_Control_Center.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

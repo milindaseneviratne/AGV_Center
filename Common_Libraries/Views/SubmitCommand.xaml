@@ -12,7 +12,7 @@
         Height="510" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="150"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
@@ -21,22 +21,22 @@
                 <ColumnDefinition Width="*" x:Name="Area2"/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <Label Grid.Row="0" x:Name="lblSerialNumber" Content="SerialNumber:" HorizontalAlignment="Left" Margin="23,20,0,0" VerticalAlignment="Top" Width="277"/>
-        <TextBlock Grid.Row="0" x:Name="textBlock" HorizontalAlignment="Left" Margin="320,60,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="25" Width="462"/>
-        <TextBox Grid.Row="0" x:Name="txtSerialNumber" HorizontalAlignment="Left" Height="23" Margin="320,22,0,0" TextWrapping="Wrap" Text="AGVXXXXXXXXXXXXXXXX" VerticalAlignment="Top" Width="462"/>
-        
-        <Button x:Name="button_Copy" Content="Rotate +90" HorizontalAlignment="Left" Margin="460,40,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="75" Height="75"/>
-        <Button x:Name="button_Copy1" Content="Rotate 180" HorizontalAlignment="Left" Margin="565,135,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="75" Height="75"/>
-        <Button x:Name="button_Copy3" Content="Rotate -90" HorizontalAlignment="Left" Margin="670,40,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="75" Height="75"/>
+        <Label Grid.Row="0" x:Name="lblScanQRCode" Content="Scan QR Code:" Margin="0,22,485,0" VerticalAlignment="Top" Width="277" Height="50" FontSize="20" FontWeight="Bold" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="0" x:Name="textBlock" HorizontalAlignment="Left" Margin="320,85,0,0" TextWrapping="Wrap" Text="Error Messages go here" VerticalAlignment="Top" Height="55" Width="462" FontSize="20" FontStyle="Italic"/>
+        <TextBox Grid.Row="0" x:Name="txtSerialNumber" HorizontalAlignment="Left" Height="48" Margin="320,22,0,0" TextWrapping="Wrap" Text="AGVXXXXXXXXXXXXXXXX" VerticalAlignment="Top" Width="462" FontSize="20"/>
 
-        <Button x:Name="button_Copy2" Content="Stop" HorizontalAlignment="Left" Margin="565,40,0,0"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="75" Height="75"/>
-        <Button x:Name="button_Copy4" Content="Go to Idle Area" HorizontalAlignment="Left" Margin="670,235,0,0"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="75" Height="75"/>
-        <Button x:Name="button_Copy5" Content="Go to Charging Area" HorizontalAlignment="Left" Margin="565,235,0,0"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="75" Height="75"/>
-        
-        <Button x:Name="button_Copy7" Content="Lift Up" HorizontalAlignment="Left" Margin="355,40,0,0"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="75" Height="75"/>
-        <Button x:Name="button_Copy8" Content="Lift Down" HorizontalAlignment="Left" Margin="355,135,0,0"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="75" Height="75"/>
-        
-        <Button x:Name="button_Copy9" Content="Station Pass" HorizontalAlignment="Left" Margin="355,235,0,0"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="75" Height="75"/>
-        <Button x:Name="button_Copy6" Content="Station Fail" HorizontalAlignment="Left" Margin="460,235,0,0"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="75" Height="75"/>
+        <Button x:Name="button_Copy" Command="{Binding SendCommand, UpdateSourceTrigger=PropertyChanged}" Content="Rotate +90" HorizontalAlignment="Left" Margin="465,41,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75"/>
+        <Button x:Name="button_Copy1" Command="{Binding SendCommand, UpdateSourceTrigger=PropertyChanged}"  Content="Rotate 180" HorizontalAlignment="Left" Margin="570,136,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75"/>
+        <Button x:Name="button_Copy3" Command="{Binding SendCommand, UpdateSourceTrigger=PropertyChanged}"  Content="Rotate -90" HorizontalAlignment="Left" Margin="675,41,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75"/>
+
+        <Button x:Name="button_Copy2" Command="{Binding SendCommand}"  Content="Cancel" HorizontalAlignment="Left" Margin="570,41,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75"/>
+        <Button x:Name="button_Copy4" Command="{Binding SendCommand}"  Content="Go to Idle Area" HorizontalAlignment="Left" Margin="675,235,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75"/>
+        <Button x:Name="button_Copy5" Command="{Binding SendCommand}"  Content="Go to Charging Area" HorizontalAlignment="Left" Margin="570,235,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75"/>
+
+        <Button x:Name="button_Copy7" Command="{Binding SendCommand}"  Content="Lift Up" HorizontalAlignment="Left" Margin="360,41,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75"/>
+        <Button x:Name="button_Copy8" Command="{Binding SendCommand}"  Content="Lift Down" HorizontalAlignment="Left" Margin="360,136,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75"/>
+
+        <Button x:Name="button_Copy9" Command="{Binding SendCommand}"  Content="Station Pass" HorizontalAlignment="Left" Margin="360,235,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75"/>
+        <Button x:Name="button_Copy6" Command="{Binding SendCommand}"  Content="Station Fail" HorizontalAlignment="Left" Margin="465,235,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75"/>
     </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
 ﻿using AGV_CIMCenter;
+using Common_Libraries.Enumerations;
 using Common_Libraries.Events;
 using Common_Libraries.Extensions;
 using Common_Libraries.Models;
@@ -17,7 +18,7 @@ using System.Windows.Controls;
 
 namespace Common_Libraries.ViewModels
 {
-    public class LoginViewModel :BindableBase, IRegionMemberLifetime
+    public class LoginViewModel :BindableBase, IRegionMemberLifetime, INavigationAware
     {
         private readonly RegionManager _regionManager;
         private readonly EventAggregator _eventAggregator;
@@ -50,7 +51,6 @@ namespace Common_Libraries.ViewModels
         }
 
         public DelegateCommand<object> LoginCommand { get; set; }
-        public DelegateCommand ExitCommand { get; set; }
 
         public LoginViewModel(RegionManager regionManager, EventAggregator eventAggregator)
         {
@@ -58,15 +58,8 @@ namespace Common_Libraries.ViewModels
             _eventAggregator = eventAggregator;
 
             LoginCommand = new DelegateCommand<object>(exLoginCmd);
-            ExitCommand = new DelegateCommand(exBackCmd);
 
             UserProperty = new ApplicationUser();
-
-        }
-
-        private void exBackCmd()
-        {
-            Application.Current.Shutdown();
         }
 
         public void exLoginCmd(object sender)
@@ -74,29 +67,65 @@ namespace Common_Libraries.ViewModels
             PasswordBox pwdBox = sender as PasswordBox;
             UserProperty.Password = pwdBox.Password;
 
-            //var dbUserInfo = sqldbCommunicator.GetuserInfo(UserProperty);
+            var dbUserInfo = sqldbCommunicator.GetuserInfo(UserProperty);
 
-            //if (dbUserInfo == null)
-            //{
-            //    LoginFailedMessage = "Incorrect username/password, please try again!";
-            //}
-            //else
-            //{
-            //    LoginFailedMessage = string.Empty;
+            if (dbUserInfo == null)
+            {
+                LoginFailedMessage = "Incorrect username/password, please try again!";
+            }
+            else
+            {
+                LoginFailedMessage = string.Empty;
 
-            //    UserProperty.Id = dbUserInfo.Id;
-            //    UserProperty.Name = dbUserInfo.Name;
-            //    UserProperty.Password = dbUserInfo.Password; // Delete this for security reasons once prduction version is launched.
+                UserProperty.Id = dbUserInfo.Id;
+                UserProperty.Name = dbUserInfo.Name;
+                UserProperty.Password = dbUserInfo.Password; // Delete this for security reasons once prduction version is launched.
+                UserProperty.Group = dbUserInfo.Group.ToUserGroup();
+                UserProperty.LogIn = DateTime.Now;
 
-            //    UserProperty.Group = dbUserInfo.Group.ToUserGroup();
-            //    _regionManager.RequestNavigate(RegionNames.ListContentRegion, ViewNames.ApplicationExplorer);
-            //}
-            userCredentials.User = UserProperty;
-            _eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
+                sqldbCommunicator.LogUserIN(UserProperty);
 
-            _regionManager.RequestNavigate(RegionNames.ListContentRegion, ViewNames.ApplicationExplorer);
-            _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, ViewNames.AGV_Center_Home);
+                //userCredentials.User = UserProperty;
+                //_eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
 
+                DisplayUI();
+            }
+
+
+        }
+
+        private void DisplayUI()
+        {
+            if (UserProperty.Group == UserGroups.Administrator)
+            {
+                _regionManager.RequestNavigate(RegionNames.ListContentRegion, ViewNames.ApplicationExplorer);
+                _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, ViewNames.AGV_Center_Home);
+            }
+
+            if (UserProperty.Group == UserGroups.Operator)
+            {
+                _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, ViewNames.SubmitCommand);
+            }
+
+            if (UserProperty.Group == UserGroups.User)
+            {
+                _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, ViewNames.SubmitCommand);
+            }
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            //DoNothing
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            navigationContext.Parameters.Add(typeof(ApplicationUser).Name, UserProperty);
         }
     }
 }

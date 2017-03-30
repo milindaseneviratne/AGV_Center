@@ -1,5 +1,7 @@
-﻿using Common_Libraries.Events;
+﻿using Common_Libraries.Enumerations;
+using Common_Libraries.Events;
 using Common_Libraries.Models;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Common_Libraries.ViewModels
 {
-    class SubmitCommandViewModel : BindableBase
+    class SubmitCommandViewModel : BindableBase, INavigationAware, IRegionMemberLifetime
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IRegionManager _regionManager;
@@ -24,17 +26,61 @@ namespace Common_Libraries.ViewModels
             set { SetProperty(ref user, value); }
         }
 
+        public bool KeepAlive
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public DelegateCommand SendCommand { get; set; }
+
+
         public SubmitCommandViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
 
             _eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserCredentials);
+            SendCommand = new DelegateCommand(exSendCmd, canSendCmd).ObservesProperty(() => UserProperty);
+        }
+
+        private bool canSendCmd()
+        {
+            bool canSendCmd = false;
+
+            if (UserProperty != null)
+            {
+                canSendCmd = UserProperty.Group != UserGroups.Operator;
+            }
+             
+            return canSendCmd;
+        }
+
+        private void exSendCmd()
+        {
+            //SendCommandLogic Here.
         }
 
         private void LoadUserCredentials(UserCredentialsDTO obj)
         {
             UserProperty = obj.User;
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            UserProperty = (ApplicationUser)navigationContext.Parameters[typeof(ApplicationUser).Name] ?? UserProperty;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            //DN
         }
     }
 }

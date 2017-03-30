@@ -32,5 +32,8 @@ namespace Common_Libraries.Models
             }
         }
         public string Password { get; set; }
+
+        public DateTime LogIn { get; set; }
+        public DateTime LogOut { get; set; }
     }
 }

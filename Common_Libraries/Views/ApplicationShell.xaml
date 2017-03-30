@@ -9,7 +9,7 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="ApplicationShell" Height="675" Width="1200" FontSize="12">
+        Title="ApplicationShell" Height="675" Width="1200" FontSize="12" WindowStartupLocation="CenterScreen" >
 
     <Grid x:Name="ApplicationShellGrid">
         <Grid.RowDefinitions>
@@ -24,7 +24,7 @@
                     <MenuItem Header="_Open" />
                     <MenuItem Header="_Save" />
                     <Separator />
-                    <MenuItem Header="_Exit" Click="MenuItem_Exit_Click"/>
+                    <MenuItem Header="_Exit" Command="{Binding ExitCommand}"/>
                 </MenuItem>
                 <MenuItem Header="_Lorem">
                     <MenuItem Header="_fermentum" />
@@ -39,9 +39,6 @@
                     <MenuItem Header="_Save" />
                     <Separator />
                     <MenuItem Header="_Open" />
-                    <MenuItem Header="_Open" />
-                    <MenuItem Header="_Open" />
-                    <MenuItem Header="_Exit" />
                 </MenuItem>
                 <MenuItem Header="_dolor ">
                     <MenuItem Header="_Exit" />
@@ -51,23 +48,14 @@
                     <MenuItem Header="_Open" />
                     <MenuItem Header="_Save" />
                 </MenuItem>
-                <MenuItem Header="_amet">
-                    <MenuItem Header="_New" />
-                    <MenuItem Header="_Open" />
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_Select Language">
+                        <MenuItem x:Name="English" Header="_English" IsCheckable="True" Command="{Binding ChangeLanguageCommand}"/>
+                        <MenuItem x:Name="Chinese" Header="_Chinese"  IsCheckable="True" Command="{Binding ChangeLanguageCommand}"/>
+                        <MenuItem x:Name="Thai" Header="_Thai"  IsCheckable="True" Command="{Binding ChangeLanguageCommand}"/>
+                    </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Exit" />
-                    <MenuItem Header="_Exit" />
-                    <MenuItem Header="_Exit" />
-                    <MenuItem Header="_Exit" />
-                    <Separator />
-                    <MenuItem Header="_Save" />
-                    <MenuItem Header="_Exit" />
-                    <MenuItem Header="_Exit" />
-                    <Separator />
-                    <MenuItem Header="_Exit" />
-                    <MenuItem Header="_Exit" />
-                    <MenuItem Header="_Exit" />
-                    <MenuItem Header="_Exit" />
+                    <MenuItem Header="_About" Command="{Binding AboutCommand}" />
                 </MenuItem>
             </Menu>
             <TextBox AcceptsReturn="True" />

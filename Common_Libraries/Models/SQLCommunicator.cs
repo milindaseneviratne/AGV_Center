@@ -13,7 +13,7 @@ namespace Common_Libraries.Models
     {
         private AGV_Control_CenterDataContext dbContext = new AGV_Control_CenterDataContext();
 
-        public dbUsers GetuserInfo(ApplicationUser user)
+        public dbUser GetuserInfo(ApplicationUser user)
         {
             //var userLocal = new ApplicationUser();
             //var dbUserLocal = new dbUsers();
@@ -38,7 +38,7 @@ namespace Common_Libraries.Models
         {
             bool successFlag = false;
 
-            dbUsers dbUserObject = new dbUsers();
+            dbUser dbUserObject = new dbUser();
 
             dbUserObject.Name = user.Name;
             dbUserObject.Password = user.Password;
@@ -71,6 +71,18 @@ namespace Common_Libraries.Models
             return successFlag;
         }
 
+        internal void LogUserOUT(ApplicationUser userProperty)
+        {
+            var query = (from row in dbContext.dbUserLogs
+                        where row.UserId == userProperty.Id
+                        orderby row.TimeStamp descending
+                        select row).FirstOrDefault();
+
+            query.LogoutTime = userProperty.LogOut;
+
+            submitChanges();
+        }
+
         private void submitChanges()
         {
             try
@@ -81,6 +93,20 @@ namespace Common_Libraries.Models
             {
                 ex.WriteLog().SaveToDataBase().Display();
             }
+        }
+
+        internal void LogUserIN(ApplicationUser userProperty)
+        {
+            dbUserLog userLog = new dbUserLog();
+
+            userLog.UserId = userProperty.Id;
+            userLog.UserName = userProperty.Name;
+            userLog.UserGroup = userProperty.Group.ToString();
+            userLog.LoginTime = userProperty.LogIn;
+            userLog.LogoutTime = DateTime.MaxValue;
+            dbContext.dbUserLogs.InsertOnSubmit(userLog);
+
+            submitChanges();
         }
     }
 }

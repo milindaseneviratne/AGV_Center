@@ -1,5 +1,8 @@
-﻿using Common_Libraries.Navigation;
+﻿using Common_Libraries.Events;
+using Common_Libraries.Models;
+using Common_Libraries.Navigation;
 using Common_Libraries.Views;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -8,15 +11,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Common_Libraries.ViewModels
 {
     class ApplicationShellViewModel : BindableBase, IRegionMemberLifetime
     {
-        public readonly IEventAggregator _eventAggregator;
-        public readonly IRegionManager _regionManager;
+        private readonly RegionManager _regionManager;
+        private readonly EventAggregator _eventAggregator;
+
 
         private string title;
+
+        private SQLCommunicator sqldbCommunicator = new SQLCommunicator();
 
         public bool KeepAlive
         {
@@ -25,22 +32,45 @@ namespace Common_Libraries.ViewModels
                 return true;
             }
         }
-
         public string Title
         {
             get { return title; }
             set { SetProperty(ref title, value); }
         }
 
-        public ApplicationShellViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
+        private ApplicationUser user;
+
+        public ApplicationUser UserProperty
+        {
+            get { return user; }
+            set { SetProperty(ref user, value); }
+        }
+
+
+        public DelegateCommand ExitCommand { get; set; }
+
+        public ApplicationShellViewModel(RegionManager regionManager, EventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
 
-            Title = "AGV Control Center | Version : 0.0.0";
+            _eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserCredentials);
+
+            ExitCommand = new DelegateCommand(exExitCmd);
+
+            Title = "AGV Control Center";
 
             _regionManager.RegisterViewWithRegion(RegionNames.PrimaryContentRegion, typeof(Login));
         }
-
+        private void exExitCmd()
+        {
+            UserProperty.LogOut = DateTime.Now;
+            sqldbCommunicator.LogUserOUT(UserProperty);
+            Application.Current.Shutdown();
+        }
+        private void LoadUserCredentials(UserCredentialsDTO obj)
+        {
+            UserProperty = obj.User;
+        }
     }
 }

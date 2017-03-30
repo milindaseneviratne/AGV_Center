@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AGV_Center.ViewModels
 {
-    class AGV_Center_HomeViewModel :BindableBase, IRegionMemberLifetime
+    class AGV_Center_HomeViewModel :BindableBase, IRegionMemberLifetime, INavigationAware
     {
         public readonly IEventAggregator _eventAggregator;
         public readonly IRegionManager _regionManager;
@@ -28,6 +28,21 @@ namespace AGV_Center.ViewModels
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
 
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            navigationContext.Parameters.Add(typeof(Common_Libraries.Models.ApplicationUser),);
         }
     }
 }

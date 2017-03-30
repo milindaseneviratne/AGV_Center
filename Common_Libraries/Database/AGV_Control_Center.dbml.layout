@@ -2,17 +2,30 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="AGV_Control_Center">
   <DataContextMoniker Name="/AGV_Control_CenterDataContext" />
   <nestedChildShapes>
-    <classShape Id="2141b8f3-9c40-46c7-9344-459d6df59c3d" absoluteBounds="0.75, 0.75, 2, 1.5785953776041666">
-      <DataClassMoniker Name="/AGV_Control_CenterDataContext/dbUsers" />
-      <nestedChildShapes>
-        <elementListCompartment Id="1a951e41-a088-43ac-b77a-2228ab918c59" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="68d969bb-6094-4de1-a985-932aa05bf202" absoluteBounds="3.75, 0.75, 2, 2.1554996744791666">
+    <classShape Id="4e6bb9dc-7aef-4185-ba21-ffc593c8bd32" absoluteBounds="0.75, 3.625, 2, 2.1554996744791666">
       <DataClassMoniker Name="/AGV_Control_CenterDataContext/dbApplicationErrorLog" />
       <nestedChildShapes>
-        <elementListCompartment Id="c5e676bf-4314-4923-ac81-ab08ef1b3865" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="a29571e7-c78f-46c9-a6b3-841e99c76bb6" absoluteBounds="0.76499999999999968, 4.085, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="c4e8c155-7b99-41f6-964a-626ced2edb4b" absoluteBounds="0.75, 1.125, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/AGV_Control_CenterDataContext/dbUserLog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="90ae2a13-f629-43f2-93c9-3e8ad06eb317" absoluteBounds="0.76500000000000012, 1.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bdec9287-6369-40f8-9060-381e4adb160e" absoluteBounds="3.375, 1.625, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/AGV_Control_CenterDataContext/dbUser" />
+      <nestedChildShapes>
+        <elementListCompartment Id="482c21ef-33d4-42bd-8410-e1b15a2293cc" absoluteBounds="3.3899999999999997, 2.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.375 : 2.41429768880208); (2.75 : 2.41429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/AGV_Control_CenterDataContext/dbUser/dbUser_dbUserLog" />
+      <nodes>
+        <classShapeMoniker Id="bdec9287-6369-40f8-9060-381e4adb160e" />
+        <classShapeMoniker Id="c4e8c155-7b99-41f6-964a-626ced2edb4b" />
+      </nodes>
+    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

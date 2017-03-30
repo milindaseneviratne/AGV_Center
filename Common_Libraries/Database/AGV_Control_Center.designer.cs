@@ -30,12 +30,15 @@ namespace Common_Libraries.Database
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertdbUsers(dbUsers instance);
-    partial void UpdatedbUsers(dbUsers instance);
-    partial void DeletedbUsers(dbUsers instance);
     partial void InsertdbApplicationErrorLog(dbApplicationErrorLog instance);
     partial void UpdatedbApplicationErrorLog(dbApplicationErrorLog instance);
     partial void DeletedbApplicationErrorLog(dbApplicationErrorLog instance);
+    partial void InsertdbUserLog(dbUserLog instance);
+    partial void UpdatedbUserLog(dbUserLog instance);
+    partial void DeletedbUserLog(dbUserLog instance);
+    partial void InsertdbUser(dbUser instance);
+    partial void UpdatedbUser(dbUser instance);
+    partial void DeletedbUser(dbUser instance);
     #endregion
 		
 		public AGV_Control_CenterDataContext() : 
@@ -68,14 +71,6 @@ namespace Common_Libraries.Database
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<dbUsers> dbUsers
-		{
-			get
-			{
-				return this.GetTable<dbUsers>();
-			}
-		}
-		
 		public System.Data.Linq.Table<dbApplicationErrorLog> dbApplicationErrorLogs
 		{
 			get
@@ -83,138 +78,20 @@ namespace Common_Libraries.Database
 				return this.GetTable<dbApplicationErrorLog>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.dbUsers")]
-	public partial class dbUsers : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _Name;
-		
-		private string _Password;
-		
-		private string _Group;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnPasswordChanging(string value);
-    partial void OnPasswordChanged();
-    partial void OnGroupChanging(string value);
-    partial void OnGroupChanged();
-    #endregion
-		
-		public dbUsers()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
+		public System.Data.Linq.Table<dbUserLog> dbUserLogs
 		{
 			get
 			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
+				return this.GetTable<dbUserLog>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50)")]
-		public string Name
+		public System.Data.Linq.Table<dbUser> dbUsers
 		{
 			get
 			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="VarChar(50)")]
-		public string Password
-		{
-			get
-			{
-				return this._Password;
-			}
-			set
-			{
-				if ((this._Password != value))
-				{
-					this.OnPasswordChanging(value);
-					this.SendPropertyChanging();
-					this._Password = value;
-					this.SendPropertyChanged("Password");
-					this.OnPasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Group]", Storage="_Group", DbType="VarChar(50)")]
-		public string Group
-		{
-			get
-			{
-				return this._Group;
-			}
-			set
-			{
-				if ((this._Group != value))
-				{
-					this.OnGroupChanging(value);
-					this.SendPropertyChanging();
-					this._Group = value;
-					this.SendPropertyChanged("Group");
-					this.OnGroupChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<dbUser>();
 			}
 		}
 	}
@@ -422,6 +299,415 @@ namespace Common_Libraries.Database
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.dbUserLog")]
+	public partial class dbUserLog : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Data.Linq.Binary _TimeStamp;
+		
+		private int _Id;
+		
+		private int _UserId;
+		
+		private string _UserName;
+		
+		private string _UserGroup;
+		
+		private System.Nullable<System.DateTime> _LoginTime;
+		
+		private System.Nullable<System.DateTime> _LogoutTime;
+		
+		private EntityRef<dbUser> _dbUser;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTimeStampChanging(System.Data.Linq.Binary value);
+    partial void OnTimeStampChanged();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnUserIdChanging(int value);
+    partial void OnUserIdChanged();
+    partial void OnUserNameChanging(string value);
+    partial void OnUserNameChanged();
+    partial void OnUserGroupChanging(string value);
+    partial void OnUserGroupChanged();
+    partial void OnLoginTimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnLoginTimeChanged();
+    partial void OnLogoutTimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnLogoutTimeChanged();
+    #endregion
+		
+		public dbUserLog()
+		{
+			this._dbUser = default(EntityRef<dbUser>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeStamp", AutoSync=AutoSync.Always, DbType="rowversion NOT NULL", CanBeNull=false, IsDbGenerated=true, IsVersion=true, UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary TimeStamp
+		{
+			get
+			{
+				return this._TimeStamp;
+			}
+			set
+			{
+				if ((this._TimeStamp != value))
+				{
+					this.OnTimeStampChanging(value);
+					this.SendPropertyChanging();
+					this._TimeStamp = value;
+					this.SendPropertyChanged("TimeStamp");
+					this.OnTimeStampChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true, UpdateCheck=UpdateCheck.Never)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int NOT NULL", UpdateCheck=UpdateCheck.Never)]
+		public int UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					if (this._dbUser.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._UserId = value;
+					this.SendPropertyChanged("UserId");
+					this.OnUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="VarChar(50) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this.OnUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._UserName = value;
+					this.SendPropertyChanged("UserName");
+					this.OnUserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserGroup", DbType="VarChar(50) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public string UserGroup
+		{
+			get
+			{
+				return this._UserGroup;
+			}
+			set
+			{
+				if ((this._UserGroup != value))
+				{
+					this.OnUserGroupChanging(value);
+					this.SendPropertyChanging();
+					this._UserGroup = value;
+					this.SendPropertyChanged("UserGroup");
+					this.OnUserGroupChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoginTime", DbType="DateTime2", UpdateCheck=UpdateCheck.Never)]
+		public System.Nullable<System.DateTime> LoginTime
+		{
+			get
+			{
+				return this._LoginTime;
+			}
+			set
+			{
+				if ((this._LoginTime != value))
+				{
+					this.OnLoginTimeChanging(value);
+					this.SendPropertyChanging();
+					this._LoginTime = value;
+					this.SendPropertyChanged("LoginTime");
+					this.OnLoginTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LogoutTime", DbType="DateTime2", UpdateCheck=UpdateCheck.Never)]
+		public System.Nullable<System.DateTime> LogoutTime
+		{
+			get
+			{
+				return this._LogoutTime;
+			}
+			set
+			{
+				if ((this._LogoutTime != value))
+				{
+					this.OnLogoutTimeChanging(value);
+					this.SendPropertyChanging();
+					this._LogoutTime = value;
+					this.SendPropertyChanged("LogoutTime");
+					this.OnLogoutTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="dbUser_dbUserLog", Storage="_dbUser", ThisKey="UserId", OtherKey="Id", IsForeignKey=true)]
+		public dbUser dbUser
+		{
+			get
+			{
+				return this._dbUser.Entity;
+			}
+			set
+			{
+				dbUser previousValue = this._dbUser.Entity;
+				if (((previousValue != value) 
+							|| (this._dbUser.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._dbUser.Entity = null;
+						previousValue.dbUserLogs.Remove(this);
+					}
+					this._dbUser.Entity = value;
+					if ((value != null))
+					{
+						value.dbUserLogs.Add(this);
+						this._UserId = value.Id;
+					}
+					else
+					{
+						this._UserId = default(int);
+					}
+					this.SendPropertyChanged("dbUser");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.dbUsers")]
+	public partial class dbUser : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private string _Password;
+		
+		private string _Group;
+		
+		private EntitySet<dbUserLog> _dbUserLogs;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnPasswordChanging(string value);
+    partial void OnPasswordChanged();
+    partial void OnGroupChanging(string value);
+    partial void OnGroupChanged();
+    #endregion
+		
+		public dbUser()
+		{
+			this._dbUserLogs = new EntitySet<dbUserLog>(new Action<dbUserLog>(this.attach_dbUserLogs), new Action<dbUserLog>(this.detach_dbUserLogs));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="VarChar(50)")]
+		public string Password
+		{
+			get
+			{
+				return this._Password;
+			}
+			set
+			{
+				if ((this._Password != value))
+				{
+					this.OnPasswordChanging(value);
+					this.SendPropertyChanging();
+					this._Password = value;
+					this.SendPropertyChanged("Password");
+					this.OnPasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Group]", Storage="_Group", DbType="VarChar(50)")]
+		public string Group
+		{
+			get
+			{
+				return this._Group;
+			}
+			set
+			{
+				if ((this._Group != value))
+				{
+					this.OnGroupChanging(value);
+					this.SendPropertyChanging();
+					this._Group = value;
+					this.SendPropertyChanged("Group");
+					this.OnGroupChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="dbUser_dbUserLog", Storage="_dbUserLogs", ThisKey="Id", OtherKey="UserId")]
+		public EntitySet<dbUserLog> dbUserLogs
+		{
+			get
+			{
+				return this._dbUserLogs;
+			}
+			set
+			{
+				this._dbUserLogs.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_dbUserLogs(dbUserLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.dbUser = this;
+		}
+		
+		private void detach_dbUserLogs(dbUserLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.dbUser = null;
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using AGV_Control_Center.Navigation;
+﻿using AGV_Control_Center.Models;
+using AGV_Control_Center.Navigation;
 using AGV_Control_Center.Views;
 using Prism.Commands;
 using Prism.Events;
@@ -14,7 +15,7 @@ using System.Windows.Controls;
 
 namespace AGV_Control_Center.ViewModels
 {
-    class ApplicationExplorerViewModel : BindableBase, IRegionMemberLifetime
+    class ApplicationExplorerViewModel : BindableBase, IRegionMemberLifetime, INavigationAware
     {
         private readonly IRegionManager _regionManager;
         private readonly IEventAggregator _eventAggregator;
@@ -24,6 +25,13 @@ namespace AGV_Control_Center.ViewModels
             {
                 return true;
             }
+        }
+        private ApplicationUser userProperty;
+
+        public ApplicationUser UserProperty
+        {
+            get { return userProperty; }
+            set { SetProperty(ref userProperty, value); }
         }
 
         private string someTextProperty;
@@ -56,6 +64,7 @@ namespace AGV_Control_Center.ViewModels
             }
 
             Items.Remove(Items.Where(x => x.Equals(typeof(ApplicationExplorer).Name)).FirstOrDefault());
+            Items.Remove(Items.Where(x => x.Equals(typeof(Login).Name)).FirstOrDefault());
             SomeTextProperty = "Selection";
 
             NavigateCommand = new DelegateCommand<object>(exNavigateCmd);
@@ -64,6 +73,21 @@ namespace AGV_Control_Center.ViewModels
         private void exNavigateCmd(object obj)
         {
             _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, obj.ToString());
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            UserProperty = (ApplicationUser)navigationContext.Parameters[typeof(ApplicationUser).Name] ?? UserProperty;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            navigationContext.Parameters.Add(typeof(ApplicationUser).Name, UserProperty);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Prism.Events;
+﻿using AGV_Control_Center.Models;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -11,9 +12,16 @@ namespace AGV_Control_Center.ViewModels
 {
     class AGV_Control_Center_HomeViewModel :BindableBase, IRegionMemberLifetime, INavigationAware
     {
-        public readonly IEventAggregator _eventAggregator;
-        public readonly IRegionManager _regionManager;
+        private readonly RegionManager _regionManager;
+        private readonly EventAggregator _eventAggregator;
 
+        private ApplicationUser user;
+
+        public ApplicationUser UserProperty
+        {
+            get { return user; }
+            set { SetProperty(ref user, value); }
+        }
         public bool KeepAlive
         {
             get
@@ -23,7 +31,7 @@ namespace AGV_Control_Center.ViewModels
         }
 
 
-        public AGV_Control_Center_HomeViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
+        public AGV_Control_Center_HomeViewModel(RegionManager regionManager, EventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
@@ -32,7 +40,7 @@ namespace AGV_Control_Center.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-           //
+            UserProperty = (ApplicationUser)navigationContext.Parameters[typeof(ApplicationUser).Name] ?? UserProperty;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -42,7 +50,7 @@ namespace AGV_Control_Center.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            //
+            navigationContext.Parameters.Add(typeof(ApplicationUser).Name, UserProperty);
         }
     }
 }

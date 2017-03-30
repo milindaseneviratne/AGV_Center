@@ -15,8 +15,8 @@ namespace AGV_Control_Center.ViewModels
 {
     class SubmitCommandViewModel : BindableBase, INavigationAware, IRegionMemberLifetime
     {
-        private readonly IEventAggregator _eventAggregator;
-        private readonly IRegionManager _regionManager;
+        private readonly RegionManager _regionManager;
+        private readonly EventAggregator _eventAggregator;
 
         private ApplicationUser user;
 
@@ -37,12 +37,12 @@ namespace AGV_Control_Center.ViewModels
         public DelegateCommand SendCommand { get; set; }
 
 
-        public SubmitCommandViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
+        public SubmitCommandViewModel(RegionManager regionManager, EventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
 
-            _eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserCredentials);
+           // _eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserCredentials);
             SendCommand = new DelegateCommand(exSendCmd, canSendCmd).ObservesProperty(() => UserProperty);
         }
 
@@ -80,7 +80,7 @@ namespace AGV_Control_Center.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            //DN
+            navigationContext.Parameters.Add(typeof(ApplicationUser).Name, UserProperty);
         }
     }
 }

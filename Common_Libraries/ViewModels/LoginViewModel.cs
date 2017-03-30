@@ -85,8 +85,8 @@ namespace AGV_Control_Center.ViewModels
 
                 sqldbCommunicator.LogUserIN(UserProperty);
 
-                //userCredentials.User = UserProperty;
-                //_eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
+                userCredentials.User = UserProperty;
+                _eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
 
                 DisplayUI();
             }

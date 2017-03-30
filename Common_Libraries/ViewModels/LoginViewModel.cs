@@ -99,7 +99,7 @@ namespace AGV_Control_Center.ViewModels
             if (UserProperty.Group == UserGroups.Administrator)
             {
                 _regionManager.RequestNavigate(RegionNames.ListContentRegion, ViewNames.ApplicationExplorer);
-                _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, ViewNames.AGV_Center_Home);
+                _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, ViewNames.AGV_Control_Center_Home);
             }
 
             if (UserProperty.Group == UserGroups.Operator)

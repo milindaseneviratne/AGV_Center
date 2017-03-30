@@ -103,10 +103,14 @@
     <Compile Include="Models\SQLCommunicator.cs" />
     <Compile Include="Navigation\RegionNames.cs" />
     <Compile Include="Navigation\ViewNames.cs" />
+    <Compile Include="ViewModels\AGV_Center_HomeViewModel.cs" />
     <Compile Include="ViewModels\ApplicationExplorerViewModel.cs" />
     <Compile Include="ViewModels\ApplicationShellViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\SubmitCommandViewModel.cs" />
+    <Compile Include="Views\AGV_Control_Center_Home.xaml.cs">
+      <DependentUpon>AGV_Control_Center_Home.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ApplicationExplorer.xaml.cs">
       <DependentUpon>ApplicationExplorer.xaml</DependentUpon>
     </Compile>
@@ -122,6 +126,10 @@
     <Compile Include="Views\SubmitCommand.xaml.cs">
       <DependentUpon>SubmitCommand.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AGV_Control_Center_Home.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ApplicationExplorer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -199,10 +207,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AGV_Center\AGV_Center.csproj">
-      <Project>{929d3751-e4cf-4feb-8112-cd9fbfdf66c7}</Project>
-      <Name>AGV_Center</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AGV_CIMCenter\AGV_CIMCenter.csproj">
       <Project>{275E234F-827B-4E0D-B93E-B59D8E979AFF}</Project>
       <Name>AGV_CIMCenter</Name>

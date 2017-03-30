@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using AGV_Center.Views;
 
 namespace AGV_Control_Center
 {
@@ -30,7 +29,7 @@ namespace AGV_Control_Center
             Container.RegisterTypeForNavigation<ApplicationExplorer>(ViewNames.ApplicationExplorer);
             Container.RegisterTypeForNavigation<SubmitCommand>(ViewNames.SubmitCommand);
             Container.RegisterTypeForNavigation<CommandServer>(ViewNames.CommandServer);
-            Container.RegisterTypeForNavigation<AGV_Center_Home>(ViewNames.AGV_Center_Home);
+            Container.RegisterTypeForNavigation<AGV_Control_Center_Home>(ViewNames.AGV_Control_Center_Home);
         }
     }
 }

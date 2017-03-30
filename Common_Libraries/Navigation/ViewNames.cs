@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using AGV_Center.Views;
 
 namespace AGV_Control_Center.Navigation
 {
@@ -42,11 +41,11 @@ namespace AGV_Control_Center.Navigation
                 return typeof(CommandServer).Name;
             }
         }
-        public static string AGV_Center_Home
+        public static string AGV_Control_Center_Home
         {
             get
             {
-                return typeof(AGV_Center_Home).Name;
+                return typeof(AGV_Control_Center_Home).Name;
             }
         }
 

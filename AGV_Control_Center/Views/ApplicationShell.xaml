@@ -70,7 +70,8 @@
                                 <ColumnDefinition Width="80*" />
                                 <ColumnDefinition Width="100*" />
                                 <ColumnDefinition Width="10*" />
-                                <ColumnDefinition Width="80*" />
+                                <ColumnDefinition Width="150*" />
+                                <ColumnDefinition Width="10*" />
                                 <ColumnDefinition Width="100*" />
                                 <ColumnDefinition Width="10*" />
                             </Grid.ColumnDefinitions>
@@ -85,9 +86,10 @@
                 </StatusBarItem>
                 <Separator Grid.Column="2" Width="1" Opacity="20"></Separator>
                 <StatusBarItem Grid.Column="3">
-                    <TextBlock Name="lblStatus3" Text="Application Status:" />
+                    <TextBlock Name="lblCurrentTime" Text="{Binding CurrentTimeProperty}" />
                 </StatusBarItem>
-                <StatusBarItem Grid.Column="4">
+                <Separator Grid.Column="4" Width="1" Opacity="20"></Separator>
+                <StatusBarItem Grid.Column="5">
                     <TextBlock Name="lblStatus4" Text="App Status Goes Here" />
                 </StatusBarItem>
                 <Separator Grid.Column="6" Width="1" Opacity="20"></Separator>

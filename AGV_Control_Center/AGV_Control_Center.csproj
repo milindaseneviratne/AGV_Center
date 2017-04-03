@@ -209,6 +209,24 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Rotate90.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Rotate-90.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Rotate180.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Charge.png" />
+    <Resource Include="Resources\Idle.png" />
+    <Resource Include="Resources\TableDown.png" />
+    <Resource Include="Resources\TableUp.png" />
+    <Resource Include="Resources\Fail.png" />
+    <Resource Include="Resources\Pass.png" />
+    <Resource Include="Resources\Cancel.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

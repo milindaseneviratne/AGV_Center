@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace AGV_Control_Center.ViewModels
 {
@@ -24,6 +25,15 @@ namespace AGV_Control_Center.ViewModels
         private string title;
 
         private SQLCommunicator sqldbCommunicator = new SQLCommunicator();
+        private DispatcherTimer totalElapsedTimerMVVM = new DispatcherTimer();
+
+        private string currentTimePorperty;
+
+        public string CurrentTimeProperty
+        {
+            get { return currentTimePorperty; }
+            set { SetProperty( ref currentTimePorperty, value); }
+        }
 
         public bool KeepAlive
         {
@@ -61,11 +71,22 @@ namespace AGV_Control_Center.ViewModels
             Title = "AGV Control Center";
 
             _regionManager.RegisterViewWithRegion(RegionNames.PrimaryContentRegion, typeof(Login));
+
+            totalElapsedTimerMVVM.Interval = TimeSpan.FromMilliseconds(300);
+            totalElapsedTimerMVVM.Tick += new EventHandler(totalElapsedTimerMVVM_Tick);
+            totalElapsedTimerMVVM.Start();
         }
+
+        private void totalElapsedTimerMVVM_Tick(object sender, EventArgs e)
+        {
+            CurrentTimeProperty = "Current Date and Time: " + DateTime.Now.ToString();
+        }
+
         private void exExitCmd()
         {
             UserProperty.LogOut = DateTime.Now;
             sqldbCommunicator.LogUserOUT(UserProperty);
+            totalElapsedTimerMVVM.Stop();
             Application.Current.Shutdown();
         }
         private void LoadUserCredentials(UserCredentialsDTO obj)

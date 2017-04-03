@@ -223,10 +223,6 @@
       <Project>{54cab49f-4cde-4de2-9316-cb78290a541f}</Project>
       <Name>Socket_Client</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Socket_Libraries\Socket_Libraries.csproj">
-      <Project>{e7db7084-5c9c-4341-973a-9a4f1e2b47f4}</Project>
-      <Name>Socket_Libraries</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Socket_Server\Socket_Server.csproj">
       <Project>{9a4763d2-83bb-44ff-b078-6d1fc73fcb40}</Project>
       <Name>Socket_Server</Name>

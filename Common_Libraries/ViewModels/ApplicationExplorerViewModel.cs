@@ -65,7 +65,7 @@ namespace AGV_Control_Center.ViewModels
                 Items.Add(propertyName.Name);
             }
 
-            //_eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserData);
+            _eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserData);
 
             Items.Remove(Items.Where(x => x.Equals(typeof(ApplicationExplorer).Name)).FirstOrDefault());
             Items.Remove(Items.Where(x => x.Equals(typeof(Login).Name)).FirstOrDefault());

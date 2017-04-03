@@ -23,10 +23,5 @@ namespace AGV_Control_Center.Views
         {
             InitializeComponent();
         }
-
-        private void MenuItem_Exit_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

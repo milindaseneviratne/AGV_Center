@@ -63,13 +63,34 @@
         </DockPanel>
         <DockPanel Grid.Row="2" Height="25">
             <StatusBar DockPanel.Dock="Bottom" FontSize="12">
-                <StatusBarItem>
-                    <TextBlock Name="lblStatus1" Text="Duis elementum, eros sit amet tempus auctor, risus dolor venenatis velit, ac dignissim nulla ante finibus turpis." />
+                <StatusBar.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80*" />
+                                <ColumnDefinition Width="100*" />
+                                <ColumnDefinition Width="10*" />
+                                <ColumnDefinition Width="80*" />
+                                <ColumnDefinition Width="100*" />
+                                <ColumnDefinition Width="10*" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </StatusBar.ItemsPanel>
+                <StatusBarItem Grid.Column="0">
+                    <TextBlock Name="lblStatus1" Text="SQL Connection Status: " />
                 </StatusBarItem>
-                <Separator Width="5" Opacity="20"></Separator>
-                <StatusBarItem>
-                    <TextBlock Name="lblStatus2" Text="Duis elementum, eros sit amet tempus auctor, risus dolor venenatis velit, ac dignissim nulla ante finibus turpis." />
+                <StatusBarItem Grid.Column="1">
+                    <TextBlock Name="lblStatus2" Text="Status Image Goes Here" />
                 </StatusBarItem>
+                <Separator Grid.Column="2" Width="1" Opacity="20"></Separator>
+                <StatusBarItem Grid.Column="3">
+                    <TextBlock Name="lblStatus3" Text="Application Status:" />
+                </StatusBarItem>
+                <StatusBarItem Grid.Column="4">
+                    <TextBlock Name="lblStatus4" Text="App Status Goes Here" />
+                </StatusBarItem>
+                <Separator Grid.Column="6" Width="1" Opacity="20"></Separator>
             </StatusBar>
         </DockPanel>
         <Grid x:Name="InnerContentGrid" Grid.Row="1" Grid.Column="0">

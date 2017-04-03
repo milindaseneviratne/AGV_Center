@@ -54,7 +54,7 @@ namespace AGV_Control_Center.ViewModels
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
 
-            //_eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserCredentials);
+            _eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserCredentials);
 
             ExitCommand = new DelegateCommand(exExitCmd);
 

@@ -67,14 +67,14 @@ namespace AGV_Control_Center.ViewModels
         {
             PasswordBox pwdBox = sender as PasswordBox;
             UserProperty.Password = pwdBox.Password;
-            try
-            {
-                throw new Exception("Testing");
-            }
-            catch (Exception e)
-            {
-                e.WriteLog().SaveToDataBase().Display();
-            }
+            //try
+            //{
+            //    throw new Exception("Testing");
+            //}
+            //catch (Exception e)
+            //{
+            //    e.WriteLog().SaveToDataBase().Display();
+            //}
             var dbUserInfo = sqldbCommunicator.GetuserInfo(UserProperty);
 
             if (dbUserInfo == null)
@@ -94,7 +94,7 @@ namespace AGV_Control_Center.ViewModels
                 sqldbCommunicator.LogUserIN(UserProperty);
 
                 userCredentials.User = UserProperty;
-                //_eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
+                _eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
 
                 DisplayUI();
             }

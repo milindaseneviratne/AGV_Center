@@ -113,9 +113,6 @@
     <Compile Include="Views\CommandServer.xaml.cs">
       <DependentUpon>CommandServer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MessageBox.xaml.cs">
-      <DependentUpon>MessageBox.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\SubmitCommand.xaml.cs">
       <DependentUpon>SubmitCommand.xaml</DependentUpon>
     </Compile>
@@ -158,10 +155,6 @@
       <DependentUpon>About.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\MessageBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\SubmitCommand.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

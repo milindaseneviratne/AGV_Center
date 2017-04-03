@@ -43,10 +43,11 @@
                 <MenuItem Header="_dolor ">
                     <MenuItem Header="_Exit" />
                 </MenuItem>
-                <MenuItem Header="_sit">
-                    <MenuItem Header="_New" />
-                    <MenuItem Header="_Open" />
-                    <MenuItem Header="_Save" />
+                <MenuItem Header="_Connectivity">
+                    <MenuItem Header="SQL Server Connections">
+                        <MenuItem Name="sql1" Header="SQL Server 1" IsCheckable="True" Command="{Binding ConnectToSQLCommand}" CommandParameter="{Binding ElementName=sql1, UpdateSourceTrigger=PropertyChanged}"></MenuItem>
+                        <MenuItem Name="sql2" Header="SQL Server 2" IsCheckable="True" Command="{Binding ConnectToSQLCommand}" CommandParameter="{Binding ElementName=sql2, UpdateSourceTrigger=PropertyChanged}"></MenuItem>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Help">
                     <MenuItem Header="_Select Language">

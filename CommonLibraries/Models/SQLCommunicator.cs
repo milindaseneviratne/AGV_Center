@@ -1,14 +1,14 @@
-﻿using AGV_Control_Center.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommonLibraries.Database;
+using CommonLibraries.Extensions;
 
-namespace AGV_Control_Center.Models
+namespace CommonLibraries.Models
 {
-    class SQLCommunicator
+    public class SQLCommunicator
     {
         private sqlDataContext dbContext = new sqlDataContext();
 
@@ -57,7 +57,7 @@ namespace AGV_Control_Center.Models
             return successFlag;
         }
 
-        internal void LogUserOUT(ApplicationUser userProperty)
+        public void LogUserOUT(ApplicationUser userProperty)
         {
             var query = (from row in dbContext.dbUserLogs
                         where row.UserId == userProperty.Id
@@ -81,7 +81,7 @@ namespace AGV_Control_Center.Models
             }
         }
 
-        internal void LogUserIN(ApplicationUser userProperty)
+        public void LogUserIN(ApplicationUser userProperty)
         {
             dbUserLog userLog = new dbUserLog();
 

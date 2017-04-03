@@ -1,11 +1,11 @@
-﻿using AGV_Control_Center.Enumerations;
+﻿using CommonLibraries.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AGV_Control_Center.Extensions
+namespace CommonLibraries.Extensions
 {
     public static class StringExtensions
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AGV_Control_Center.Models
+namespace CommonLibraries.Models
 {
     public static class ErrorLogger
     {

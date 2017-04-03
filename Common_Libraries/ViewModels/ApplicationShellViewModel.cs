@@ -1,7 +1,7 @@
 ﻿using AGV_Control_Center.Events;
-using AGV_Control_Center.Models;
 using AGV_Control_Center.Navigation;
 using AGV_Control_Center.Views;
+using CommonLibraries.Models;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;

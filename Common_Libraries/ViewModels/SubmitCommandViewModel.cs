@@ -1,6 +1,4 @@
-﻿using AGV_Control_Center.Enumerations;
-using AGV_Control_Center.Events;
-using AGV_Control_Center.Models;
+﻿using AGV_Control_Center.Events;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -10,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommonLibraries.Enumerations;
+using CommonLibraries.Models;
 
 namespace AGV_Control_Center.ViewModels
 {

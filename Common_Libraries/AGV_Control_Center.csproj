@@ -89,13 +89,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Enumerations\UserGroups.cs" />
     <Compile Include="Events\UserCredentialsDTO.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Extensions\ExceptionExtensions.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\ErrorLogger.cs" />
-    <Compile Include="Models\SQLCommunicator.cs" />
     <Compile Include="Navigation\RegionNames.cs" />
     <Compile Include="Navigation\ViewNames.cs" />
     <Compile Include="ViewModels\AGV_Center_HomeViewModel.cs" />

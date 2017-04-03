@@ -1,12 +1,11 @@
-﻿using AGV_Control_Center.Models;
-using AGV_Control_Center.Views;
+﻿using CommonLibraries.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AGV_Control_Center.Extensions
+namespace CommonLibraries.Extensions
 {
     public static class ExceptionExtensions
     {
@@ -25,8 +24,8 @@ namespace AGV_Control_Center.Extensions
 
         public static Exception Display(this Exception ex)
         {
-            MessageBox msgBox = new MessageBox(ex);
-            msgBox.ShowDialog();
+            //MessageBox msgBox = new MessageBox(ex);
+            //msgBox.ShowDialog();
             return ex;
         }
 

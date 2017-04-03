@@ -1,5 +1,4 @@
-﻿using AGV_Control_Center.Models;
-using AGV_Control_Center.ViewModels;
+﻿using AGV_Control_Center.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

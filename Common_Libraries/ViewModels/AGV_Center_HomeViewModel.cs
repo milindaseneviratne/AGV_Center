@@ -1,4 +1,4 @@
-﻿using AGV_Control_Center.Models;
+﻿using CommonLibraries.Models;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;

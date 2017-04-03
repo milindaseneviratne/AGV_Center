@@ -15,7 +15,7 @@ using System.Windows;
 
 namespace AGV_Control_Center.ViewModels
 {
-    class ApplicationShellViewModel : BindableBase, IRegionMemberLifetime
+    class ApplicationShellViewModel : BindableBase, IRegionMemberLifetime, INavigationAware
     {
         private readonly RegionManager _regionManager;
         private readonly EventAggregator _eventAggregator;
@@ -54,7 +54,7 @@ namespace AGV_Control_Center.ViewModels
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
 
-            _eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserCredentials);
+            //_eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserCredentials);
 
             ExitCommand = new DelegateCommand(exExitCmd);
 
@@ -71,6 +71,21 @@ namespace AGV_Control_Center.ViewModels
         private void LoadUserCredentials(UserCredentialsDTO obj)
         {
             UserProperty = obj.User;
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            UserProperty = (ApplicationUser)navigationContext.Parameters[typeof(ApplicationUser).Name] ?? UserProperty;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            navigationContext.Parameters.Add(typeof(ApplicationUser).Name, UserProperty);
         }
     }
 }

@@ -48,6 +48,13 @@ namespace AGV_Control_Center.Navigation
                 return typeof(AGV_Control_Center_Home).Name;
             }
         }
+        public static string ApplicationConfiguration
+        {
+            get
+            {
+                return typeof(ApplicationConfiguration).Name;
+            }
+        }
 
         //public static IEnumerator GetEnumerator()
         //{

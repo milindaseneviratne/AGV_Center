@@ -42,7 +42,7 @@ namespace AGV_Control_Center.ViewModels
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
 
-           // _eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserCredentials);
+            //_eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserCredentials);
             SendCommand = new DelegateCommand(exSendCmd, canSendCmd).ObservesProperty(() => UserProperty);
         }
 

@@ -86,7 +86,7 @@ namespace AGV_Control_Center.ViewModels
                 sqldbCommunicator.LogUserIN(UserProperty);
 
                 userCredentials.User = UserProperty;
-                _eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
+                //_eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
 
                 DisplayUI();
             }
@@ -115,7 +115,7 @@ namespace AGV_Control_Center.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            //DoNothing
+            UserProperty = (ApplicationUser)navigationContext.Parameters[typeof(ApplicationUser).Name] ?? UserProperty;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

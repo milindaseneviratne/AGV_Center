@@ -30,6 +30,7 @@ namespace AGV_Control_Center
             Container.RegisterTypeForNavigation<SubmitCommand>(ViewNames.SubmitCommand);
             Container.RegisterTypeForNavigation<CommandServer>(ViewNames.CommandServer);
             Container.RegisterTypeForNavigation<AGV_Control_Center_Home>(ViewNames.AGV_Control_Center_Home);
+            Container.RegisterTypeForNavigation<ApplicationConfiguration>(ViewNames.ApplicationConfiguration);
         }
     }
 }

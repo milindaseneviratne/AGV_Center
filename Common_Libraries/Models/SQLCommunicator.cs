@@ -1,16 +1,16 @@
-﻿using AGV_Control_Center.Database;
-using AGV_Control_Center.Extensions;
+﻿using AGV_Control_Center.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommonLibraries.Database;
 
 namespace AGV_Control_Center.Models
 {
     class SQLCommunicator
     {
-        private AGV_Control_CenterDataContext dbContext = new AGV_Control_CenterDataContext();
+        private sqlDataContext dbContext = new sqlDataContext();
 
         public dbUser GetuserInfo(ApplicationUser user)
         {

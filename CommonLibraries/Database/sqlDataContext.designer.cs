@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AGV_Control_Center.Database
+namespace CommonLibraries.Database
 {
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
@@ -23,7 +23,7 @@ namespace AGV_Control_Center.Database
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="AGV_Control_Center")]
-	public partial class AGV_Control_CenterDataContext : System.Data.Linq.DataContext
+	public partial class sqlDataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -41,31 +41,31 @@ namespace AGV_Control_Center.Database
     partial void DeletedbUser(dbUser instance);
     #endregion
 		
-		public AGV_Control_CenterDataContext() : 
-				base(global::AGV_Control_Center.Properties.Settings.Default.AGV_Control_CenterConnectionString, mappingSource)
+		public sqlDataContext() : 
+				base(global::CommonLibraries.Properties.Settings.Default.AGV_Control_CenterConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public AGV_Control_CenterDataContext(string connection) : 
+		public sqlDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public AGV_Control_CenterDataContext(System.Data.IDbConnection connection) : 
+		public sqlDataContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public AGV_Control_CenterDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public sqlDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public AGV_Control_CenterDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public sqlDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();

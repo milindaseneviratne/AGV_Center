@@ -1,4 +1,5 @@
 ﻿using CommonLibraries.Models;
+using CommonLibraries.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,8 @@ namespace CommonLibraries.Extensions
 
         public static Exception Display(this Exception ex)
         {
-            //MessageBox msgBox = new MessageBox(ex);
-            //msgBox.ShowDialog();
+            MessageBox msgBox = new MessageBox(ex);
+            msgBox.ShowDialog();
             return ex;
         }
 

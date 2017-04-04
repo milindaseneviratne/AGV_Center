@@ -96,6 +96,7 @@
     <Compile Include="ViewModels\ApplicationConfigurationViewModel.cs" />
     <Compile Include="ViewModels\ApplicationExplorerViewModel.cs" />
     <Compile Include="ViewModels\ApplicationShellViewModel.cs" />
+    <Compile Include="ViewModels\CommandServerViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\SubmitCommandViewModel.cs" />
     <Compile Include="Views\AGV_Control_Center_Home.xaml.cs">

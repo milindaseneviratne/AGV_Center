@@ -5,9 +5,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Socket_Server.Models
+namespace CommonLibraries.Models
 {
-    class StateObject
+    public class StateObject
     {
         public Socket workSocket = null;
         public const int BufferSize = 1024;

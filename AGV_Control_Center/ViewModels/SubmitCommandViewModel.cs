@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommonLibraries.Enumerations;
 using CommonLibraries.Models;
+using System.Collections.ObjectModel;
 
 namespace AGV_Control_Center.ViewModels
 {
@@ -35,7 +36,30 @@ namespace AGV_Control_Center.ViewModels
         }
 
         public DelegateCommand SendCommand { get; set; }
+        public DelegateCommand SendQrCode { get; set; }
+        private string qrCode;
 
+        public string QrCode
+        {
+            get { return qrCode; }
+            set { SetProperty(ref qrCode, value); }
+        }
+
+        private string errorMessage;
+
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set { SetProperty(ref errorMessage, value); }
+        }
+
+        private ObservableCollection<string> communicationsList;
+
+        public ObservableCollection<string> CommunicationsList
+        {
+            get { return communicationsList; }
+            set { SetProperty( ref communicationsList, value); }
+        }
 
         public SubmitCommandViewModel(RegionManager regionManager, EventAggregator eventAggregator)
         {
@@ -44,6 +68,17 @@ namespace AGV_Control_Center.ViewModels
 
             //_eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserCredentials);
             SendCommand = new DelegateCommand(exSendCmd, canSendCmd).ObservesProperty(() => UserProperty);
+            SendQrCode = new DelegateCommand(exSendQrCodeCmd, canSendQrCodeCmd).ObservesProperty(() => QrCode);
+        }
+
+        private bool canSendQrCodeCmd()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void exSendQrCodeCmd()
+        {
+            throw new NotImplementedException();
         }
 
         private bool canSendCmd()
@@ -63,10 +98,10 @@ namespace AGV_Control_Center.ViewModels
             //SendCommandLogic Here.
         }
 
-        private void LoadUserCredentials(UserCredentialsDTO obj)
-        {
-            UserProperty = obj.User;
-        }
+        //private void LoadUserCredentials(UserCredentialsDTO obj)
+        //{
+        //    UserProperty = obj.User;
+        //}
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {

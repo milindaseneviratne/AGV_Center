@@ -13,18 +13,21 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="1">
+        <Grid Margin="0,140,0,10" Grid.RowSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300" x:Name="Area1"/>
                 <ColumnDefinition Width="*" x:Name="Area2"/>
             </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0" >
+                <ListBox DockPanel.Dock="Left" Grid.Column="0" ItemsSource="{Binding Path=CommunicationsList, UpdateSourceTrigger=PropertyChanged}" x:Name="listBox" HorizontalAlignment="Left" Margin="10,10,0,0" Width="280" Height="340" VerticalAlignment="Top"/>
+            </DockPanel>
         </Grid>
         <Label Grid.Row="0" x:Name="lblScanQRCode" Content="Scan QR Code:" Margin="0,22,485,0" VerticalAlignment="Top" Width="277" Height="50" FontSize="20" FontWeight="Bold" HorizontalAlignment="Right"/>
-        <TextBlock Grid.Row="0" x:Name="textBlock" HorizontalAlignment="Left" Margin="320,85,0,0" TextWrapping="Wrap" Text="Error Messages go here" VerticalAlignment="Top" Height="55" Width="462" FontSize="20" FontStyle="Italic"/>
-        <TextBox Grid.Row="0" x:Name="txtSerialNumber" HorizontalAlignment="Left" Height="48" Margin="320,22,0,0" TextWrapping="Wrap" Text="AGVXXXXXXXXXXXXXXXX" VerticalAlignment="Top" Width="462" FontSize="20"/>
-
+        <TextBlock Grid.Row="0" x:Name="txtErrorMessage" HorizontalAlignment="Left" Margin="320,85,0,0" TextWrapping="Wrap" Text="{Binding ErrorMessage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="55" Width="462" FontSize="20" FontStyle="Italic"/>
+        <TextBox Grid.Row="0" x:Name="txtQrCode" Text="{Binding QrCode, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="48" Margin="320,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="462" FontSize="20"/>
         <Button x:Name="button_Rotate90" Command="{Binding SendCommand, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="465,41,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75" BorderThickness="0">
             <Image Source="/AGV_Control_Center;component/Resources/Rotate90.png" Style="{StaticResource ImageOpacity}" ToolTip="Rorate +90"/>
         </Button>
@@ -41,27 +44,27 @@
             <Image Source="/AGV_Control_Center;component/Resources/Cancel.png" Style="{StaticResource ImageOpacity}" ToolTip="Cancel"/>
         </Button>
 
-        <Button x:Name="button_Idle" Command="{Binding SendCommand}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="675,235,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75">
+        <Button x:Name="button_Idle" Command="{Binding SendCommand}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="675,15,0,0"  Grid.Row="2" VerticalAlignment="Top" Width="75" Height="75">
             <Image Source="/AGV_Control_Center;component/Resources/Idle.png" Style="{StaticResource ImageOpacity}" ToolTip="Idle"/>
         </Button>
-        
-        <Button x:Name="button_Charge" Command="{Binding SendCommand}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="570,235,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75">
+
+        <Button x:Name="button_Charge" Command="{Binding SendCommand}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="570,15,0,0"  Grid.Row="2" VerticalAlignment="Top" Width="75" Height="75">
             <Image Source="/AGV_Control_Center;component/Resources/Charge.png" Style="{StaticResource ImageOpacity}" ToolTip="Charge"/>
         </Button>
 
         <Button x:Name="button_TableUp" Command="{Binding SendCommand}"  Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="360,41,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75">
             <Image Source="/AGV_Control_Center;component/Resources/TableUp.png" Style="{StaticResource ImageOpacity}" ToolTip="Table Up"/>
         </Button>
-        
+
         <Button x:Name="button_TableDown" Command="{Binding SendCommand}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="360,136,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75">
             <Image Source="/AGV_Control_Center;component/Resources/TableDown.png" Style="{StaticResource ImageOpacity}" ToolTip="Table Down"/>
         </Button>
 
-        <Button x:Name="button_StationPass" Command="{Binding SendCommand}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="360,235,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75">
+        <Button x:Name="button_StationPass" Command="{Binding SendCommand}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="360,15,0,0"  Grid.Row="2" VerticalAlignment="Top" Width="75" Height="75">
             <Image Source="/AGV_Control_Center;component/Resources/Pass.png" Style="{StaticResource ImageOpacity}" ToolTip="Station Pass"/>
         </Button>
 
-        <Button x:Name="button_SrtationFail" Command="{Binding SendCommand}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="465,235,0,0"  Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75">
+        <Button x:Name="button_SrtationFail" Command="{Binding SendCommand}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="465,15,0,0"  Grid.Row="2" VerticalAlignment="Top" Width="75" Height="75">
             <Image Source="/AGV_Control_Center;component/Resources/Fail.png" Style="{StaticResource ImageOpacity}" ToolTip="Station Fail"/>
         </Button>
     </Grid>

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using CommonLibraries.Enumerations;
 using CommonLibraries.Models;
 using System.Collections.ObjectModel;
+using Socket_Client.Models;
 
 namespace AGV_Control_Center.ViewModels
 {
@@ -18,6 +19,8 @@ namespace AGV_Control_Center.ViewModels
     {
         private readonly RegionManager _regionManager;
         private readonly EventAggregator _eventAggregator;
+
+        //private AsynchonousClient asyncClient = new AsynchonousClient();
 
         private ApplicationUser user;
 
@@ -73,12 +76,19 @@ namespace AGV_Control_Center.ViewModels
 
         private bool canSendQrCodeCmd()
         {
-            throw new NotImplementedException();
+            bool successFlag = false;
+
+            if (QrCode.Contains("<EOF>"))
+            {
+                successFlag = true;
+            }
+
+            return successFlag;
         }
 
         private void exSendQrCodeCmd()
         {
-            throw new NotImplementedException();
+            AsynchonousClient.StartClient(QrCode,"C8810");
         }
 
         private bool canSendCmd()

@@ -98,6 +98,12 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommonLibraries\CommonLibraries.csproj">
+      <Project>{F8CB639F-33F4-4E57-9435-B4E6222C0361}</Project>
+      <Name>CommonLibraries</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -10,6 +10,9 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Height="510" Width="800">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Return" Command="{Binding SendQrCode, UpdateSourceTrigger=PropertyChanged}" />
+    </UserControl.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>

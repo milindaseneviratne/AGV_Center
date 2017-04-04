@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CommonLibraries.Extensions
@@ -25,10 +26,16 @@ namespace CommonLibraries.Extensions
 
         public static Exception Display(this Exception ex)
         {
-            MessageBox msgBox = new MessageBox(ex);
-            msgBox.ShowDialog();
+            Thread showExceptionWindowThread = new Thread(() => DisplayMessageBox(ex));
+            showExceptionWindowThread.SetApartmentState(ApartmentState.STA);
+            showExceptionWindowThread.Start();
             return ex;
         }
 
+        private static void DisplayMessageBox(Exception ex)
+        {
+            MessageBox msgBox = new MessageBox(ex);
+            msgBox.ShowDialog();
+        }
     }
 }

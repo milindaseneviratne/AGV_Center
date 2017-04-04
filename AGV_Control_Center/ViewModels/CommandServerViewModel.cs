@@ -17,7 +17,6 @@ namespace AGV_Control_Center.ViewModels
 
         //private Action startSeerver = new Action(AsynchonousSocketListner.StartListning);
 
-
         public bool KeepAlive
         {
             get
@@ -36,9 +35,12 @@ namespace AGV_Control_Center.ViewModels
         private void InitializeServer()
         {
             //startSeerver.BeginInvoke();
-
-            Thread listnerThread = new Thread(AsynchonousSocketListner.StartListning);
-            listnerThread.Start();
+            if (AsynchonousSocketListner.listner == null)
+            {
+                Thread listnerThread = new Thread(AsynchonousSocketListner.StartListning);
+                listnerThread.SetApartmentState(ApartmentState.STA);
+                listnerThread.Start();
+            }
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

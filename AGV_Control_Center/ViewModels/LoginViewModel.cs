@@ -1,5 +1,4 @@
-﻿using AGV_CIMCenter;
-using AGV_Control_Center.Events;
+﻿using AGV_Control_Center.Events;
 using AGV_Control_Center.Navigation;
 using CommonLibraries.Models;
 using CommonLibraries.Database;

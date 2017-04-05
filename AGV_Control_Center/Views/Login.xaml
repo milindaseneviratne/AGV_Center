@@ -11,6 +11,7 @@
                 mc:Ignorable="d"
                 Height="225" Width="289.942">
 
+
     <Border Padding="10" >
         <Grid>
             <Button x:Name="btnExit" Command="{Binding ExitCommand}" Content="Exit" HorizontalAlignment="Left" Margin="175,105,0,0" VerticalAlignment="Top" Width="75"/>
@@ -18,6 +19,8 @@
             <Label x:Name="lblUserGroup" Content="User Group:" HorizontalAlignment="Left" Margin="7,9,0,0" VerticalAlignment="Top" Width="78"/>
             <Label x:Name="lblUsername" Content="User Name:" HorizontalAlignment="Left" Margin="7,37,0,0" VerticalAlignment="Top" Width="78"/>
             <Label x:Name="lblPassword" Content="Password:" HorizontalAlignment="Left" Margin="7,65,0,0" VerticalAlignment="Top" Width="78"/>
+
+
             <TextBlock x:Name="lblErrorMessage" Text="{Binding LoginFailedMessage, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="90,132,0,0" VerticalAlignment="Top" Width="160" Height="50" FontStyle="Italic" TextWrapping="Wrap"/>
             <ComboBox x:Name="cmbUserGroups" SelectedIndex="{Binding UserProperty.Group, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="90,9,0,0" VerticalAlignment="Top" Width="160" IsReadOnly="True"  >
                 <ComboBoxItem></ComboBoxItem>
@@ -29,5 +32,9 @@
             <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Height="23" Margin="90,67,0,0" VerticalAlignment="Top" Width="160"/>
         </Grid>
     </Border>
-
+    
+    <UserControl.InputBindings>
+        <KeyBinding Key="Return" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=txtPassword, UpdateSourceTrigger=PropertyChanged}" />
+    </UserControl.InputBindings>
+    
 </UserControl>

@@ -88,7 +88,9 @@ namespace AGV_Control_Center.ViewModels
 
         private void exSendQrCodeCmd()
         {
-            AsynchonousClient.StartClient(QrCode,"C8810");
+            CommunicationsList.Insert(0,"Sent to Server ---->" + QrCode);
+            string rxCommand = AsynchonousClient.SendRecTCPCommand(QrCode,"C8810");
+            CommunicationsList.Insert(0,"Recvd from Server <----" + rxCommand);
         }
 
         private bool canSendCmd()
@@ -116,6 +118,12 @@ namespace AGV_Control_Center.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             UserProperty = (ApplicationUser)navigationContext.Parameters[typeof(ApplicationUser).Name] ?? UserProperty;
+            InitializeUI();
+        }
+
+        private void InitializeUI()
+        {
+            CommunicationsList = new ObservableCollection<string>();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

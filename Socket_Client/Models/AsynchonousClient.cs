@@ -20,9 +20,23 @@ namespace Socket_Client.Models
         private static ManualResetEvent recieveDone = new ManualResetEvent(false);
 
         private static string response = string.Empty;
-        private static Socket client = null;
+        public static Socket client = null;
 
-        public static void StartClient(string data, string server)
+        public static string SendRecTCPCommand(string data, string serverName)
+        {
+            ConnectToServer(serverName);
+
+            Send(client, data);
+            sendDone.WaitOne();
+
+            Recieve(client);
+            recieveDone.WaitOne();
+
+            EndConnection();
+
+            return response;
+        }
+        private static void ConnectToServer(string server)
         {
             try
             {
@@ -30,30 +44,24 @@ namespace Socket_Client.Models
                 IPAddress ipAddress = ipHostEntry.AddressList.Where(x => x.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
-               // while (true)
-                //{
-                    connectDone.Reset();
-                    sendDone.Reset();
-                    recieveDone.Reset();
+                connectDone.Reset();
+                sendDone.Reset();
+                recieveDone.Reset();
 
-                    client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                    client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
-                    connectDone.WaitOne();
-
-                    Send(client, data);
-                    sendDone.WaitOne();
-
-                    Recieve(client);
-                    recieveDone.WaitOne();
-
-                    client.Shutdown(SocketShutdown.Both);
-                    client.Close();
-                //}
+                client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
+                connectDone.WaitOne();
             }
             catch (Exception e)
             {
                 e.WriteLog().SaveToDataBase().Display();
             }
+        }
+
+        private static void EndConnection()
+        {
+            client.Shutdown(SocketShutdown.Both);
+            client.Close();
         }
 
         private static void Recieve(Socket client)

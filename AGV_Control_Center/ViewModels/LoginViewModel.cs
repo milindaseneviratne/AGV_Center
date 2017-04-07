@@ -74,31 +74,44 @@ namespace AGV_Control_Center.ViewModels
             //{
             //    e.WriteLog().SaveToDataBase().Display();
             //}
-            var dbUserInfo = sqldbCommunicator.GetuserInfo(UserProperty);
+            //var dbUserInfo = sqldbCommunicator.GetuserInfo(UserProperty);
 
-            if (dbUserInfo == null)
-            {
-                LoginFailedMessage = "Incorrect username/password, please try again!";
-            }
-            else
-            {
-                LoginFailedMessage = string.Empty;
+            //if (dbUserInfo == null)
+            //{
+            //    LoginFailedMessage = "Incorrect username/password, please try again!";
+            //}
+            //else
+            //{
+            //    LoginFailedMessage = string.Empty;
 
-                UserProperty.Id = dbUserInfo.Id;
-                UserProperty.Name = dbUserInfo.Name;
-                UserProperty.Password = dbUserInfo.Password; // Delete this for security reasons once prduction version is launched.
-                UserProperty.Group = dbUserInfo.Group.ToUserGroup();
-                UserProperty.LogIn = DateTime.Now;
+            //    UserProperty.Id = dbUserInfo.Id;
+            //    UserProperty.Name = dbUserInfo.Name;
+            //    UserProperty.Password = dbUserInfo.Password; // Delete this for security reasons once prduction version is launched.
+            //    UserProperty.Group = dbUserInfo.Group.ToUserGroup();
+            //    UserProperty.LogIn = DateTime.Now;
 
-                sqldbCommunicator.LogUserIN(UserProperty);
+            //    sqldbCommunicator.LogUserIN(UserProperty);
 
-                userCredentials.User = UserProperty;
-                _eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
+            //    userCredentials.User = UserProperty;
+            //    _eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
 
-                DisplayUI();
-            }
+            //    DisplayUI();
+            //}
 
+            LoginFailedMessage = string.Empty;
 
+            UserProperty.Id = 100;
+            UserProperty.Name = "Milinda";
+            UserProperty.Password = "qwerty"; // Delete this for security reasons once prduction version is launched.
+            UserProperty.Group = UserGroups.Administrator;
+            UserProperty.LogIn = DateTime.Now;
+
+            //sqldbCommunicator.LogUserIN(UserProperty);
+
+            userCredentials.User = UserProperty;
+            _eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
+
+            DisplayUI();
         }
 
         private void DisplayUI()

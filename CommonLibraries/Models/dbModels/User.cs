@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CommonLibraries.Model
+namespace CommonLibraries.Models
 {
     using System.Collections.ObjectModel;
     
-    public partial class dbUser
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public dbUser()
+        public User()
         {
-            this.dbUserLogs = new ObservableCollection<dbUserLog>();
+            this.dbUserLogs = new ObservableCollection<UserActivityLog>();
         }
     
         public int Id { get; set; }
@@ -25,6 +25,6 @@ namespace CommonLibraries.Model
         public string Group { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ObservableCollection<dbUserLog> dbUserLogs { get; set; }
+        public virtual ObservableCollection<UserActivityLog> dbUserLogs { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 
 namespace CommonLibraries.Models
 {
-    public class dbApplicationErrorLog
+    public class ApplicationErrorLog
     {
         public int Id { get; set; }
         public string HelpLink { get; set; }
@@ -9,6 +9,6 @@ namespace CommonLibraries.Models
         public string Source { get; set; }
         public string StackTrace { get; set; }
         public string HashCode { get; set; }
-        public string Dump { get; set; }
+        public string DumpString { get; set; }
     }
 }

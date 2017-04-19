@@ -10,13 +10,13 @@ namespace CommonLibraries.Models
 {
     public class SQLCommunicator
     {
-        private sqlDataContext dbContext = new sqlDataContext();
+        private sqlDbContextEF dbContext = new sqlDbContextEF();
 
-        public dbUser GetuserInfo(ApplicationUser user)
+        public User GetuserInfo(ApplicationUser user)
         {
-            var query = (from row in dbContext.dbUsers
+            var query = (from row in dbContext.User
                          where row.Name == user.Name && row.Password == user.Password
-                         select row).FirstOrDefault();         
+                         select row).FirstOrDefault();
 
             return query;
         }
@@ -24,15 +24,15 @@ namespace CommonLibraries.Models
         {
             bool successFlag = false;
 
-            dbUser dbUserObject = new dbUser();
+            User dbUserObject = new User();
 
             dbUserObject.Name = user.Name;
             dbUserObject.Password = user.Password;
             dbUserObject.Group = user.Group.ToString();
 
-            dbContext.dbUsers.InsertOnSubmit(dbUserObject);
+            dbContext.User.Add(dbUserObject);
 
-            submitChanges();
+            SaveChanges();
 
             return successFlag;
         }
@@ -41,39 +41,39 @@ namespace CommonLibraries.Models
         {
             bool successFlag = false;
 
-            dbApplicationErrorLog dbAppErrorLog = new dbApplicationErrorLog();
+            ApplicationErrorLog dbAppErrorLog = new ApplicationErrorLog();
 
-            dbAppErrorLog.Dump = ex.ToString();
+            dbAppErrorLog.DumpString = ex.ToString();
             dbAppErrorLog.HashCode = ex.GetHashCode().ToString();
             dbAppErrorLog.HelpLink = ex.HelpLink;
             dbAppErrorLog.Message = ex.Message;
             dbAppErrorLog.Source = ex.Source;
             dbAppErrorLog.StackTrace = ex.StackTrace;
 
-            //dbContext.dbApplicationErrorLogs.InsertOnSubmit(dbAppErrorLog);
+            dbContext.ApplicationErrorLog.Add(dbAppErrorLog);
 
-            submitChanges();
+            SaveChanges();
 
             return successFlag;
         }
 
         public void LogUserOUT(ApplicationUser userProperty)
         {
-            var query = (from row in dbContext.dbUserLogs
-                        where row.UserId == userProperty.Id
-                        orderby row.TimeStamp descending
-                        select row).FirstOrDefault();
+            var query = (from row in dbContext.UserActivityLog
+                         where row.UserId == userProperty.Id
+                         orderby row.TimeStamp descending
+                         select row).FirstOrDefault();
 
             query.LogoutTime = userProperty.LogOut;
 
-            submitChanges();
+            SaveChanges();
         }
 
-        private void submitChanges()
+        private void SaveChanges()
         {
             try
             {
-                dbContext.SubmitChanges();
+                dbContext.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -83,16 +83,16 @@ namespace CommonLibraries.Models
 
         public void LogUserIN(ApplicationUser userProperty)
         {
-            dbUserLog userLog = new dbUserLog();
+            UserActivityLog userLog = new UserActivityLog();
 
             userLog.UserId = userProperty.Id;
             userLog.UserName = userProperty.Name;
             userLog.UserGroup = userProperty.Group.ToString();
             userLog.LoginTime = userProperty.LogIn;
             userLog.LogoutTime = DateTime.MaxValue;
-            dbContext.dbUserLogs.InsertOnSubmit(userLog);
+            dbContext.UserActivityLog.Add(userLog);
 
-            submitChanges();
+            SaveChanges();
         }
     }
 }

@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CommonLibraries.Model
+namespace CommonLibraries.Models
 {
     using System;
    
-    public partial class dbUserLog
+    public partial class UserActivityLog
     {
         public byte[] TimeStamp { get; set; }
         public int Id { get; set; }
@@ -20,6 +20,6 @@ namespace CommonLibraries.Model
         public string UserGroup { get; set; }
         public DateTime? LoginTime { get; set; }
         public DateTime? LogoutTime { get; set; }
-        public virtual dbUser dbUser { get; set; }
+        public virtual User dbUser { get; set; }
     }
 }

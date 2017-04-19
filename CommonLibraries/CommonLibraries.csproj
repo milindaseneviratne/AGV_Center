@@ -65,21 +65,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Database\sqlDataContext.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>sqlDataContext.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Database\sqlDbContextEF.cs" />
     <Compile Include="Enumerations\UserGroups.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\agvStationTestFlow.cs" />
+    <Compile Include="Models\dbModels\agvStationTestFlow.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\dbApplicationErrorLog.cs" />
-    <Compile Include="Models\dbUser.cs" />
-    <Compile Include="Models\dbUserLog.cs" />
+    <Compile Include="Models\dbModels\ApplicationErrorLog.cs" />
+    <Compile Include="Models\dbModels\User.cs" />
+    <Compile Include="Models\dbModels\UserActivityLog.cs" />
     <Compile Include="Models\ErrorLogger.cs" />
     <Compile Include="Models\SQLCommunicator.cs" />
     <Compile Include="Models\StateObject.cs" />
@@ -95,11 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Database\sqlDataContext.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>sqlDataContext.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -109,11 +99,6 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Database\sqlDataContext.dbml.layout">
-      <DependentUpon>sqlDataContext.dbml</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\MessageBox.xaml">

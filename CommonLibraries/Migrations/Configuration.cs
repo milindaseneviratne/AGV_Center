@@ -1,5 +1,6 @@
 namespace CommonLibraries.Migrations
 {
+    using Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -10,22 +11,24 @@ namespace CommonLibraries.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(CommonLibraries.Database.sqlDbContextEF context)
         {
-            //  This method will be called after migrating to the latest version.
+            //This method will be called after migrating to the latest version.
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            //You can use the DbSet<T>.AddOrUpdate() helper extension method
+            //to avoid creating duplicate seed data.E.g.
+
+              context.User.AddOrUpdate(
+                u => u.Name,
+                new User { Name = "Milinda", Password = "qwerty", Group = "Administrator" },
+                new User { Name = "Jeffery", Password = "qwerty", Group = "Administrator" },
+                new User { Name = "MIS", Password = "1234", Group = "User" },
+                new User { Name = "OP", Password = string.Empty, Group = "User" }
+              );
+
         }
     }
 }

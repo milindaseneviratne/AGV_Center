@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CommonLibraries.Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AGV_Control_Center.dbo.agvStationTestFlow' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="agvStationTestFlow">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Zone" Type="nvarchar" MaxLength="255" />
+          <Property Name="Station_Location" Type="nvarchar" MaxLength="8" />
+          <Property Name="Station_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Dest_Station" Type="nvarchar" MaxLength="50" />
+          <Property Name="Idle_Area" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="dbApplicationErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HelpLink" Type="varchar(max)" />
+          <Property Name="Message" Type="varchar(max)" />
+          <Property Name="Source" Type="varchar(max)" />
+          <Property Name="StackTrace" Type="varchar(max)" />
+          <Property Name="HashCode" Type="varchar(max)" />
+          <Property Name="Dump" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="dbUserLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserGroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LoginTime" Type="datetime2" Precision="7" />
+          <Property Name="LogoutTime" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="dbUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Group" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__dbUserLog__UserI__2B3F6F97">
+          <End Role="dbUsers" Type="Self.dbUsers" Multiplicity="1" />
+          <End Role="dbUserLog" Type="Self.dbUserLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dbUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="dbUserLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CommonLibrariesModelsStoreContainer">
+          <EntitySet Name="dbApplicationErrorLog" EntityType="Self.dbApplicationErrorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbUserLog" EntityType="Self.dbUserLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbUsers" EntityType="Self.dbUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="agvStationTestFlow" EntityType="Self.agvStationTestFlow" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [agvStationTestFlow].[Id] AS [Id], 
+    [agvStationTestFlow].[Zone] AS [Zone], 
+    [agvStationTestFlow].[Station_Location] AS [Station_Location], 
+    [agvStationTestFlow].[Station_Name] AS [Station_Name], 
+    [agvStationTestFlow].[Dest_Station] AS [Dest_Station], 
+    [agvStationTestFlow].[Idle_Area] AS [Idle_Area], 
+    [agvStationTestFlow].[Remark] AS [Remark]
+    FROM [dbo].[agvStationTestFlow] AS [agvStationTestFlow]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__dbUserLog__UserI__2B3F6F97" Association="Self.FK__dbUserLog__UserI__2B3F6F97">
+            <End Role="dbUsers" EntitySet="dbUsers" />
+            <End Role="dbUserLog" EntitySet="dbUserLog" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CommonLibraries.Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="dbApplicationErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HelpLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Source" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StackTrace" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="HashCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Dump" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="dbUserLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LoginTime" Type="DateTime" Precision="7" />
+          <Property Name="LogoutTime" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="dbUser" Relationship="Self.FK__dbUserLog__UserI__2B3F6F97" FromRole="dbUserLog" ToRole="dbUsers" />
+        </EntityType>
+        <EntityType Name="dbUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="dbUserLogs" Relationship="Self.FK__dbUserLog__UserI__2B3F6F97" FromRole="dbUsers" ToRole="dbUserLog" />
+        </EntityType>
+        <EntityType Name="agvStationTestFlow">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Zone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Station_Location" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Station_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Dest_Station" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Idle_Area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__dbUserLog__UserI__2B3F6F97">
+          <End Role="dbUsers" Type="Self.dbUser" Multiplicity="1" />
+          <End Role="dbUserLog" Type="Self.dbUserLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dbUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="dbUserLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="dbApplicationErrorLogs" EntityType="Self.dbApplicationErrorLog" />
+          <EntitySet Name="dbUserLogs" EntityType="Self.dbUserLog" />
+          <EntitySet Name="dbUsers" EntityType="Self.dbUser" />
+          <EntitySet Name="agvStationTestFlows" EntityType="Self.agvStationTestFlow" />
+          <AssociationSet Name="FK__dbUserLog__UserI__2B3F6F97" Association="Self.FK__dbUserLog__UserI__2B3F6F97">
+            <End Role="dbUsers" EntitySet="dbUsers" />
+            <End Role="dbUserLog" EntitySet="dbUserLogs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CommonLibrariesModelsStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="dbApplicationErrorLogs">
+            <EntityTypeMapping TypeName="CommonLibraries.Models.dbApplicationErrorLog">
+              <MappingFragment StoreEntitySet="dbApplicationErrorLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="HelpLink" ColumnName="HelpLink" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
+                <ScalarProperty Name="HashCode" ColumnName="HashCode" />
+                <ScalarProperty Name="Dump" ColumnName="Dump" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbUserLogs">
+            <EntityTypeMapping TypeName="CommonLibraries.Models.dbUserLog">
+              <MappingFragment StoreEntitySet="dbUserLog">
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserGroup" ColumnName="UserGroup" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+                <ScalarProperty Name="LogoutTime" ColumnName="LogoutTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbUsers">
+            <EntityTypeMapping TypeName="CommonLibraries.Models.dbUser">
+              <MappingFragment StoreEntitySet="dbUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Group" ColumnName="Group" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="agvStationTestFlows">
+            <EntityTypeMapping TypeName="CommonLibraries.Models.agvStationTestFlow">
+              <MappingFragment StoreEntitySet="agvStationTestFlow">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Zone" ColumnName="Zone" />
+                <ScalarProperty Name="Station_Location" ColumnName="Station_Location" />
+                <ScalarProperty Name="Station_Name" ColumnName="Station_Name" />
+                <ScalarProperty Name="Dest_Station" ColumnName="Dest_Station" />
+                <ScalarProperty Name="Idle_Area" ColumnName="Idle_Area" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

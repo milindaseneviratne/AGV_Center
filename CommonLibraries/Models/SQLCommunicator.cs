@@ -50,7 +50,7 @@ namespace CommonLibraries.Models
             dbAppErrorLog.Source = ex.Source;
             dbAppErrorLog.StackTrace = ex.StackTrace;
 
-            dbContext.dbApplicationErrorLogs.InsertOnSubmit(dbAppErrorLog);
+            //dbContext.dbApplicationErrorLogs.InsertOnSubmit(dbAppErrorLog);
 
             submitChanges();
 

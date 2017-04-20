@@ -1,4 +1,3 @@
-
 namespace CommonLibraries.Models
 {
     public class ApplicationErrorLog

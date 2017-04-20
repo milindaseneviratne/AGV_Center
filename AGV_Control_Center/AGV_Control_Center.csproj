@@ -107,7 +107,7 @@
     <Compile Include="ViewModels\ApplicationShellViewModel.cs" />
     <Compile Include="ViewModels\CommandServerViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\SubmitCommandViewModel.cs" />
+    <Compile Include="ViewModels\CommandClientViewModel.cs" />
     <Compile Include="Views\AGV_Control_Center_Home.xaml.cs">
       <DependentUpon>AGV_Control_Center_Home.xaml</DependentUpon>
     </Compile>
@@ -123,8 +123,8 @@
     <Compile Include="Views\CommandServer.xaml.cs">
       <DependentUpon>CommandServer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SubmitCommand.xaml.cs">
-      <DependentUpon>SubmitCommand.xaml</DependentUpon>
+    <Compile Include="Views\CommandClient.xaml.cs">
+      <DependentUpon>CommandClient.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\AGV_Control_Center_Home.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -165,7 +165,7 @@
       <DependentUpon>About.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\SubmitCommand.xaml">
+    <Page Include="Views\CommandClient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

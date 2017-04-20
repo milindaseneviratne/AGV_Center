@@ -17,9 +17,9 @@ namespace AGV_Control_Center.Views
     /// <summary>
     /// Interaction logic for SubmitCommand.xaml
     /// </summary>
-    public partial class SubmitCommand : UserControl
+    public partial class CommandClient : UserControl
     {
-        public SubmitCommand()
+        public CommandClient()
         {
             InitializeComponent();
         }

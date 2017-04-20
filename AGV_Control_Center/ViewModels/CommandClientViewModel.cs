@@ -15,12 +15,10 @@ using Socket_Client.Models;
 
 namespace AGV_Control_Center.ViewModels
 {
-    class SubmitCommandViewModel : BindableBase, INavigationAware, IRegionMemberLifetime
+    class CommandClientViewModel : BindableBase, INavigationAware, IRegionMemberLifetime
     {
         private readonly RegionManager _regionManager;
         private readonly EventAggregator _eventAggregator;
-
-        //private AsynchonousClient asyncClient = new AsynchonousClient();
 
         private ApplicationUser user;
 
@@ -64,12 +62,11 @@ namespace AGV_Control_Center.ViewModels
             set { SetProperty( ref communicationsList, value); }
         }
 
-        public SubmitCommandViewModel(RegionManager regionManager, EventAggregator eventAggregator)
+        public CommandClientViewModel(RegionManager regionManager, EventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
 
-            //_eventAggregator.GetEvent<UserCredentialsDTO>().Subscribe(LoadUserCredentials);
             SendCommand = new DelegateCommand(exSendCmd, canSendCmd).ObservesProperty(() => UserProperty);
             SendQrCode = new DelegateCommand(exSendQrCodeCmd, canSendQrCodeCmd).ObservesProperty(() => QrCode);
         }

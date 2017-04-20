@@ -125,12 +125,12 @@ namespace AGV_Control_Center.ViewModels
 
             if (UserProperty.Group == UserGroups.Operator)
             {
-                _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, ViewNames.SubmitCommand);
+                _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, ViewNames.CommandClient);
             }
 
             if (UserProperty.Group == UserGroups.User)
             {
-                _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, ViewNames.SubmitCommand);
+                _regionManager.RequestNavigate(RegionNames.PrimaryContentRegion, ViewNames.CommandClient);
             }
         }
 

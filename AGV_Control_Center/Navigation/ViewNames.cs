@@ -19,11 +19,11 @@ namespace AGV_Control_Center.Navigation
             }
         }
 
-        public static string SubmitCommand
+        public static string CommandClient
         {
             get
             {
-                return typeof(SubmitCommand).Name;
+                return typeof(CommandClient).Name;
             }
         }
 

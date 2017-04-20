@@ -22,7 +22,7 @@ namespace Socket_Client.Models
         private static string response = string.Empty;
         public static Socket client = null;
 
-        public static string SendRecTCPCommand(string data, string serverName)
+        public string SendRecTCPCommand(string data, string serverName, int port = 11000)
         {
             ConnectToServer(serverName);
 
@@ -36,7 +36,7 @@ namespace Socket_Client.Models
 
             return response;
         }
-        private static void ConnectToServer(string server)
+        private static void ConnectToServer(string server, int port = 11000)
         {
             try
             {

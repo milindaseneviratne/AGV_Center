@@ -1,4 +1,5 @@
 ﻿using CommonLibraries.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using Socket_Server.Models;
@@ -13,9 +14,6 @@ namespace AGV_Control_Center.ViewModels
 {
     public class CommandServerViewModel : BindableBase, IRegionMemberLifetime, INavigationAware
     {
-        //private static AsynchonousSocketListner asyncListner = new AsynchonousSocketListner();
-
-        //private Action startSeerver = new Action(AsynchonousSocketListner.StartListning);
 
         public bool KeepAlive
         {
@@ -24,6 +22,7 @@ namespace AGV_Control_Center.ViewModels
                 return true;
             }
         }
+
         private ApplicationUser user;
 
         public ApplicationUser UserProperty
@@ -32,22 +31,36 @@ namespace AGV_Control_Center.ViewModels
             set { SetProperty(ref user, value); }
         }
 
-        private void InitializeServer()
+        public DelegateCommand StartServerCommand { get; set; }
+        public CommandServerViewModel()
         {
-            //startSeerver.BeginInvoke();
+            StartServerCommand = new DelegateCommand(exStartServerCmd, canExStartServerCmd).ObservesProperty(() => UserProperty);
+        }
+
+        private void exStartServerCmd()
+        {
+            InitializeServer();
+        }
+
+        private bool canExStartServerCmd()
+        {
             if (AsynchonousSocketListner.listner == null)
             {
-                Thread listnerThread = new Thread(AsynchonousSocketListner.StartListning);
-                listnerThread.SetApartmentState(ApartmentState.STA);
-                listnerThread.Start();
+                return true;
             }
+            return false;
+        }
+
+        private void InitializeServer()
+        {
+            Thread listnerThread = new Thread(AsynchonousSocketListner.StartListning);
+            listnerThread.SetApartmentState(ApartmentState.STA);
+            listnerThread.Start();
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             UserProperty = (ApplicationUser)navigationContext.Parameters[typeof(ApplicationUser).Name] ?? UserProperty;
-
-            InitializeServer();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

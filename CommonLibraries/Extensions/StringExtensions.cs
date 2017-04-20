@@ -24,5 +24,24 @@ namespace CommonLibraries.Extensions
 
             return temp;
         }
+
+        public static string RemoveEOF(this string inputString)
+        {
+            return inputString.Replace("<EOF>", "");
+        }
+        public static string AddEOF(this string inputString)
+        {
+            return inputString + "<EOF>";
+        }
+
+        public static string Validate(this string inputString)
+        {
+            if (inputString.Contains("OK"))
+            {
+                return "OK";
+            }
+
+            return "ERROR";
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommonLibraries.Database;
 using CommonLibraries.Extensions;
+using CommonLibraries.Models.dbModels;
 
 namespace CommonLibraries.Models
 {
@@ -35,6 +36,15 @@ namespace CommonLibraries.Models
             SaveChanges();
 
             return successFlag;
+        }
+
+        public string GetDestination(Barcode barcode)
+        {
+            var result = dbContext.AgvStationTestFlow
+                                  .Where(row => row.Station_Name == barcode.Station)
+                                  .FirstOrDefault()
+                                  .Dest_Station;
+            return result;
         }
 
         public bool InsertExceptionInformation(Exception ex)
@@ -91,6 +101,13 @@ namespace CommonLibraries.Models
             userLog.LoginTime = userProperty.LogIn;
             userLog.LogoutTime = DateTime.MaxValue;
             dbContext.UserActivityLog.Add(userLog);
+
+            SaveChanges();
+        }
+
+        public void LogServerClientCommunications(ServerClientCommunicationLog log)
+        {
+            dbContext.CommunicationLog.Add(log);
 
             SaveChanges();
         }

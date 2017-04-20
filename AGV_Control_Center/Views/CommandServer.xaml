@@ -11,6 +11,9 @@
                 mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Label x:Name="label" Content="This is the SERVER UI: under construction" HorizontalAlignment="Left" Margin="95,135,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label" Content="Click the start button to start listening Server" HorizontalAlignment="Left" Margin="41,144,0,0" VerticalAlignment="Top" FontSize="12"/>
+        <Button x:Name="button_StartServer" Command="{Binding StartServerCommand, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="211,215,0,0" VerticalAlignment="Top" Width="75" Height="75" BorderThickness="0">
+            <Image Source="/AGV_Control_Center;component/Resources/Pass.png" Style="{StaticResource ImageOpacity}" ToolTip="Start Server"/>
+        </Button>
     </Grid>
 </UserControl>

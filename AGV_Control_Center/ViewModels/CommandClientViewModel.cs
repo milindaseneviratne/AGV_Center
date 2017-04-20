@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommonLibraries.Enumerations;
 using CommonLibraries.Models;
+using CommonLibraries.Models.dbModels;
 using System.Collections.ObjectModel;
 using Socket_Client.Models;
 
@@ -19,7 +20,10 @@ namespace AGV_Control_Center.ViewModels
     {
         private readonly RegionManager _regionManager;
         private readonly EventAggregator _eventAggregator;
+        private AsynchonousClient client = new AsynchonousClient();
+        private CommunicationLogger sqlLogger = new CommunicationLogger();
 
+        //private CommunicationLogger
         private ApplicationUser user;
 
         public ApplicationUser UserProperty
@@ -85,10 +89,14 @@ namespace AGV_Control_Center.ViewModels
 
         private void exSendQrCodeCmd()
         {
-            CommunicationsList.Insert(0,"Sent to Server ---->" + QrCode);
-            string rxCommand = AsynchonousClient.SendRecTCPCommand(QrCode,"C8810");
-            CommunicationsList.Insert(0,"Recvd from Server <----" + rxCommand);
+
+            CommunicationsList.Insert(0, "Sent to Server ---->" + QrCode);
+            string rxCommand = client.SendRecTCPCommand(QrCode, "C8810");
+            CommunicationsList.Insert(0, "Recvd from Server <----" + rxCommand);
+            sqlLogger.LogServerClientCommunications(rxCommand, QrCode);
         }
+
+
 
         private bool canSendCmd()
         {

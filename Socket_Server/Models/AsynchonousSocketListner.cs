@@ -11,11 +11,10 @@ using System.Threading.Tasks;
 
 namespace Socket_Server.Models
 {
-    public static class AsynchonousSocketListner
+    public class AsynchonousSocketListner
     {
         public static ManualResetEvent allDone = new ManualResetEvent(false);
         public static Socket listner = null;
-
         public static void StartListning()
         {
             byte[] bytes = new byte[1024];
@@ -77,6 +76,16 @@ namespace Socket_Server.Models
                 if (content.IndexOf("<EOF>") > -1)
                 {
                     // finished recieving. What should I do now?
+                    bool success = VCSCommunicator.SendCommand(BarcodeDecoder.GetBarcode(content.RemoveEOF()));
+
+                    if (success)
+                    {
+                        content = (content.RemoveEOF() + " OK").AddEOF();
+                    }
+                    else
+                    {
+                        content = (content.RemoveEOF() + " ERROR").AddEOF();
+                    }
 
                     // Send ACK
                     Send(handler, content);

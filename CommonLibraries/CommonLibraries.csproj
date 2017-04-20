@@ -34,6 +34,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Communication">
+      <HintPath>..\..\..\..\..\..\..\Cal Comp\Milinda's Documents\My Projects\3D AGV\CarryBot\CommunacationWithVCS\DLL\Release\Communication.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -66,18 +69,25 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Database\sqlDbContextEF.cs" />
+    <Compile Include="Enumerations\BarcodesTypes.cs" />
     <Compile Include="Enumerations\UserGroups.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Barcode.cs" />
+    <Compile Include="Models\BarcodeDecoder.cs" />
+    <Compile Include="Models\CommunicationLogger.cs" />
     <Compile Include="Models\dbModels\agvStationTestFlow.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\dbModels\ApplicationErrorLog.cs" />
+    <Compile Include="Models\dbModels\CimVcsCommunicationLog.cs" />
+    <Compile Include="Models\dbModels\ServerClientCommunicationLog.cs" />
     <Compile Include="Models\dbModels\User.cs" />
     <Compile Include="Models\dbModels\UserActivityLog.cs" />
     <Compile Include="Models\ErrorLogger.cs" />
     <Compile Include="Models\SQLCommunicator.cs" />
     <Compile Include="Models\StateObject.cs" />
+    <Compile Include="Models\VCSCommunicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

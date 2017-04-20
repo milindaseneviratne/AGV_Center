@@ -1,4 +1,5 @@
 ﻿using CommonLibraries.Models;
+using CommonLibraries.Models.dbModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,11 +15,13 @@ namespace CommonLibraries.Database
         public DbSet<ApplicationErrorLog> ApplicationErrorLog { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserActivityLog> UserActivityLog { get; set; }
+        public DbSet<ServerClientCommunicationLog> CommunicationLog { get; set; }
 
-
-
-        public sqlDbContextEF() : base("name=AGV_Control_Center")
+        //JefferySQLExpress
+        //MilindaSQLExpress
+        public sqlDbContextEF() : base("name=MilindaSQLExpress") 
         {
+            
         }
 
 

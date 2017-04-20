@@ -18,7 +18,6 @@ namespace CommonLibraries.Models
         {
             this.dbUserLogs = new ObservableCollection<UserActivityLog>();
         }
-    
         public int Id { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }

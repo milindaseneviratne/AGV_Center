@@ -89,7 +89,6 @@ namespace AGV_Control_Center.ViewModels
 
         private void exSendQrCodeCmd()
         {
-
             CommunicationsList.Insert(0, "Sent to Server ---->" + QrCode);
             string rxCommand = client.SendRecTCPCommand(QrCode, "C8810");
             CommunicationsList.Insert(0, "Recvd from Server <----" + rxCommand);

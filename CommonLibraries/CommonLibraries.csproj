@@ -77,8 +77,17 @@
     <Compile Include="Models\Barcode.cs" />
     <Compile Include="Models\BarcodeDecoder.cs" />
     <Compile Include="Models\CommunicationLogger.cs" />
+    <Compile Include="Models\dbModels\agvAGV_Info.cs" />
+    <Compile Include="Models\dbModels\agvCommand_Type_Info.cs" />
+    <Compile Include="Models\dbModels\agvConfig.cs" />
+    <Compile Include="Models\dbModels\agvModel_Info.cs" />
     <Compile Include="Models\dbModels\agvStationTestFlow.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\dbModels\agvStation_Info.cs" />
+    <Compile Include="Models\dbModels\agvStatus_Info.cs" />
+    <Compile Include="Models\dbModels\agvTable_Info.cs" />
+    <Compile Include="Models\dbModels\agvTask.cs" />
+    <Compile Include="Models\dbModels\agvZone_Info.cs" />
     <Compile Include="Models\dbModels\ApplicationErrorLog.cs" />
     <Compile Include="Models\dbModels\CimVcsCommunicationLog.cs" />
     <Compile Include="Models\dbModels\ServerClientCommunicationLog.cs" />

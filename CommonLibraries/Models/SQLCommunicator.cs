@@ -41,9 +41,9 @@ namespace CommonLibraries.Models
         public string GetDestination(Barcode barcode)
         {
             var result = dbContext.agvStationTestFlow
-                                  .Where(row => row.Current_Stations.FirstOrDefault().Name == barcode.Station)
+                                  .Where(row => row.Current_Station.Name == barcode.Station)
                                   .FirstOrDefault()
-                                  .Dest_Stations.FirstOrDefault().Name;
+                                  .Dest_Station.Name;
             return result;
         }
 

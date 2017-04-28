@@ -11,6 +11,7 @@ namespace CommonLibraries.Models
         public int Id { get; set; }
 
         [Required]
+        public int ZoneId { get; set; }
         public virtual agvZone_Info Zone { get; set; }
 
         [Required]
@@ -31,12 +32,13 @@ namespace CommonLibraries.Models
 
         [StringLength(maximumLength: 250, MinimumLength = 1)]
         public string Idle_Area { get; set; }
-        [StringLength(maximumLength: 250, MinimumLength = 1)]
-        public string Arg1 { get; set; }
-        [StringLength(maximumLength: 250, MinimumLength = 1)]
-        public string Arg2 { get; set; }
-        [StringLength(maximumLength: 250, MinimumLength = 1)]
-        public string Arg3 { get; set; }
+
+        //[StringLength(maximumLength: 250, MinimumLength = 1)]
+        //public string Arg1 { get; set; }
+        //[StringLength(maximumLength: 250, MinimumLength = 1)]
+        //public string Arg2 { get; set; }
+        //[StringLength(maximumLength: 250, MinimumLength = 1)]
+        //public string Arg3 { get; set; }
         public DateTime UpdateTime { get; set; }
         [StringLength(maximumLength: 250, MinimumLength = 0)]
         public string Remark { get; set; }

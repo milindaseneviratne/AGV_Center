@@ -15,8 +15,9 @@ namespace CommonLibraries.Models.dbModels
         public string Name { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 250, MinimumLength = 1)]
-        public string Zone { get; set; }
+        //[StringLength(maximumLength: 250, MinimumLength = 1)]
+        public int ZoneId { get; set; }
+        public agvZone_Info Zone { get; set; }
 
         [Required]
         public int ModelId { get; set; }

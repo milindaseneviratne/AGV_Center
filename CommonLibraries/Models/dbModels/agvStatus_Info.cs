@@ -8,11 +8,11 @@ namespace CommonLibraries.Models
         public int Id { get; set; }
         [StringLength(maximumLength: 250, MinimumLength = 1)]
         public string Status { get; set; }
-        [StringLength(maximumLength: 250, MinimumLength = 1)]
+        [StringLength(maximumLength: 250, MinimumLength = 0)]
         public string Arg1 { get; set; }
-        [StringLength(maximumLength: 250, MinimumLength = 1)]
+        [StringLength(maximumLength: 250, MinimumLength = 0)]
         public string Arg2 { get; set; }
-        [StringLength(maximumLength: 250, MinimumLength = 1)]
+        [StringLength(maximumLength: 250, MinimumLength = 0)]
         public string Arg3 { get; set; }
         [StringLength(maximumLength: 250, MinimumLength = 0)]
         public string Remark { get; set; }

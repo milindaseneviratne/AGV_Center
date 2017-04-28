@@ -10,6 +10,8 @@ namespace CommonLibraries.Models
         [StringLength(maximumLength: 250, MinimumLength = 1)]
         public string Byte { get; set; }
         [StringLength(maximumLength: 250, MinimumLength = 1)]
+        public string Type { get; set; }
+        [StringLength(maximumLength: 250, MinimumLength = 1)]
         public string Argument { get; set; }
         [StringLength(maximumLength: 250, MinimumLength = 1)]
         public string DataSource { get; set; }

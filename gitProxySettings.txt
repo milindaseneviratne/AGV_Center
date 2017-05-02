@@ -26,3 +26,6 @@ to reset git proxy
 
 git config --global --unset http.proxy
 git config --global --unset https.proxy
+
+to set windows to remember your username and password
+git config --global credential.helper wincred

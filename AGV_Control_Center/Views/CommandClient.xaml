@@ -31,6 +31,11 @@
         <Label Grid.Row="0" x:Name="lblScanQRCode" Content="Scan QR Code:" Margin="0,22,485,0" VerticalAlignment="Top" Width="277" Height="50" FontSize="20" FontWeight="Bold" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="0" x:Name="txtErrorMessage" HorizontalAlignment="Left" Margin="320,85,0,0" TextWrapping="Wrap" Text="{Binding ErrorMessage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="55" Width="462" FontSize="20" FontStyle="Italic"/>
         <TextBox Grid.Row="0" x:Name="txtQrCode" Text="{Binding QrCode, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="48" Margin="320,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="462" FontSize="20"/>
+
+        <Button Grid.Row="0" x:Name="button_ConnectScanner" Command="{Binding ConnectScannerCommand}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Right" Margin="0,0,700,15"   VerticalAlignment="Bottom" Width="75" Height="75">
+            <Image Source="/AGV_Control_Center;component/Resources/Pass.png" Style="{StaticResource ImageOpacity}" ToolTip="Station Pass"/>
+        </Button>
+
         <Button x:Name="button_Rotate90" Command="{Binding SendCommand, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpecialButtonStyle}" HorizontalAlignment="Left" Margin="465,41,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="75" BorderThickness="0">
             <Image Source="/AGV_Control_Center;component/Resources/Rotate90.png" Style="{StaticResource ImageOpacity}" ToolTip="Rorate +90"/>
         </Button>

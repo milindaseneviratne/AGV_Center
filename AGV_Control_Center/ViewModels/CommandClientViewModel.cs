@@ -22,7 +22,7 @@ namespace AGV_Control_Center.ViewModels
         private readonly EventAggregator _eventAggregator;
         private AsynchonousClient client = new AsynchonousClient();
         private CommunicationLogger sqlLogger = new CommunicationLogger();
-
+        private SerialCommunicator serialCom = new SerialCommunicator();
         //private CommunicationLogger
         private ApplicationUser user;
 
@@ -41,6 +41,7 @@ namespace AGV_Control_Center.ViewModels
         }
 
         public DelegateCommand SendCommand { get; set; }
+        public DelegateCommand ConnectScannerCommand { get; set; }
         public DelegateCommand SendQrCode { get; set; }
         private string qrCode;
 
@@ -73,6 +74,12 @@ namespace AGV_Control_Center.ViewModels
 
             SendCommand = new DelegateCommand(exSendCmd, canSendCmd).ObservesProperty(() => UserProperty);
             SendQrCode = new DelegateCommand(exSendQrCodeCmd, canSendQrCodeCmd).ObservesProperty(() => QrCode);
+            ConnectScannerCommand = new DelegateCommand(exConnectToScanner);
+        }
+
+        private void exConnectToScanner()
+        {
+            serialCom.AttemptConnectionToPort();
         }
 
         private bool canSendQrCodeCmd()

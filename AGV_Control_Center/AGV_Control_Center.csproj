@@ -199,10 +199,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AGV_CIMCenter\AGV_CIMCenter.csproj">
-      <Project>{275E234F-827B-4E0D-B93E-B59D8E979AFF}</Project>
-      <Name>AGV_CIMCenter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CommonLibraries\CommonLibraries.csproj">
       <Project>{f8cb639f-33f4-4e57-9435-b4e6222c0361}</Project>
       <Name>CommonLibraries</Name>

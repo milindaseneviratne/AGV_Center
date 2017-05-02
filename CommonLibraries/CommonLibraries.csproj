@@ -55,6 +55,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xaml" />
@@ -93,7 +94,9 @@
     <Compile Include="Models\dbModels\ServerClientCommunicationLog.cs" />
     <Compile Include="Models\dbModels\User.cs" />
     <Compile Include="Models\dbModels\UserActivityLog.cs" />
+    <Compile Include="Models\Device.cs" />
     <Compile Include="Models\ErrorLogger.cs" />
+    <Compile Include="Models\SerialCommunicator.cs" />
     <Compile Include="Models\SQLCommunicator.cs" />
     <Compile Include="Models\StateObject.cs" />
     <Compile Include="Models\VCSCommunicator.cs" />

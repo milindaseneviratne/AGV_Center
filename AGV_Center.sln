@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Socket_Server", "Socket_Server\Socket_Server.csproj", "{9A4763D2-83BB-44FF-B078-6D1FC73FCB40}"
 EndProject
@@ -12,6 +12,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLibraries", "CommonLibraries\CommonLibraries.csproj", "{F8CB639F-33F4-4E57-9435-B4E6222C0361}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGV_Control_Center", "AGV_Control_Center\AGV_Control_Center.csproj", "{59EF6AD3-83EC-4291-8205-D2FED186443B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2B163A96-7A22-4E59-89C9-E4F6207B276C}"
+	ProjectSection(SolutionItems) = preProject
+		gitProxySettings.txt = gitProxySettings.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,8 @@
+git config --global http.proxy http://proxyuser:proxypwd@proxy.server.com:8080
+
+git config --global https.proxy https://DLMT01\lb570247:!qaz1234512345d@lm8isa03:8080
+
+
+[https]
+	
+proxy = https://DLMT01\\lb570247:!qaz1234512345d@lm8isa03:8080

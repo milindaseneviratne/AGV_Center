@@ -1,31 +1,29 @@
-git config --global http.proxy http://proxyuser:proxypwd@proxy.server.com:8080
+This is the syntax to add a proxy to github.	
+	git config --global http.proxy http://proxyuser:proxypwd@proxy.server.com:8080
 
-set https proxy
-git config --global https.proxy https://DLMT01\lb570247:!qaz1234512345@lm8isa03:8080
+Set https proxy (This is the setting that worked for me)
+	git config --global https.proxy https://DLMT01\lb570247:!qaz1234512345@lm8isa03:8080
+	git config --global https.proxy https://(DOMAIN)\USERID:PWD@PROXY:PORT
 
-set http proxy
-git config --global http.proxy http://DLMT01\lb570247:!qaz1234512345@lm8isa03:8080
-git config --global http.proxy http[s]://DLMT01\lb570247:!qaz1234512345@lm8isa03:8080
+Set http proxy
+	git config --global http.proxy http://DLMT01\lb570247:!qaz1234512345@lm8isa03:8080
+	git config --global http.proxy http[s]://DLMT01\lb570247:!qaz1234512345@lm8isa03:8080
 
-git config --global http.proxy http[s]://userName:password(encoded)@proxyaddress:port
+	git config --global http.proxy http[s]://userName:password(encoded)@proxyaddress:port
 
+This should be in the global gitconfig file. It is located in %USERPROFILE% \ .gitconfig
+	[https]
+	proxy = https://DLMT01\lb570247:!qaz1234512345d@lm8isa03:8080
 
-[https]
-	
-proxy = https://DLMT01\\lb570247:!qaz1234512345d@lm8isa03:8080
+	[http]
+	proxy = http://DLMT01\lb570247:!qaz1234512345@lm8isa03:8080
 
+To view the global settings
+	git config -1 --global
 
-[http]
-	
-proxy = http://DLMT01\\lb570247:!qaz1234512345@lm8isa03:8080
+To reset git proxy
+	git config --global --unset http.proxy
+	git config --global --unset https.proxy
 
-to view the global settings
-git config -1 --global
-
-to reset git proxy
-
-git config --global --unset http.proxy
-git config --global --unset https.proxy
-
-to set windows to remember your username and password
-git config --global credential.helper wincred
+To set windows to remember your username and password
+	git config --global credential.helper wincred

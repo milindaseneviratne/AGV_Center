@@ -19,11 +19,11 @@ namespace CommonLibraries.Models
         {
             ScannedString = scannedString;
 
-            if (ScannedString.Contains("TableMove"))
+            if (ScannedString.Contains("OK"))
             {
-                barcode.Comand = ScannedString;
-                barcode.Station = ScannedString.Split('@').ToList().LastOrDefault();
-                barcode.Type = BarcodesTypes.TableMove;
+                barcode.Comand = ScannedString.Split('@').ToList().LastOrDefault();
+                barcode.Station = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().LastOrDefault();
+                barcode.Group = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().FirstOrDefault().TrimStart('*');
 
                 barcode.Destination = sqlCommunicator.GetDestination(barcode);
             }

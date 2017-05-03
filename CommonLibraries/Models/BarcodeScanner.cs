@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace CommonLibraries.Models
 {
-    public class Device
+    public class BarcodeScanner
     {
-        public string Name { get; set; }
+        public string Description { get; set; }
         public string DriverName { get; set; }
         public string COMPortName { get; internal set; }
+        public Dictionary<string, string> Properties { get; internal set; }
     }
 }

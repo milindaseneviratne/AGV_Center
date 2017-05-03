@@ -94,7 +94,7 @@
     <Compile Include="Models\dbModels\ServerClientCommunicationLog.cs" />
     <Compile Include="Models\dbModels\User.cs" />
     <Compile Include="Models\dbModels\UserActivityLog.cs" />
-    <Compile Include="Models\Device.cs" />
+    <Compile Include="Models\BarcodeScanner.cs" />
     <Compile Include="Models\ErrorLogger.cs" />
     <Compile Include="Models\SerialCommunicator.cs" />
     <Compile Include="Models\SQLCommunicator.cs" />

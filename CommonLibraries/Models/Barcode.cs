@@ -13,6 +13,6 @@ namespace CommonLibraries.Models
         public string Station { get; set; }
         public string Destination { get; set; }
         public BarcodesTypes Type { get; set; }
-
+        public string Group { get; internal set; }
     }
 }

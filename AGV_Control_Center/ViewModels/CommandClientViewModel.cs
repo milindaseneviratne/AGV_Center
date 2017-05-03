@@ -13,6 +13,7 @@ using CommonLibraries.Models;
 using CommonLibraries.Models.dbModels;
 using System.Collections.ObjectModel;
 using Socket_Client.Models;
+using System.Threading;
 
 namespace AGV_Control_Center.ViewModels
 {
@@ -23,6 +24,8 @@ namespace AGV_Control_Center.ViewModels
         private AsynchonousClient client = new AsynchonousClient();
         private CommunicationLogger sqlLogger = new CommunicationLogger();
         private SerialCommunicator serialCom = new SerialCommunicator();
+        private CancellationTokenSource cts = new CancellationTokenSource();
+
         //private CommunicationLogger
         private ApplicationUser user;
 
@@ -67,6 +70,9 @@ namespace AGV_Control_Center.ViewModels
             set { SetProperty( ref communicationsList, value); }
         }
 
+        public string scannedBarcode { get; set; }
+        public string rxCommand { get; set; }
+
         public CommandClientViewModel(RegionManager regionManager, EventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
@@ -79,7 +85,27 @@ namespace AGV_Control_Center.ViewModels
 
         private void exConnectToScanner()
         {
-            serialCom.AttemptConnectionToPort();
+            if(serialCom.AttemptConnectionToScanner())
+            {
+                //Scnner detected and can connect.               
+                Task.Run(()=>Startprocess());
+            }
+        }
+
+        private async Task Startprocess()
+        {
+            while (true)
+            {
+                scannedBarcode = await serialCom.GetScannedBarcode(cts.Token);
+
+                if (!string.IsNullOrWhiteSpace(scannedBarcode))
+                {
+                    //CommunicationsList.Insert(0, "Sent to Server ---->" + scannedBarcode);
+                    rxCommand = client.SendRecTCPCommand(scannedBarcode + "<EOF>", "C8810");
+                    //CommunicationsList.Insert(0, "Recvd from Server <----" + rxCommand);
+                    sqlLogger.LogServerClientCommunications(rxCommand, scannedBarcode);
+                }
+            }
         }
 
         private bool canSendQrCodeCmd()
@@ -97,7 +123,7 @@ namespace AGV_Control_Center.ViewModels
         private void exSendQrCodeCmd()
         {
             CommunicationsList.Insert(0, "Sent to Server ---->" + QrCode);
-            string rxCommand = client.SendRecTCPCommand(QrCode, "C8810");
+            rxCommand = client.SendRecTCPCommand(QrCode, "C8810");
             CommunicationsList.Insert(0, "Recvd from Server <----" + rxCommand);
             sqlLogger.LogServerClientCommunications(rxCommand, QrCode);
         }

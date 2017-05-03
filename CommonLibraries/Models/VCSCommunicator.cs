@@ -20,7 +20,14 @@ namespace CommonLibraries.Models
                 IPAddress IP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(addresses => addresses.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
 
                 Client = new CommunicationClient(IP.ToString(), vcsPort);
-                byte[] message = Encoding.ASCII.GetBytes(barcode.Comand + barcode.Destination);
+                byte[] messageRAW = Encoding.ASCII.GetBytes(barcode.Comand + barcode.Destination);
+
+                byte[] message = new byte[4];
+                message[0] = messageRAW[0];
+                message[1] = messageRAW[1];
+                message[2] = messageRAW[2];
+                message[3] = messageRAW[3];
+
                 Communication.Communication.IPandMessage messagetoSend = new Communication.Communication.IPandMessage(IP, message);
                 Client.sendMessage(messagetoSend);
                 return true;

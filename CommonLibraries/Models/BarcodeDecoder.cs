@@ -19,13 +19,13 @@ namespace CommonLibraries.Models
         {
             ScannedString = scannedString;
 
-            if (ScannedString.Contains("OK"))
+            if (ScannedString.Contains("OK") || ScannedString.Contains("Inital"))
             {
-                barcode.Comand = ScannedString.Split('@').ToList().LastOrDefault();
                 barcode.Station = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().LastOrDefault();
                 barcode.Group = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().FirstOrDefault().TrimStart('*');
-
+                barcode.Status = ScannedString.Split('@').ToList().LastOrDefault();
                 barcode.Destination = sqlCommunicator.GetDestination(barcode);
+                barcode.Comand = sqlCommunicator.GetCommandType(barcode);
             }
 
             return barcode;

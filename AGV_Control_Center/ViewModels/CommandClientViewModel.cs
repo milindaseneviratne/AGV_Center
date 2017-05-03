@@ -85,11 +85,7 @@ namespace AGV_Control_Center.ViewModels
 
         private void exConnectToScanner()
         {
-            if(serialCom.AttemptConnectionToScanner())
-            {
-                //Scnner detected and can connect.               
-                Task.Run(()=>Startprocess());
-            }
+            
         }
 
         private async Task Startprocess()
@@ -100,9 +96,9 @@ namespace AGV_Control_Center.ViewModels
 
                 if (!string.IsNullOrWhiteSpace(scannedBarcode))
                 {
-                    //CommunicationsList.Insert(0, "Sent to Server ---->" + scannedBarcode);
+                    CommunicationsList.Insert(0, "Sent to Server ---->" + scannedBarcode);
                     rxCommand = client.SendRecTCPCommand(scannedBarcode + "<EOF>", "C8810");
-                    //CommunicationsList.Insert(0, "Recvd from Server <----" + rxCommand);
+                    CommunicationsList.Insert(0, "Recvd from Server <----" + rxCommand);
                     sqlLogger.LogServerClientCommunications(rxCommand, scannedBarcode);
                 }
             }
@@ -156,6 +152,15 @@ namespace AGV_Control_Center.ViewModels
         {
             UserProperty = (ApplicationUser)navigationContext.Parameters[typeof(ApplicationUser).Name] ?? UserProperty;
             InitializeUI();
+            InitializeBarcodeScanner();
+        }
+
+        private async Task InitializeBarcodeScanner()
+        {
+            if (serialCom.AttemptConnectionToScanner())
+            {
+                await Startprocess();
+            }
         }
 
         private void InitializeUI()

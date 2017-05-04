@@ -14,8 +14,7 @@ namespace CommonLibraries.Models
     public class SerialCommunicator
     {
         public static SerialPort SerialPortObj = new SerialPort();
-        private BarcodeScanner BarcodeScanner { get; set; }
-
+        private SQLCommunicator sqlComm = new SQLCommunicator();
         //Added By Milinda, Universal function to Open the Serial port.
         public static bool OpenSerialPort(string PortName)
         {
@@ -53,49 +52,27 @@ namespace CommonLibraries.Models
             return SerialPortObj.IsOpen;
         }
 
-        public BarcodeScanner FindBarcodeScanner()
+        public BarcodeScanner FindBarcodeScanner(BarcodeScannerConfig scannerConfig)
         {
+            BarcodeScanner barcodeScanner = null;
+
+            
             try
             {
                 //SELECT * FROM Win32_PnPEntity - can get the scanner but cant Find the XYZ Printers.
                 //SELECT * FROM WIN32_SerialPort - can find serialPort devices but not devices that are connected using the USB CDC/ACM driver for windows.
                 //Barcode scanner DeviceID: USBCDCACM\VID_0C2E&PID_092A\1&2B53A856&0&16364B062D_00
-                using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity"))
+                using (var searcher = new ManagementObjectSearcher(scannerConfig.QueryString))
                 {
                     var availableSerialPortsList = SerialPort.GetPortNames().ToList();
 
                     var connectedDeviceList = searcher.Get().Cast<ManagementBaseObject>().ToList();
 
-                    var connectedSerialDeviceList = connectedDeviceList.Where(x => x["DeviceID"].ToString().Contains(@"USBCDCACM\VID_0C2E&PID_092A\1&2B53A856&0&16364B062D_00")).ToList();
+                    var connectedSerialDeviceList = connectedDeviceList.Where(x => x[scannerConfig.Key1].ToString().Contains(scannerConfig.Value1)).ToList();
 
                     Dictionary<string, string> scannerProperties = new Dictionary<string, string>();
 
-                    List<string> propertyNames = new List<string>();
-                    propertyNames.AddRange(new string[] 
-                    {
-                        "Caption",
-                        "ClassGuid",
-                        "CompatibleID",
-                        "ConfigManagerErrorCode",
-                        "ConfigManagerUserConfig",
-                        "CreationClassName",
-                        "Description",
-                        "DeviceID",
-                        "ErrorCleared",
-                        "ErrorDescription",
-                        "HardwareID",
-                        "InstallDate",
-                        "LastErrorCode",
-                        "Name",
-                        "PowerManagementCapabilities",
-                        "Service",
-                        "Status",
-                        "StatusInfo",
-                        "SystemCreationClassName",
-                        "SystemName",
-                    });
-
-                    foreach (var propertyName in propertyNames)
+                    foreach (var propertyName in scannerConfig.PropertyNames)
                     {
                         foreach (var detectedDevice in connectedSerialDeviceList)
                         {
@@ -110,33 +87,39 @@ namespace CommonLibraries.Models
                     string re2 = "((?:[a-z][a-z]*[0-9]+[a-z0-9]*))";    // Alphanum 1
 
                     Regex r = new Regex(re1 + re2, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                    Match m = r.Match(scannerProperties[propertyNames[13]]);
+                    Match m = null;
 
-                    if (m.Success)
+                    foreach (var propValPair in scannerProperties)
                     {
-                        BarcodeScanner = new BarcodeScanner();
-                        BarcodeScanner.COMPortName = m.Groups[1].ToString();
-                        BarcodeScanner.Description = scannerProperties["Description"];
-                        BarcodeScanner.DriverName = scannerProperties["Name"];
-                        BarcodeScanner.Properties = scannerProperties;
+                        m = r.Match(propValPair.Value);
+                        if (m.Success) break;
+                    }
+
+                    if (m != null && m.Success)
+                    {
+                        barcodeScanner = new BarcodeScanner();
+                        barcodeScanner.COMPortName = m.Groups[1].ToString();
+                        barcodeScanner.Description = scannerProperties[scannerConfig.Key2];
+                        barcodeScanner.PNPDeviceID = scannerProperties[scannerConfig.Key1];
+                        barcodeScanner.Properties = scannerProperties;
                     }
                     else
                     {
-                        throw new Exception("Could Not find DeviceID" + @"[USBCDCACM\VID_0C2E&PID_092A\1&2B53A856&0&16364B062D_00]" + "\n Please Check the settings!");
+                        throw new Exception("Could Not find " + scannerConfig.Value2 + " " + scannerConfig.Key1 + " with Value: " + scannerConfig.Value1 + "\n Please Check the configurations!");
                     }
                 }
             }
             catch (Exception e)
             {
-                e.WriteLog().Display();
+                e.WriteLog().SaveToDataBase().Display();
             }
 
-            return BarcodeScanner;
+            return barcodeScanner;
         }
 
-        public async Task<string> GetScannedBarcode(CancellationToken token)
+        public async Task<string> GetScannedBarcode(BarcodeScanner barcodeScanner,CancellationToken token)
         {
-            OpenSerialPort(BarcodeScanner.COMPortName);
+            OpenSerialPort(barcodeScanner.COMPortName);
 
             List<string> rxVals = new List<string>();
             bool FinishedReading = false;
@@ -150,6 +133,9 @@ namespace CommonLibraries.Models
                 int bytesInBuffer = SerialPortObj.BytesToRead;
                 FinishedReading = bytesInBuffer == 0;
             }
+
+            CloseSerialPort(barcodeScanner.COMPortName);
+
             return rxString;
         }
 
@@ -178,23 +164,26 @@ namespace CommonLibraries.Models
             return RecCmds;
         }
 
-        public bool AttemptConnectionToScanner()
+        public List<BarcodeScanner> AttemptConnectionToScanners()
         {
-            FindBarcodeScanner();
-            if (!string.IsNullOrWhiteSpace(BarcodeScanner.COMPortName))
+            //GetScannerConfigsFrom SQL Server.
+            List<BarcodeScannerConfig> scannerConfigs = sqlComm.GetBarcodeScannerConfigs();
+            List<BarcodeScanner> barcodeScanners = new List<BarcodeScanner>();
+
+            foreach (var scannerConfig in scannerConfigs)
             {
-                OpenSerialPort(BarcodeScanner.COMPortName);
+                BarcodeScanner barcodeScanner = FindBarcodeScanner(scannerConfig);
+                if (!string.IsNullOrWhiteSpace(barcodeScanner.COMPortName))
+                {
+                    OpenSerialPort(barcodeScanner.COMPortName);
 
-                CloseSerialPort(BarcodeScanner.COMPortName);
+                    CloseSerialPort(barcodeScanner.COMPortName);
 
-                return true;
+                    barcodeScanners.Add(barcodeScanner);
+                }
             }
-            return false;
+            return barcodeScanners;
         }
 
-        public BarcodeScanner GetBarcodeScanner()
-        {
-            return BarcodeScanner;
-        }
     }
 }

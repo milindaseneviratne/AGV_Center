@@ -121,5 +121,112 @@ namespace CommonLibraries.Models
 
             SaveChanges();
         }
+
+        public List<BarcodeScannerConfig> GetBarcodeScannerConfigs()
+        {
+            List<BarcodeScannerConfig> barcodeScannerConfigs = new List<BarcodeScannerConfig>();
+
+            BarcodeScannerConfig barcodeScannerConfig = new BarcodeScannerConfig();
+
+            barcodeScannerConfig.QueryString = "SELECT * FROM Win32_PnPEntity";
+            barcodeScannerConfig.Value1 = @"USBCDCACM\VID_0C2E&PID_092A\1&2B53A856&0&16364B062D_00";
+            barcodeScannerConfig.Key1 = "PNPDeviceID";
+            barcodeScannerConfig.Value2 = "Xenon 1902 Wireless Area-Imaging Scanner (COM34)";
+            barcodeScannerConfig.Key2 = "Caption";
+
+            List<string> propertyNames = new List<string>
+                    {
+                        "Caption",
+                        "ClassGuid",
+                        "CompatibleID",
+                        "ConfigManagerErrorCode",
+                        "ConfigManagerUserConfig",
+                        "CreationClassName",
+                        "Description",
+                        "DeviceID",
+                        "ErrorCleared",
+                        "ErrorDescription",
+                        "HardwareID",
+                        "PNPDeviceID",
+                        "InstallDate",
+                        "LastErrorCode",
+                        "Name",
+                        "PowerManagementCapabilities",
+                        "Service",
+                        "Status",
+                        "StatusInfo",
+                        "SystemCreationClassName",
+                        "SystemName",
+                    };
+            barcodeScannerConfig.PropertyNames = propertyNames;
+
+
+            barcodeScannerConfigs.Add(barcodeScannerConfig);
+
+            BarcodeScannerConfig barcodeScannerConfig2 = new BarcodeScannerConfig();
+
+            barcodeScannerConfig2.QueryString = "SELECT * FROM Win32_SerialPort";
+            barcodeScannerConfig2.Value1 = @"USB\VID_0483&PID_5740\DEMO_1.000";
+            barcodeScannerConfig2.Key1 = "PNPDeviceID";
+            barcodeScannerConfig2.Value2 = "MD USB Virtual COM Port (COM35)";
+            barcodeScannerConfig2.Key2 = "Caption";
+
+            propertyNames = new List<string>
+                    {
+                        "Availability",
+                        "Binary",
+                        "Capabilities",
+                        "CapabilityDescriptions",
+                        "Caption",
+                        "ConfigManagerErrorCode",
+                        "ConfigManagerUserConfig",
+                        "CreationClassName",
+                        "Description",
+                        "DeviceID",
+                        "ErrorCleared",
+                        "ErrorDescription",
+                        "InstallDate",
+                        "LastErrorCode",
+                        "MaxBaudRate",
+                        "MaximumInputBufferSize",
+                        "MaximumOutputBufferSize",
+                        "MaxNumberControlled",
+                        "Name",
+                        "OSAutoDiscovered",
+                        "PNPDeviceID",
+                        "PowerManagementCapabilities",
+                        "PowerManagementSupported",
+                        "ProtocolSupported",
+                        "ProviderType",
+                        "SettableBaudRate",
+                        "SettableDataBits",
+                        "SettableFlowControl",
+                        "SettableParity",
+                        "SettableParityCheck",
+                        "SettableRLSD",
+                        "SettableStopBits",
+                        "Status",
+                        "StatusInfo",
+                        "Supports16BitMode",
+                        "SupportsDTRDSR",
+                        "SupportsElapsedTimeouts",
+                        "SupportsIntTimeouts",
+                        "SupportsParityCheck",
+                        "SupportsRLSD",
+                        "SupportsRTSCTS",
+                        "SupportsSpecialCharacters",
+                        "SupportsXOnXOff",
+                        "SupportsXOnXOffSet",
+                        "SystemCreationClassName",
+                        "SystemName",
+                        "TimeOfLastReset"
+                    };
+            barcodeScannerConfig2.PropertyNames = propertyNames;
+
+
+            barcodeScannerConfigs.Add(barcodeScannerConfig2);
+
+            return barcodeScannerConfigs;
+        }
     }
 }

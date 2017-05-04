@@ -25,7 +25,7 @@ namespace AGV_Control_Center.ViewModels
         private CommunicationLogger sqlLogger = new CommunicationLogger();
         private SerialCommunicator serialCom = new SerialCommunicator();
         private CancellationTokenSource cts = new CancellationTokenSource();
-
+        
         //private CommunicationLogger
         private ApplicationUser user;
 
@@ -43,6 +43,7 @@ namespace AGV_Control_Center.ViewModels
             }
         }
 
+        public ObservableCollection<BarcodeScanner> BarcodeScanners { get; set; }
         public DelegateCommand SendCommand { get; set; }
         public DelegateCommand ConnectScannerCommand { get; set; }
         public DelegateCommand SendQrCode { get; set; }
@@ -88,11 +89,11 @@ namespace AGV_Control_Center.ViewModels
             
         }
 
-        private async Task Startprocess()
+        private async Task Startprocess(BarcodeScanner scanner)
         {
             while (true)
             {
-                scannedBarcode = await serialCom.GetScannedBarcode(cts.Token);
+                scannedBarcode = await serialCom.GetScannedBarcode(scanner, cts.Token);
 
                 if (!string.IsNullOrWhiteSpace(scannedBarcode))
                 {
@@ -157,15 +158,21 @@ namespace AGV_Control_Center.ViewModels
 
         private async Task InitializeBarcodeScanner()
         {
-            if (serialCom.AttemptConnectionToScanner())
+            BarcodeScanners.AddRange(serialCom.AttemptConnectionToScanners());
+
+            if (BarcodeScanners.Count > 0)
             {
-                await Startprocess();
+                foreach (var scanner in BarcodeScanners)
+                {
+                    Startprocess(scanner);
+                }
             }
         }
 
         private void InitializeUI()
         {
             CommunicationsList = new ObservableCollection<string>();
+            BarcodeScanners = new ObservableCollection<BarcodeScanner>();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

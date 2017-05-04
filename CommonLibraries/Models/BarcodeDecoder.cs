@@ -1,5 +1,6 @@
 ﻿using CommonLibraries.Database;
 using CommonLibraries.Enumerations;
+using CommonLibraries.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,12 @@ namespace CommonLibraries.Models
         public static agvStationTestFlow TestFlow { get; set; }
         public static Barcode GetBarcode(string scannedString)
         {
-            ScannedString = scannedString;
+            ScannedString = scannedString.EliminateExtraChars();
 
             if (ScannedString.Contains("OK") || ScannedString.Contains("Inital"))
             {
                 barcode.Station = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().LastOrDefault();
-                barcode.Group = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().FirstOrDefault().TrimStart('*');
+                barcode.Group = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().FirstOrDefault();
                 barcode.Status = ScannedString.Split('@').ToList().LastOrDefault();
                 barcode.Destination = sqlCommunicator.GetDestination(barcode);
                 barcode.Comand = sqlCommunicator.GetCommandType(barcode);

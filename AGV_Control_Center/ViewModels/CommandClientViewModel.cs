@@ -183,6 +183,21 @@ namespace AGV_Control_Center.ViewModels
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             navigationContext.Parameters.Add(typeof(ApplicationUser).Name, UserProperty);
+            FinalizeUI();
+        }
+
+        private void FinalizeUI()
+        {
+            foreach (var scanner in BarcodeScanners)
+            {
+                if (scanner.SerialPort.IsOpen)
+                {
+                    scanner.SerialPort.DiscardInBuffer();
+                    scanner.SerialPort.DiscardOutBuffer();
+                    scanner.SerialPort.Close();
+                    scanner.SerialPort.Dispose();
+                }
+            }
         }
     }
 }

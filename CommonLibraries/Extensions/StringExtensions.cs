@@ -43,5 +43,16 @@ namespace CommonLibraries.Extensions
 
             return "ERROR";
         }
+
+        public static string EliminateExtraChars(this string inputString)
+        {
+            var charsToRemove = new string[] { "\n", "\r", "\0", "*", " " };
+            foreach (var c in charsToRemove)
+            {
+                inputString = inputString.Replace(c, string.Empty);
+            }
+
+            return inputString;
+        }
     }
 }

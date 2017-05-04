@@ -8,15 +8,16 @@ using System.Threading.Tasks;
 using System.Management;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.IO;
 
 namespace CommonLibraries.Models
 {
     public class SerialCommunicator
     {
-        public static SerialPort SerialPortObj = new SerialPort();
+        //public static SerialPort SerialPortObj = new SerialPort();
         private SQLCommunicator sqlComm = new SQLCommunicator();
         //Added By Milinda, Universal function to Open the Serial port.
-        public static bool OpenSerialPort(string PortName)
+        public static bool OpenSerialPort(SerialPort SerialPortObj, string PortName)
         {
             try
             {
@@ -35,7 +36,7 @@ namespace CommonLibraries.Models
         }
 
         //Added by Milinda, Universal Function to Close the serial Port.
-        public static bool CloseSerialPort(string PortName)
+        public static bool CloseSerialPort(SerialPort SerialPortObj, string PortName)
         {
             try
             {
@@ -119,7 +120,7 @@ namespace CommonLibraries.Models
 
         public async Task<string> GetScannedBarcode(BarcodeScanner barcodeScanner,CancellationToken token)
         {
-            OpenSerialPort(barcodeScanner.COMPortName);
+            OpenSerialPort(barcodeScanner.SerialPort, barcodeScanner.COMPortName);
 
             List<string> rxVals = new List<string>();
             bool FinishedReading = false;
@@ -127,19 +128,19 @@ namespace CommonLibraries.Models
 
             while (!FinishedReading)
             {
-                rxVals.AddRange(await readStringsfromSerialPortAsync(token));
+                rxVals.AddRange(await readStringsfromSerialPortAsync(barcodeScanner, token));
                 rxString = string.Join("", rxVals.ToArray());
 
-                int bytesInBuffer = SerialPortObj.BytesToRead;
+                int bytesInBuffer = barcodeScanner.SerialPort.BytesToRead;
                 FinishedReading = bytesInBuffer == 0;
             }
 
-            CloseSerialPort(barcodeScanner.COMPortName);
+            CloseSerialPort(barcodeScanner.SerialPort, barcodeScanner.COMPortName);
 
             return rxString;
         }
 
-        public async Task<List<string>> readStringsfromSerialPortAsync(CancellationToken ct)
+        public async Task<List<string>> readStringsfromSerialPortAsync(BarcodeScanner barcodeScanner, CancellationToken ct)
         {
             List<string> RecCmds = new List<string>();
             byte[] buffer = new byte[1000];
@@ -148,14 +149,18 @@ namespace CommonLibraries.Models
             {
                 RecCmds.Clear();
                 Array.Clear(buffer, 0, buffer.Length);
-                Task<int> bytes = SerialPortObj.BaseStream.ReadAsync(buffer, 0, buffer.Length, ct);
+                Task<int> bytes = barcodeScanner.SerialPort.BaseStream.ReadAsync(buffer, 0, buffer.Length, ct);
                 int bytesCount = await bytes;
-                rxData = Encoding.ASCII.GetString(buffer).TrimEnd('\0').TrimEnd('\r');
+                rxData = Encoding.ASCII.GetString(buffer).EliminateExtraChars();
                 RecCmds.Add(rxData);
+            }
+            catch (IOException e)
+            {
+                e.WriteLog().SaveToDataBase();
             }
             catch (OperationCanceledException e)
             {
-                e.WriteLog();
+                e.WriteLog().SaveToDataBase();
             }
             catch (Exception e)
             {
@@ -172,13 +177,15 @@ namespace CommonLibraries.Models
 
             foreach (var scannerConfig in scannerConfigs)
             {
+                SerialPort SerialPortObj = new SerialPort();
                 BarcodeScanner barcodeScanner = FindBarcodeScanner(scannerConfig);
                 if (!string.IsNullOrWhiteSpace(barcodeScanner.COMPortName))
                 {
-                    OpenSerialPort(barcodeScanner.COMPortName);
+                    OpenSerialPort(SerialPortObj, barcodeScanner.COMPortName);
 
-                    CloseSerialPort(barcodeScanner.COMPortName);
+                    CloseSerialPort(SerialPortObj, barcodeScanner.COMPortName);
 
+                    barcodeScanner.SerialPort = SerialPortObj;
                     barcodeScanners.Add(barcodeScanner);
                 }
             }

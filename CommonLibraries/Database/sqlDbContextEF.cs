@@ -16,6 +16,7 @@ namespace CommonLibraries.Database
         public DbSet<User> User { get; set; }
         public DbSet<UserActivityLog> UserActivityLog { get; set; }
         public DbSet<ServerClientCommunicationLog> CommunicationLog { get; set; }
+        public DbSet<BarcodeScannerConfig> BarcodeScannerConfigs { get; set; }
 
         public DbSet<agvStationTestFlow> agvStationTestFlow { get; set; }
         public DbSet<agvAGV_Info> agvAGV_Info { get; set; }

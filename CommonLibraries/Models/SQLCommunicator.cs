@@ -221,6 +221,7 @@ namespace CommonLibraries.Models
                         "SystemName",
                         "TimeOfLastReset"
                     };
+
             barcodeScannerConfig2.PropertyNames = propertyNames;
 
 

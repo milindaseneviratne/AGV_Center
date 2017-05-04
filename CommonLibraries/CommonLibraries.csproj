@@ -77,7 +77,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Barcode.cs" />
     <Compile Include="Models\BarcodeDecoder.cs" />
-    <Compile Include="Models\BarcodeScannerConfig.cs" />
+    <Compile Include="Models\dbModels\BarcodeScannerConfig.cs" />
     <Compile Include="Models\CommunicationLogger.cs" />
     <Compile Include="Models\dbModels\agvAGV_Info.cs" />
     <Compile Include="Models\dbModels\agvCommand_Type_Info.cs" />

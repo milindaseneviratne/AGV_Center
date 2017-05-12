@@ -5,10 +5,10 @@ namespace CommonLibraries.Models
     public class agvCommand_Type_Info
     {
         public int Id { get; set; }
-        [StringLength(maximumLength:250,MinimumLength =1)]
+        [StringLength(maximumLength:250,MinimumLength = 1)]
         public string Name { get; set; }
-        [StringLength(maximumLength: 250, MinimumLength = 1)]
-        public string Byte { get; set; }
+
+        public int Byte { get; set; }
         [StringLength(maximumLength: 250, MinimumLength = 1)]
         public string Type { get; set; }
         [StringLength(maximumLength: 250, MinimumLength = 1)]

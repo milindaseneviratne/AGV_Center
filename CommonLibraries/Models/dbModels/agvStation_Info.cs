@@ -11,6 +11,7 @@ namespace CommonLibraries.Models.dbModels
     public class agvStation_Info
     {
         public int Id { get; set; }
+
         [StringLength(maximumLength: 250, MinimumLength = 1)]
         public string Name { get; set; }
 
@@ -25,11 +26,20 @@ namespace CommonLibraries.Models.dbModels
 
         [StringLength(maximumLength: 250, MinimumLength = 1)]
         public string Location { get; set; }
+
         [StringLength(maximumLength: 250, MinimumLength = 1)]
         public string Face { get; set; }
+
+        [Required]
+        [StringLength(maximumLength: 250, MinimumLength = 1)]
+        public string Group { get; set; }
+
+        [Required]
         [StringLength(maximumLength: 250, MinimumLength = 1)]
         public string Status { get; set; }
+
         public DateTime? UpdateTime { get; set; }
+
         [StringLength(maximumLength: 250, MinimumLength = 0)]
         public string Remark { get; set; }
 

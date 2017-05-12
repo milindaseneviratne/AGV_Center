@@ -26,9 +26,9 @@ namespace CommonLibraries.Migrations
 
             context.User.AddOrUpdate(
               u => u.Name,
-              new User { Name = "Milinda", Password = "qwerty", Group = "Administrator" },
-              new User { Name = "Jeffery", Password = "qwerty", Group = "Administrator" },
-              new User { Name = "MIS", Password = "1234", Group = "User" },
+              new User { Name = "Milinda", Password = "cXdlcnR5", Group = "Administrator" },
+              new User { Name = "Jeffery", Password = "cXdlcnR5", Group = "Administrator" },
+              new User { Name = "MIS", Password = "MTIzNA== ", Group = "User" },
               new User { Name = "OP", Password = string.Empty, Group = "User" }
             );
 
@@ -43,17 +43,16 @@ namespace CommonLibraries.Migrations
                 new agvZone_Info { Name = "Zone3", Remark = "Remarks go here." }
                 );
 
-            context.agvCommand_Type_Info.AddOrUpdate(u => u.Name,
-                new agvCommand_Type_Info { Name = "Table_Move", Byte = string.Empty, Type = "Table_Move", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
-                new agvCommand_Type_Info { Name = "TableInitial", Byte = string.Empty, Type = "TableInitial", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
-                new agvCommand_Type_Info { Name = "TableFromIdle", Byte = string.Empty, Type = "TableFromIdle", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
-                new agvCommand_Type_Info { Name = "TableToIdle", Byte = string.Empty, Type = "TableToIdle", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
-                new agvCommand_Type_Info { Name = "TableFinish", Byte = string.Empty, Type = "TableFinish", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
-                new agvCommand_Type_Info { Name = "AGV_Request", Byte = string.Empty, Type = "AGV_Request", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
-                new agvCommand_Type_Info { Name = "ChargeAll", Byte = string.Empty, Type = "ChargeAll", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
-                new agvCommand_Type_Info { Name = "NewTable", Byte = string.Empty, Type = "NewTable", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
-                new agvCommand_Type_Info { Name = "NewTable", Byte = string.Empty, Type = "NewTable", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
-                new agvCommand_Type_Info { Name = "TabelRotate", Byte = string.Empty, Type = "TabelRotate", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" }
+            context.agvCommand_Type_Info.AddOrUpdate(x => new { x.Name, x.Byte, x.Argument },
+                new agvCommand_Type_Info { Name = "Table_Move", Byte = 1, Type = "Table_Move", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
+                new agvCommand_Type_Info { Name = "TableInitial", Byte = 2, Type = "TableInitial", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
+                new agvCommand_Type_Info { Name = "TableFromIdle", Byte = 3, Type = "TableFromIdle", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
+                new agvCommand_Type_Info { Name = "TableToIdle", Byte = 4, Type = "TableToIdle", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
+                new agvCommand_Type_Info { Name = "TableFinish", Byte = 5, Type = "TableFinish", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
+                new agvCommand_Type_Info { Name = "AGV_Request", Byte = 6, Type = "AGV_Request", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
+                new agvCommand_Type_Info { Name = "ChargeAll", Byte = 7, Type = "ChargeAll", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
+                new agvCommand_Type_Info { Name = "NewTable", Byte = 8, Type = "NewTable", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
+                new agvCommand_Type_Info { Name = "TabelRotate", Byte = 9, Type = "TabelRotate", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" }
                 );
 
             context.agvStatus_Info.AddOrUpdate(u => u.Status,
@@ -94,19 +93,62 @@ namespace CommonLibraries.Migrations
             //Mechanical stations rotate flows.
             //ChargeAll from all stations to ChargeArea.
 
-            for (int i = 0; i < 3; i++)
-            {
-                context.agvStationTestFlow.AddOrUpdate(x => new { x.Command_TypeId, x.Current_StationId, x.Dest_StationId },
+            //Table Initializing Steps.
+            CreateagvStationTestFlow(context, "NewTable", "Idle1", "New", "NewTable");
+            CreateagvStationTestFlow(context, "Idle1", "S1", "Initial", "TableInitial");
+            //Normal A->B Flow
+            CreateagvStationTestFlow(context, "S1", "S2", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S2", "S3", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S3", "S4", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S4", "S5", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S5", "S6", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S6", "S7", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S7", "S8", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S8", "S9", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S9", "S10", "OK", "Table_Move");
+            //One to Many Flow.
+            CreateagvStationTestFlow(context, "S10", "M11", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S10", "M12", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S10", "M13", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S10", "M14", "OK", "Table_Move");
+            //Many to One Flow.
+            CreateagvStationTestFlow(context, "M11", "S15", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "M12", "S15", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "M13", "S15", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "M14", "S15", "OK", "Table_Move");
+            //Normal A-B Flow
+            CreateagvStationTestFlow(context, "S15", "S16", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S16", "S17", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S17", "S18", "OK", "Table_Move");
+            CreateagvStationTestFlow(context, "S18", "QC1", "Finished", "Table_Move");
+            
+
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    context.agvStationTestFlow.AddOrUpdate(x => new { x.Command_TypeId, x.Current_StationId, x.Dest_StationId },
+            //    new agvStationTestFlow
+            //    {
+            //        Command_TypeId = context.agvCommand_Type_Info.Where(x => x.Name.StartsWith("Table_Move")).FirstOrDefault().Id,
+            //        Current_StationId = context.agvStation_Info.Where(x => x.Name.StartsWith("S")).FirstOrDefault().Id + i,
+            //        Dest_StationId = context.agvStation_Info.Where(x => x.Name.StartsWith("S")).FirstOrDefault().Id + i + 1,
+            //        ZoneId = context.agvZone_Info.Where(x => x.Id < 100).FirstOrDefault().Id,
+            //        StatusId = context.agvStatus_Info.Where(x => x.Id < 100).FirstOrDefault().Id,
+            //        UpdateTime = DateTime.Now
+            //    });
+            //}
+        }
+
+        private static void CreateagvStationTestFlow(sqlDbContextEF context, string currentStationName, string destStationName, string status, string commandType)
+        {
+            context.agvStationTestFlow.AddOrUpdate(x => new { x.Command_TypeId, x.Current_StationId, x.Dest_StationId },
                 new agvStationTestFlow
                 {
-                    Command_TypeId = context.agvCommand_Type_Info.Where(x => x.Name.StartsWith("Table_Move")).FirstOrDefault().Id,
-                    Current_StationId = context.agvStation_Info.Where(x => x.Name.StartsWith("S")).FirstOrDefault().Id + i,
-                    Dest_StationId = context.agvStation_Info.Where(x => x.Name.StartsWith("S")).FirstOrDefault().Id + i + 1,
-                    ZoneId = context.agvZone_Info.Where(x => x.Id < 100).FirstOrDefault().Id,
-                    StatusId = context.agvStatus_Info.Where(x => x.Id < 100).FirstOrDefault().Id,
+                    Current_StationId = context.agvStation_Info.Where(s => s.Name == currentStationName).FirstOrDefault().Id,
+                    Dest_StationId = context.agvStation_Info.Where(s => s.Name == destStationName).FirstOrDefault().Id,
+                    StatusId = context.agvStatus_Info.Where(s => s.Status == status).FirstOrDefault().Id,
+                    Command_TypeId = context.agvCommand_Type_Info.Where(c => c.Name == commandType).FirstOrDefault().Id,
                     UpdateTime = DateTime.Now
                 });
-            }
         }
 
         public Expression<Func<agvStationTestFlow, object>> identifierExpression()
@@ -116,9 +158,15 @@ namespace CommonLibraries.Migrations
         private static void AddStations(sqlDbContextEF context)
         {
             string stationName = string.Empty;
+            CreateStation(context, "NewTable");
             CreateStation(context, "Initial");
 
             for (int i = 1; i < 10 + 1; i++)
+            {
+                CreateStation(context, "S" + i.ToString());
+            }
+
+            for (int i = 15; i < 18 + 1; i++)
             {
                 CreateStation(context, "S" + i.ToString());
             }
@@ -176,7 +224,8 @@ namespace CommonLibraries.Migrations
                                 {
                                     Name = stationName,
                                     Face = "Up",
-                                    Location = "*001002",
+                                    Location = "x:001,y:002",
+                                    Group = "None",
                                     ModelId = context.agvModel_Info.Where(x => x.Id < 100).FirstOrDefault().Id,
                                     Remark = "Remarks go here.",
                                     Status = "Default",

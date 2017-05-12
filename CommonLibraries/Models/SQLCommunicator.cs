@@ -15,12 +15,16 @@ namespace CommonLibraries.Models
 
         public User GetuserInfo(ApplicationUser user)
         {
+            var passwordBytes = Encoding.UTF8.GetBytes(user.Password);
+            var base64Encoded = Convert.ToBase64String(passwordBytes);
+
             var query = (from row in dbContext.User
-                         where row.Name == user.Name && row.Password == user.Password
+                         where row.Name == user.Name && row.Password == base64Encoded
                          select row).FirstOrDefault();
 
             return query;
         }
+
         public bool InsertNewUser(ApplicationUser user)
         {
             bool successFlag = false;

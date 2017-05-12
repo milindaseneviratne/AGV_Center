@@ -8,11 +8,12 @@ namespace CommonLibraries.Models.dbModels
 {
     public class BarcodeScannerConfig
     {
+        public int Id { get; set; }
         public string QueryString { get; set; }
-        public string Value1 { get; set; }
         public string Key1 { get; set; }
-        public string Value2 { get; set; }
+        public string Value1 { get; set; }
         public string Key2 { get; set; }
+        public string Value2 { get; set; }
         public List<string> PropertyNames { get; set; }
     }
 }

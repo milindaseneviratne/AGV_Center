@@ -64,6 +64,7 @@ namespace AGV_Control_Center.ViewModels
 
         public void exLoginCmd(object sender)
         {
+
             PasswordBox pwdBox = sender as PasswordBox;
             UserProperty.Password = pwdBox.Password;
 

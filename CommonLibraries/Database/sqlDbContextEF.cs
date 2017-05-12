@@ -31,7 +31,7 @@ namespace CommonLibraries.Database
 
         //JefferySQLExpress
         //MilindaSQLExpress
-        public sqlDbContextEF() : base("name=MilindaSQLExpress") 
+        public sqlDbContextEF() : base("name=AGVControlCenter_TEST") 
         {
             
         }

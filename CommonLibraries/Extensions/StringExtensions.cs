@@ -1,4 +1,5 @@
 ﻿using CommonLibraries.Enumerations;
+using CommonLibraries.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,37 @@ namespace CommonLibraries.Extensions
             }
 
             return inputString;
+        }
+
+        public static bool HasData(this Barcode barcode)
+        {
+            if (string.IsNullOrWhiteSpace(barcode.Comand))
+            {
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(barcode.Destination))
+            {
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(barcode.Group))
+            {
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(barcode.Station))
+            {
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(barcode.Status))
+            {
+                return false;
+            }
+
+
+            return true;
         }
     }
 }

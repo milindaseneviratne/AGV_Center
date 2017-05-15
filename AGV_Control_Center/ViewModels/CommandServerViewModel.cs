@@ -31,6 +31,25 @@ namespace AGV_Control_Center.ViewModels
             set { SetProperty(ref user, value); }
         }
 
+        private AsynchonousSocketListner agvControlSystemServer;
+        public AsynchonousSocketListner AgvControlSystemServer
+        {
+            get
+            {
+                if (agvControlSystemServer == null)
+                {
+                    agvControlSystemServer = new AsynchonousSocketListner();
+                }
+                return agvControlSystemServer;
+            }
+            set
+            {
+                if (agvControlSystemServer == null)
+                {
+                    agvControlSystemServer = new AsynchonousSocketListner();
+                }
+            }
+        }
         public DelegateCommand StartServerCommand { get; set; }
         public CommandServerViewModel()
         {
@@ -44,7 +63,7 @@ namespace AGV_Control_Center.ViewModels
 
         private bool canExStartServerCmd()
         {
-            if (AsynchonousSocketListner.listner == null)
+            if (AgvControlSystemServer.listner == null)
             {
                 return true;
             }
@@ -53,7 +72,8 @@ namespace AGV_Control_Center.ViewModels
 
         private void InitializeServer()
         {
-            Thread listnerThread = new Thread(AsynchonousSocketListner.StartListning);
+            AgvControlSystemServer = new AsynchonousSocketListner();
+            Thread listnerThread = new Thread(AgvControlSystemServer.StartListning);
             listnerThread.SetApartmentState(ApartmentState.STA);
             listnerThread.Start();
         }

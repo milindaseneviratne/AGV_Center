@@ -9,25 +9,26 @@ using System.Threading.Tasks;
 
 namespace CommonLibraries.Models
 {
-    public static class BarcodeDecoder
+    public class BarcodeDecoder
     {
-        private static SQLCommunicator sqlCommunicator = new SQLCommunicator();
-        private static Barcode barcode = new Barcode();
-        public static string ScannedString { get; set; }
-        public static string Command { get; set; }
-        public static agvStationTestFlow TestFlow { get; set; }
-        public static Barcode GetBarcode(string scannedString)
+        private SQLCommunicator sqlCommunicator = new SQLCommunicator();
+        private Barcode barcode;
+        public string ScannedString { get; set; }
+        public string Command { get; set; }
+        public agvStationTestFlow TestFlow { get; set; }
+        public Barcode GetVCSCommand(string scannedString)
         {
+            barcode = new Barcode();
             ScannedString = scannedString.EliminateExtraChars();
 
-            if (ScannedString.Contains("OK") || ScannedString.Contains("Inital"))
-            {
+            //if (ScannedString.Contains("OK") || ScannedString.Contains("Initial"))
+            //{
                 barcode.Station = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().LastOrDefault();
                 barcode.Group = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().FirstOrDefault();
                 barcode.Status = ScannedString.Split('@').ToList().LastOrDefault();
                 barcode.Destination = sqlCommunicator.GetDestination(barcode);
                 barcode.Comand = sqlCommunicator.GetCommandType(barcode);
-            }
+            //}
 
             return barcode;
         }

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace CommonLibraries.Models
 {
-    public static class VCSCommunicator
+    public class VCSCommunicator
     {
-        public static bool SendCommand(Barcode barcode, string vcsIP = "", int vcsPort = 26000 )
+        public bool SendCommand(Barcode barcode, string vcsIP = "", int vcsPort = 26000 )
         {
             try
             {

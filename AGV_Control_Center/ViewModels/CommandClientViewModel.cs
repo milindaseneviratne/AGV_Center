@@ -153,7 +153,7 @@ namespace AGV_Control_Center.ViewModels
         {
             UserProperty = (ApplicationUser)navigationContext.Parameters[typeof(ApplicationUser).Name] ?? UserProperty;
             InitializeUI();
-            InitializeBarcodeScanner();
+            //InitializeBarcodeScanner();
         }
 
         private async Task InitializeBarcodeScanner()

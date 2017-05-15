@@ -75,6 +75,7 @@
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\agvTaskCreator.cs" />
     <Compile Include="Models\Barcode.cs" />
     <Compile Include="Models\BarcodeDecoder.cs" />
     <Compile Include="Models\dbModels\BarcodeScannerConfig.cs" />

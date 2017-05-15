@@ -25,6 +25,54 @@ namespace CommonLibraries.Models
             return query;
         }
 
+        public agvModel_Info GetModel()
+        {
+            var query = dbContext.agvModel_Info
+                .Where(x => x.Code.Equals("3F1SW", StringComparison.OrdinalIgnoreCase))
+                .FirstOrDefault();
+
+            if (query != null)
+            {
+                return query;
+            }
+
+            return null;
+        }
+
+        public agvStation_Info GetStation(string destination)
+        {
+            var query = dbContext.agvStation_Info
+                .Where(x => x.Name.Equals(destination, StringComparison.OrdinalIgnoreCase))
+                .FirstOrDefault();
+
+            if (query != null)
+            {
+                return query;
+            }
+
+            return null;
+        }
+
+        public bool CreateTask(agvModel_Info model, agvStation_Info currentStation, agvStation_Info destinationStation, string result)
+        {
+            dbContext.agvTask.Add(new agvTask
+            {
+                ModelCode = model.Code,
+                Current_Station = currentStation.Name,
+                Dest_Station = destinationStation.Name,
+                Result = result,
+                StartTime = DateTime.Now
+            });
+
+
+            if (SaveChanges() == 1)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public bool InsertNewUser(ApplicationUser user)
         {
             bool successFlag = false;
@@ -46,9 +94,14 @@ namespace CommonLibraries.Models
         {
             var result = dbContext.agvStationTestFlow
                                   .Where(row => row.Current_Station.Name == barcode.Station && row.Status.Status == barcode.Status)
-                                  .FirstOrDefault()
-                                  .Dest_Station.Name;
-            return result;
+                                  .FirstOrDefault();
+
+            if(result!= null)
+            {
+                return result.Dest_Station.Name;
+            }
+
+            return string.Empty;
         }
 
         public string GetCommandType(Barcode barcode)
@@ -93,16 +146,18 @@ namespace CommonLibraries.Models
             SaveChanges();
         }
 
-        private void SaveChanges()
+        private int SaveChanges()
         {
             try
             {
-                dbContext.SaveChanges();
+                return dbContext.SaveChanges();
             }
             catch (Exception ex)
             {
                 ex.WriteLog().SaveToDataBase().Display();
             }
+
+            return 0;
         }
 
         public void LogUserIN(ApplicationUser userProperty)

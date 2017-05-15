@@ -13,9 +13,13 @@ namespace Socket_Server.Models
 {
     public class AsynchonousSocketListner
     {
-        public static ManualResetEvent allDone = new ManualResetEvent(false);
-        public static Socket listner = null;
-        public static void StartListning()
+        private BarcodeDecoder bacrodeDecoder = new BarcodeDecoder();
+        private VCSCommunicator vcsComm = new VCSCommunicator();
+        private agvTaskCreator agvTaskCreator = new agvTaskCreator();
+
+        public ManualResetEvent allDone = new ManualResetEvent(false);
+        public Socket listner = null;
+        public void StartListning()
         {
             byte[] bytes = new byte[1024];
 
@@ -43,7 +47,7 @@ namespace Socket_Server.Models
             }
         }
 
-        private static void AcceptCallback(IAsyncResult ar)
+        private void AcceptCallback(IAsyncResult ar)
         {
             allDone.Set();
 
@@ -56,11 +60,11 @@ namespace Socket_Server.Models
             handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, SocketFlags.None, new AsyncCallback(ReadCallback), state);
         }
 
-        private static void ReadCallback(IAsyncResult ar)
+        private void ReadCallback(IAsyncResult ar)
         {
             try
             {
-                string content = string.Empty;
+                string recvievedBarcode = string.Empty;
 
                 StateObject state = (StateObject)ar.AsyncState;
                 Socket handler = state.workSocket;
@@ -70,25 +74,28 @@ namespace Socket_Server.Models
                 if (bytesRead > 0)
                 {
                     state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
-                    content = state.sb.ToString();
+                    recvievedBarcode = state.sb.ToString();
                 }
 
-                if (content.IndexOf("<EOF>") > -1)
+                if (recvievedBarcode.IndexOf("<EOF>") > -1)
                 {
                     // finished recieving. What should I do now?
-                    bool success = VCSCommunicator.SendCommand(BarcodeDecoder.GetBarcode(content.RemoveEOF()));
+                    var rawBarcode = recvievedBarcode.RemoveEOF();
+                    var vcsCommand = bacrodeDecoder.GetVCSCommand(rawBarcode);
+                    bool success = vcsComm.SendCommand(vcsCommand);
+                    bool taskCreated = agvTaskCreator.CreateTask(vcsCommand);
 
-                    if (success)
+                    if (success && taskCreated)
                     {
-                        content = (content.RemoveEOF() + " OK").AddEOF();
+                        recvievedBarcode = (recvievedBarcode.RemoveEOF() + " OK").AddEOF();
                     }
                     else
                     {
-                        content = (content.RemoveEOF() + " ERROR").AddEOF();
+                        recvievedBarcode = (recvievedBarcode.RemoveEOF() + " ERROR").AddEOF();
                     }
 
                     // Send ACK
-                    Send(handler, content);
+                    Send(handler, recvievedBarcode);
                 }
                 else
                 {
@@ -101,14 +108,14 @@ namespace Socket_Server.Models
             }
         }
 
-        private static void Send(Socket handler, string content)
+        private void Send(Socket handler, string content)
         {
             byte[] byteData = Encoding.ASCII.GetBytes(content);
 
             handler.BeginSend(byteData, 0, byteData.Length, SocketFlags.None, new AsyncCallback(SendCallback), handler);
         }
 
-        private static void SendCallback(IAsyncResult ar)
+        private void SendCallback(IAsyncResult ar)
         {
             try
             {

@@ -32,14 +32,14 @@ namespace AGV_Control_Center.ViewModels
             set { SetProperty(ref user, value); }
         }
 
-        private AsynchonousSocketListner agvControlSystemServer;
-        public AsynchonousSocketListner AgvControlSystemServer
+        private AsynchonousServer agvControlSystemServer;
+        public AsynchonousServer AgvControlSystemServer
         {
             get
             {
                 if (agvControlSystemServer == null)
                 {
-                    agvControlSystemServer = new AsynchonousSocketListner();
+                    agvControlSystemServer = new AsynchonousServer();
                 }
                 return agvControlSystemServer;
             }
@@ -47,7 +47,7 @@ namespace AGV_Control_Center.ViewModels
             {
                 if (agvControlSystemServer == null)
                 {
-                    agvControlSystemServer = new AsynchonousSocketListner();
+                    agvControlSystemServer = new AsynchonousServer();
                 }
             }
         }

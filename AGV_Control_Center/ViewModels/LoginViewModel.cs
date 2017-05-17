@@ -64,33 +64,42 @@ namespace AGV_Control_Center.ViewModels
 
         public void exLoginCmd(object sender)
         {
-
-            PasswordBox pwdBox = sender as PasswordBox;
-            UserProperty.Password = pwdBox.Password;
-
-            var dbUserInfo = sqldbCommunicator.GetuserInfo(UserProperty);
-
-            if (dbUserInfo == null)
+            try
             {
-                LoginFailedMessage = "Incorrect username/password, please try again!";
+                throw new UnauthorizedAccessException();
+
+                PasswordBox pwdBox = sender as PasswordBox;
+                UserProperty.Password = pwdBox.Password;
+
+                var dbUserInfo = sqldbCommunicator.GetuserInfo(UserProperty);
+
+                if (dbUserInfo == null)
+                {
+                    LoginFailedMessage = "Incorrect username/password, please try again!";
+                }
+                else
+                {
+                    LoginFailedMessage = string.Empty;
+
+                    UserProperty.Id = dbUserInfo.Id;
+                    UserProperty.Name = dbUserInfo.Name;
+                    UserProperty.Password = dbUserInfo.Password; // Delete this for security reasons once prduction version is launched.
+                    UserProperty.Group = dbUserInfo.Group.ToUserGroup();
+                    UserProperty.LogIn = DateTime.Now;
+
+                    sqldbCommunicator.LogUserIN(UserProperty);
+
+                    userCredentials.User = UserProperty;
+                    _eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
+
+                    DisplayUI();
+                }
             }
-            else
+            catch (Exception e)
             {
-                LoginFailedMessage = string.Empty;
-
-                UserProperty.Id = dbUserInfo.Id;
-                UserProperty.Name = dbUserInfo.Name;
-                UserProperty.Password = dbUserInfo.Password; // Delete this for security reasons once prduction version is launched.
-                UserProperty.Group = dbUserInfo.Group.ToUserGroup();
-                UserProperty.LogIn = DateTime.Now;
-
-                sqldbCommunicator.LogUserIN(UserProperty);
-
-                userCredentials.User = UserProperty;
-                _eventAggregator.GetEvent<UserCredentialsDTO>().Publish(userCredentials);
-
-                DisplayUI();
+                e.WriteLog().SaveToDataBase().Display();
             }
+           
 
             //LoginFailedMessage = string.Empty;
 

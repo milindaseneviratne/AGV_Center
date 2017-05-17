@@ -1,4 +1,4 @@
-﻿<Window x:Class="AGV_Control_Center.Views.ApplicationShell"
+﻿<Window x:Name="AGV_Control_Center" x:Class="AGV_Control_Center.Views.ApplicationShell"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,15 +9,25 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="ApplicationShell" Height="675" Width="1200" FontSize="12" WindowStartupLocation="CenterScreen" >
+        Title="ApplicationShell" Height="675" Width="1200" FontSize="14" WindowStartupLocation="CenterScreen" >
 
     <Grid x:Name="ApplicationShellGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" Height="25">
+        <DockPanel x:Name="RootWindow">
+            <DockPanel x:Name="TitleBar">
+                <Button x:Name="CloseButton" Content="X" DockPanel.Dock="Right" Width="25" FontWeight="Bold"/>
+                <Button x:Name="MaxButton" Content="í" DockPanel.Dock="Right" Width="25" FontWeight="Bold" />
+                <Button x:Name="MinButton" Content="_" DockPanel.Dock="Right" Width="25" FontWeight="Bold" />
+
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">AGV Control Center</TextBlock>
+            </DockPanel>
+        </DockPanel>
+        <DockPanel Grid.Row="1" Height="25">
             <Menu DockPanel.Dock="Top" Height="25" FontSize="12">
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" />
@@ -61,7 +71,7 @@
             </Menu>
             <TextBox AcceptsReturn="True" />
         </DockPanel>
-        <DockPanel Grid.Row="2" Height="25">
+        <DockPanel Grid.Row="3" Height="25">
             <StatusBar DockPanel.Dock="Bottom" FontSize="12">
                 <StatusBar.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -95,7 +105,7 @@
                 <Separator Grid.Column="6" Width="1" Opacity="20"></Separator>
             </StatusBar>
         </DockPanel>
-        <Grid x:Name="InnerContentGrid" Grid.Row="1" Grid.Column="0">
+        <Grid x:Name="InnerContentGrid" Grid.Row="2" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200" x:Name="ListContentRegion"/>
                 <ColumnDefinition Width="*" x:Name="PrimaryContentRegion"/>
@@ -104,8 +114,8 @@
             <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="2" />
             <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="2" />
 
-            <ContentControl Grid.Row="0" Grid.Column="0" prism:RegionManager.RegionName="ListContentRegion" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"></ContentControl>
-            <ContentControl Grid.Row="0" Grid.Column="1" prism:RegionManager.RegionName="PrimaryContentRegion" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"></ContentControl>
+            <ContentControl Grid.Row="1" Grid.Column="0" prism:RegionManager.RegionName="ListContentRegion" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"></ContentControl>
+            <ContentControl Grid.Row="1" Grid.Column="1" prism:RegionManager.RegionName="PrimaryContentRegion" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"></ContentControl>
         </Grid>
     </Grid> 
 </Window>

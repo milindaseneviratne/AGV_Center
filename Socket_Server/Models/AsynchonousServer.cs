@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Socket_Server.Models
 {
-    public class AsynchonousSocketListner
+    public class AsynchonousServer
     {
         private BarcodeDecoder bacrodeDecoder = new BarcodeDecoder();
         private VCSCommunicator vcsComm = new VCSCommunicator();

@@ -121,7 +121,33 @@ namespace CommonLibraries.Migrations
             CreateagvStationTestFlow(context, "S16", "S17", "OK", "Table_Move");
             CreateagvStationTestFlow(context, "S17", "S18", "OK", "Table_Move");
             CreateagvStationTestFlow(context, "S18", "QC1", "Finished", "Table_Move");
-            
+            //NG Flow
+            CreateagvStationTestFlow(context, "S1", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S2", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S3", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S4", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S5", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S6", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S7", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S8", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S9", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S10", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "M11", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "M12", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "M13", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "M14", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S15", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S16", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S17", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S18", "Repair", "NG", "Table_Move");
+            //Rotate Flow
+            CreateagvStationTestFlow(context, "M11", "M11", "Rotate", "TableRotate");
+            CreateagvStationTestFlow(context, "M12", "M12", "Rotate", "TableRotate");
+            CreateagvStationTestFlow(context, "M13", "M13", "Rotate", "TableRotate");
+            CreateagvStationTestFlow(context, "M14", "M14", "Rotate", "TableRotate");
+
+
+
 
             //for (int i = 0; i < 3; i++)
             //{

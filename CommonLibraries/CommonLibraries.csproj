@@ -92,7 +92,7 @@
     <Compile Include="Models\dbModels\agvTask.cs" />
     <Compile Include="Models\dbModels\agvZone_Info.cs" />
     <Compile Include="Models\dbModels\ApplicationErrorLog.cs" />
-    <Compile Include="Models\dbModels\CimVcsCommunicationLog.cs" />
+    <Compile Include="Models\dbModels\ServerVCSCommuniationLog.cs" />
     <Compile Include="Models\dbModels\ServerClientCommunicationLog.cs" />
     <Compile Include="Models\dbModels\User.cs" />
     <Compile Include="Models\dbModels\UserActivityLog.cs" />

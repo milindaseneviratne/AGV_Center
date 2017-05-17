@@ -5,7 +5,7 @@ namespace CommonLibraries.Models
     public partial class UserActivityLog
     {
         public byte[] TimeStamp { get; set; }
-        public int Id { get; set; }
+        public long Id { get; set; }
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string UserGroup { get; set; }

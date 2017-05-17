@@ -2,7 +2,7 @@ namespace CommonLibraries.Models
 {
     public class ApplicationErrorLog
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string HelpLink { get; set; }
         public string Message { get; set; }
         public string Source { get; set; }

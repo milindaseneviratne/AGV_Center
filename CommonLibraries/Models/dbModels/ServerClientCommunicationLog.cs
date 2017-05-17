@@ -8,7 +8,7 @@ namespace CommonLibraries.Models.dbModels
 {
     public class ServerClientCommunicationLog
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public DateTime Time { get; set; }
         public string TxCommand { get; set; }
         public string RxCommand { get; set; }

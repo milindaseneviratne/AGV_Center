@@ -66,7 +66,9 @@ namespace AGV_Control_Center.ViewModels
         {
             try
             {
-                throw new UnauthorizedAccessException();
+                //throw new UnauthorizedAccessException();
+                //ModelFactory modelfactory = new ModelFactory();
+                //modelfactory.Convert();
 
                 PasswordBox pwdBox = sender as PasswordBox;
                 UserProperty.Password = pwdBox.Password;

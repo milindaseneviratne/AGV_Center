@@ -98,6 +98,7 @@
     <Compile Include="Models\dbModels\UserActivityLog.cs" />
     <Compile Include="Models\BarcodeScanner.cs" />
     <Compile Include="Models\ErrorLogger.cs" />
+    <Compile Include="Models\ModelFactory.cs" />
     <Compile Include="Models\SerialCommunicator.cs" />
     <Compile Include="Models\SQLCommunicator.cs" />
     <Compile Include="Models\StateObject.cs" />

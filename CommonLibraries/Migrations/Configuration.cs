@@ -52,7 +52,7 @@ namespace CommonLibraries.Migrations
                 new agvCommand_Type_Info { Name = "AGV_Request", Byte = 6, Type = "AGV_Request", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
                 new agvCommand_Type_Info { Name = "ChargeAll", Byte = 7, Type = "ChargeAll", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
                 new agvCommand_Type_Info { Name = "NewTable", Byte = 8, Type = "NewTable", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" },
-                new agvCommand_Type_Info { Name = "TabelRotate", Byte = 9, Type = "TabelRotate", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" }
+                new agvCommand_Type_Info { Name = "TableRotate", Byte = 9, Type = "TableRotate", Argument = "Argument Desriptions go here", DataSource = "agvStationTestFlow", Remark = "Remarks Go here" }
                 );
 
             context.agvStatus_Info.AddOrUpdate(u => u.Status,
@@ -122,31 +122,29 @@ namespace CommonLibraries.Migrations
             CreateagvStationTestFlow(context, "S17", "S18", "OK", "Table_Move");
             CreateagvStationTestFlow(context, "S18", "QC1", "Finished", "Table_Move");
             //NG Flow
-            CreateagvStationTestFlow(context, "S1", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S2", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S3", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S4", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S5", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S6", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S7", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S8", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S9", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S10", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "M11", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "M12", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "M13", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "M14", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S15", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S16", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S17", "Repair", "NG", "Table_Move");
-            CreateagvStationTestFlow(context, "S18", "Repair", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S1", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S2", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S3", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S4", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S5", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S6", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S7", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S8", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S9", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S10", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "M11", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "M12", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "M13", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "M14", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S15", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S16", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S17", "Repair1", "NG", "Table_Move");
+            CreateagvStationTestFlow(context, "S18", "Repair1", "NG", "Table_Move");
             //Rotate Flow
             CreateagvStationTestFlow(context, "M11", "M11", "Rotate", "TableRotate");
             CreateagvStationTestFlow(context, "M12", "M12", "Rotate", "TableRotate");
             CreateagvStationTestFlow(context, "M13", "M13", "Rotate", "TableRotate");
             CreateagvStationTestFlow(context, "M14", "M14", "Rotate", "TableRotate");
-
-
 
 
             //for (int i = 0; i < 3; i++)
@@ -169,10 +167,10 @@ namespace CommonLibraries.Migrations
             context.agvStationTestFlow.AddOrUpdate(x => new { x.Command_TypeId, x.Current_StationId, x.Dest_StationId },
                 new agvStationTestFlow
                 {
-                    Current_StationId = context.agvStation_Info.Where(s => s.Name == currentStationName).FirstOrDefault().Id,
-                    Dest_StationId = context.agvStation_Info.Where(s => s.Name == destStationName).FirstOrDefault().Id,
-                    StatusId = context.agvStatus_Info.Where(s => s.Status == status).FirstOrDefault().Id,
-                    Command_TypeId = context.agvCommand_Type_Info.Where(c => c.Name == commandType).FirstOrDefault().Id,
+                    Current_StationId = context.agvStation_Info.Where(s => s.Name.Equals(currentStationName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault().Id,
+                    Dest_StationId = context.agvStation_Info.Where(s => s.Name.Equals(destStationName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault().Id,
+                    StatusId = context.agvStatus_Info.Where(s => s.Status.Equals(status,StringComparison.OrdinalIgnoreCase)).FirstOrDefault().Id,
+                    Command_TypeId = context.agvCommand_Type_Info.Where(c => c.Name.Equals(commandType, StringComparison.OrdinalIgnoreCase)).FirstOrDefault().Id,
                     UpdateTime = DateTime.Now
                 });
         }

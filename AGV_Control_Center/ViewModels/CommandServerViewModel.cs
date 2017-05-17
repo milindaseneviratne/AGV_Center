@@ -14,6 +14,7 @@ namespace AGV_Control_Center.ViewModels
 {
     public class CommandServerViewModel : BindableBase, IRegionMemberLifetime, INavigationAware
     {
+        private agvTaskCreator agvTaskCreator = new agvTaskCreator();
 
         public bool KeepAlive
         {
@@ -50,6 +51,7 @@ namespace AGV_Control_Center.ViewModels
                 }
             }
         }
+
         public DelegateCommand StartServerCommand { get; set; }
         public CommandServerViewModel()
         {
@@ -72,10 +74,13 @@ namespace AGV_Control_Center.ViewModels
 
         private void InitializeServer()
         {
-            AgvControlSystemServer = new AsynchonousSocketListner();
             Thread listnerThread = new Thread(AgvControlSystemServer.StartListning);
             listnerThread.SetApartmentState(ApartmentState.STA);
             listnerThread.Start();
+
+            Thread dequeueThread = new Thread(agvTaskCreator.DequeueTasks);
+            dequeueThread.SetApartmentState(ApartmentState.STA);
+            dequeueThread.Start();
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

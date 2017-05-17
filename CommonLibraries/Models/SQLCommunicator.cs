@@ -41,16 +41,20 @@ namespace CommonLibraries.Models
 
         public agvStation_Info GetStation(string destination)
         {
-            var query = dbContext.agvStation_Info
-                .Where(x => x.Name.Equals(destination, StringComparison.OrdinalIgnoreCase))
-                .FirstOrDefault();
-
-            if (query != null)
+            using (sqlDbContextEF privatedbContext = new sqlDbContextEF())
             {
-                return query;
-            }
+                var query = privatedbContext.agvStation_Info
+               .Where(x => x.Name.Equals(destination, StringComparison.OrdinalIgnoreCase))
+               .FirstOrDefault();
 
-            return null;
+                if (query != null)
+                {
+                    return query;
+                }
+
+                return null;
+            }
+           
         }
 
         public bool CreateTask(agvModel_Info model, agvStation_Info currentStation, agvStation_Info destinationStation, string result)
@@ -71,6 +75,20 @@ namespace CommonLibraries.Models
             }
 
             return false;
+        }
+
+        public List<agvTask> GetTasksInQueue()
+        {
+            var query = dbContext.agvTask
+                                  .Where(t => t.Result.Equals("In Queue", StringComparison.OrdinalIgnoreCase))
+                                  .ToList();
+
+            if (query != null)
+            {
+                return query;
+            }
+
+            return null;
         }
 
         public bool InsertNewUser(ApplicationUser user)
@@ -108,10 +126,13 @@ namespace CommonLibraries.Models
         {
             var result = dbContext.agvStationTestFlow
                                   .Where(row => row.Current_Station.Name == barcode.Station && row.Status.Status == barcode.Status)
-                                  .FirstOrDefault()
-                                  .Command_Type.Name;
+                                  .FirstOrDefault();
+            if (result != null)
+            {
+                return result.Command_Type.Name;
+            }
 
-            return result;
+            return null;
         }
 
         public bool InsertExceptionInformation(Exception ex)

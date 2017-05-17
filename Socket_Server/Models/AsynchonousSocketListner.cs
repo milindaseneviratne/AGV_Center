@@ -82,8 +82,12 @@ namespace Socket_Server.Models
                     // finished recieving. What should I do now?
                     var rawBarcode = recvievedBarcode.RemoveEOF();
                     var vcsCommand = bacrodeDecoder.GetVCSCommand(rawBarcode);
-                    bool success = vcsComm.SendCommand(vcsCommand);
-                    bool taskCreated = agvTaskCreator.CreateTask(vcsCommand);
+
+                    bool success = false;
+                    if (vcsCommand.HasData()) success = vcsComm.SendCommand(vcsCommand);
+
+                    bool taskCreated = false;
+                    if (success) taskCreated = agvTaskCreator.CreateTask(vcsCommand);
 
                     if (success && taskCreated)
                     {

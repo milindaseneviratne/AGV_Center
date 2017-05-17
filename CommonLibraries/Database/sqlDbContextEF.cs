@@ -33,7 +33,6 @@ namespace CommonLibraries.Database
         //MilindaSQLExpress
         public sqlDbContextEF() : base("name=AGVControlCenter_TEST") 
         {
-            
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

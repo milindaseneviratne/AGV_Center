@@ -98,7 +98,7 @@ namespace AGV_Control_Center.ViewModels
                 if (!string.IsNullOrWhiteSpace(scannedBarcode))
                 {
                     CommunicationsList.Insert(0, "Sent to Server ---->" + scannedBarcode);
-                    rxCommand = client.SendRecTCPCommand(scannedBarcode + "<EOF>", "C8810");
+                    rxCommand = await client.SendRecTCPCommand(scannedBarcode + "<EOF>", "C8810");
                     CommunicationsList.Insert(0, "Recvd from Server <----" + rxCommand);
                     sqlLogger.LogServerClientCommunications(rxCommand, scannedBarcode);
                 }
@@ -117,10 +117,10 @@ namespace AGV_Control_Center.ViewModels
             return successFlag;
         }
 
-        private void exSendQrCodeCmd()
+        private async void exSendQrCodeCmd()
         {
             CommunicationsList.Insert(0, "Sent to Server ---->" + QrCode);
-            rxCommand = client.SendRecTCPCommand(QrCode, "C8810");
+            rxCommand = await client.SendRecTCPCommand(QrCode, "C8810");
             CommunicationsList.Insert(0, "Recvd from Server <----" + rxCommand);
             sqlLogger.LogServerClientCommunications(rxCommand, QrCode);
         }

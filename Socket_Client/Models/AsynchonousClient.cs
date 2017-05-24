@@ -13,6 +13,8 @@ namespace Socket_Client.Models
 {
     public class AsynchonousClient
     {
+        private const int SEND_REC_TIMEOUT = 1000;
+
         private const int port = 11000;
 
         private static ManualResetEvent connectDone = new ManualResetEvent(false);
@@ -22,20 +24,26 @@ namespace Socket_Client.Models
         private static string response = string.Empty;
         public static Socket client = null;
 
-        public string SendRecTCPCommand(string data, string serverName, int port = 11000)
+        public async Task<string> SendRecTCPCommand(string data, string serverName, int port = 11000)
         {
-            ConnectToServer(serverName);
+            var result = await Task.Run(()=>
+            {
+                ConnectToServer(serverName);
 
-            Send(client, data);
-            sendDone.WaitOne();
+                Send(client, data);
+                sendDone.WaitOne(SEND_REC_TIMEOUT);
 
-            Recieve(client);
-            recieveDone.WaitOne();
+                Recieve(client);
+                recieveDone.WaitOne(SEND_REC_TIMEOUT);
 
-            EndConnection();
+                EndConnection();
+
+                return true;
+            }); 
 
             return response;
         }
+
         private static void ConnectToServer(string server, int port = 11000)
         {
             try

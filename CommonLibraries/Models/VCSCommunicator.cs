@@ -81,6 +81,9 @@ namespace CommonLibraries.Models
         {
             Client = new CommunicationClient(IP.ToString(), vcsPort);
             Client.sendMessage(messagetoSend);
+            var response = Client.receiveMessage();
+
+            var responseMesage = response.Message.ToString();
         }
     }
 }

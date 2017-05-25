@@ -16,19 +16,20 @@ namespace CommonLibraries.Models
         public string ScannedString { get; set; }
         public string Command { get; set; }
         public agvStationTestFlow TestFlow { get; set; }
-        public Barcode GetVCSCommand(string scannedString)
+        public Barcode GetVCSCommand(byte[] rxMessageArray)
         {
+            var scannedString = Encoding.ASCII.GetString(rxMessageArray, 0, rxMessageArray.Length);
+
+            scannedString = scannedString.RemoveEOF();
+
             barcode = new Barcode();
             ScannedString = scannedString.EliminateExtraChars();
 
-            //if (ScannedString.Contains("OK") || ScannedString.Contains("Initial"))
-            //{
-                barcode.Station = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().LastOrDefault();
-                barcode.Group = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().FirstOrDefault();
-                barcode.Status = ScannedString.Split('@').ToList().LastOrDefault();
-                barcode.Destination = sqlCommunicator.GetDestination(barcode);
-                barcode.Comand = sqlCommunicator.GetCommandType(barcode);
-            //}
+            barcode.Station = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().LastOrDefault();
+            barcode.Group = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().FirstOrDefault();
+            barcode.Status = ScannedString.Split('@').ToList().LastOrDefault();
+            barcode.Destination = sqlCommunicator.GetDestination(barcode);
+            barcode.Comand = sqlCommunicator.GetCommandType(barcode);
 
             return barcode;
         }

@@ -13,14 +13,13 @@ namespace Socket_Server.Models
 {
     public class AsynchonousServer
     {
-        private BarcodeDecoder bacrodeDecoder = new BarcodeDecoder();
-        private VCSCommunicator vcsComm = new VCSCommunicator();
-        private agvTaskCreator agvTaskCreator = new agvTaskCreator();
-
         public ManualResetEvent allDone = new ManualResetEvent(false);
         public Socket listner = null;
-        public void StartListning()
+        private RecievedMessagesController _rxMessages;
+
+        public void StartListning(RecievedMessagesController rxMessages)
         {
+            _rxMessages = rxMessages;
             byte[] bytes = new byte[1024];
 
             IPHostEntry ipHostEntry = Dns.GetHostEntry(Dns.GetHostName());
@@ -73,32 +72,13 @@ namespace Socket_Server.Models
 
                 if (bytesRead > 0)
                 {
+                    _rxMessages.TryAdd(state.buffer);
                     state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
                     recvievedBarcode = state.sb.ToString();
                 }
 
                 if (recvievedBarcode.IndexOf("<EOF>") > -1)
                 {
-                    // finished recieving. What should I do now?
-                    var rawBarcode = recvievedBarcode.RemoveEOF();
-                    var vcsCommand = bacrodeDecoder.GetVCSCommand(rawBarcode);
-
-                    bool success = false;
-                    if (vcsCommand.HasData()) success = vcsComm.SendCommand(vcsCommand);
-
-                    bool taskCreated = false;
-                    if (success) taskCreated = agvTaskCreator.CreateTask(vcsCommand);
-
-                    if (success && taskCreated)
-                    {
-                        recvievedBarcode = (recvievedBarcode.RemoveEOF() + " OK").AddEOF();
-                    }
-                    else
-                    {
-                        recvievedBarcode = (recvievedBarcode.RemoveEOF() + " ERROR").AddEOF();
-                    }
-
-                    // Send ACK
                     Send(handler, recvievedBarcode);
                 }
                 else

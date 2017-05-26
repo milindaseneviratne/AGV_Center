@@ -75,6 +75,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\agvTaskCreator.cs" />
+    <Compile Include="Models\agvTaskDequer.cs" />
     <Compile Include="Models\Barcode.cs" />
     <Compile Include="Models\BarcodeDecoder.cs" />
     <Compile Include="Models\dbModels\BarcodeScannerConfig.cs" />
@@ -98,7 +99,6 @@
     <Compile Include="Models\BarcodeScanner.cs" />
     <Compile Include="Models\ErrorLogger.cs" />
     <Compile Include="Models\ModelFactory.cs" />
-    <Compile Include="Models\RecievedMessagesController.cs" />
     <Compile Include="Models\SerialCommunicator.cs" />
     <Compile Include="Models\SQLCommunicator.cs" />
     <Compile Include="Models\StateObject.cs" />

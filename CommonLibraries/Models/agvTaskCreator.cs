@@ -11,8 +11,8 @@ namespace CommonLibraries.Models
 {
     public class agvTaskCreator
     {
-        private VCSCommunicator vcsComm = new VCSCommunicator();
         private SQLCommunicator sqlComm = new SQLCommunicator();
+
         public bool CreateTask(Barcode barcode)
         {
             if (barcode != null && barcode.HasData())
@@ -41,28 +41,6 @@ namespace CommonLibraries.Models
             }
 
             return "In Queue";
-        }
-
-        public void DequeueTasks()
-        {
-            while(true)
-            {
-                var enqueuedTasks = sqlComm.GetTasksInQueue();
-
-                foreach (var taskItem in enqueuedTasks)
-                {
-                    //check if destination is idle.
-                    var destination = sqlComm.GetStation(taskItem.Dest_Station);
-
-                    if (destination.Status.Equals("Idle", StringComparison.OrdinalIgnoreCase))
-                    {
-                        //send VCS command "TableFromIdle" to take the table to the destination.
-                        vcsComm.SendDequeueTaskCommand(taskItem, destination);
-                        Thread.Sleep(500);
-                    }
-                }
-                Thread.Sleep(5000);
-            }
         }
     }
 }

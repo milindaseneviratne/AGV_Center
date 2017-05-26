@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace CommonLibraries.Models
 {
@@ -13,17 +14,23 @@ namespace CommonLibraries.Models
     {
         private SQLCommunicator sqlCommunicator = new SQLCommunicator();
         private Barcode barcode;
+        private ConcurrentQueue<string> _agvRxQueue;
+        private ConcurrentQueue<Barcode> _vcsTxQueue;
+
+        public BarcodeDecoder(ConcurrentQueue<string> agvRxQueue, ConcurrentQueue<Barcode> vcsTxQueue)
+        {
+            _agvRxQueue = agvRxQueue;
+            _vcsTxQueue = vcsTxQueue;
+        }
 
         public string ScannedString { get; set; }
 
-        public Barcode GetVCSCommand(byte[] rxMessageArray)
+        private Barcode GetVCSCommand(string rxString)
         {
-            var scannedString = Encoding.ASCII.GetString(rxMessageArray, 0, rxMessageArray.Length);
-
-            scannedString = scannedString.RemoveEOF();
+            rxString = rxString.RemoveEOF();
 
             barcode = new Barcode();
-            ScannedString = scannedString.EliminateExtraChars();
+            ScannedString = rxString.EliminateExtraChars();
 
             barcode.Station = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().LastOrDefault();
             barcode.Group = ScannedString.Split('@').ToList().FirstOrDefault().Split('+').ToList().FirstOrDefault();
@@ -34,5 +41,16 @@ namespace CommonLibraries.Models
             return barcode;
         }
 
+        public void ProcessBarcodes()
+        {
+            while (true)
+            {
+                string result;
+                bool success = _agvRxQueue.TryDequeue(out result);
+                if (!success) continue;
+                _vcsTxQueue.Enqueue(GetVCSCommand(result));
+            }
+            
+        }
     }
 }

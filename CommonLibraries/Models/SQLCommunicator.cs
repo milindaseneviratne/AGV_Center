@@ -40,6 +40,10 @@ namespace CommonLibraries.Models
 
         public agvModel_Info GetModel()
         {
+            //In this query we search in agvModel_Info for a row where the value in the
+            //Code Column is "3F1SW"
+            //FirtstOrDefault just gets the first result if there are many rows that
+            //match the condition.
             var query = dbContext.agvModel_Info
                 .Where(x => x.Code.Equals("3F1SW", StringComparison.OrdinalIgnoreCase))
                 .FirstOrDefault();
@@ -106,6 +110,10 @@ namespace CommonLibraries.Models
 
         public bool InsertNewUser(ApplicationUser user)
         {
+            //Here we can see a User object being created,
+            //then the object properties are loaded.
+            //then the object is added to the dbcontext.TableName.Add()
+            //Finally changes are saved.
             bool successFlag = false;
 
             User dbUserObject = new User();
@@ -170,6 +178,9 @@ namespace CommonLibraries.Models
 
         public void LogUserOUT(ApplicationUser userProperty)
         {
+            //Here we fetch a row from the user activity log table
+            //And then update the logout time property
+            //finally save the changes.
             var query = (from row in dbContext.UserActivityLog
                          where row.UserId == userProperty.Id
                          orderby row.TimeStamp descending

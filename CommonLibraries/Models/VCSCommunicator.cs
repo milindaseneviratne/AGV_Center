@@ -2,6 +2,7 @@
 using CommonLibraries.Models.dbModels;
 using Communication;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -13,27 +14,47 @@ namespace CommonLibraries.Models
 {
     public class VCSCommunicator
     {
-        private CommunicationClient Client;
+        private agvTaskCreator agvTaskDequer = new agvTaskCreator();
+        private CommunicationServer serverForVcs;
         private IPAddress IP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(addresses => addresses.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
-        private Communication.Communication.IPandMessage messagetoSend;
+        private ConcurrentQueue<byte[]> _vcsRxQueue;
+        private ConcurrentQueue<Barcode> _vcsTxStack;
+        private int _vcsPort;
 
-        public bool SendCommand(Barcode barcode, string vcsIP = "", int vcsPort = 26000 )
+        public VCSCommunicator(ConcurrentQueue<byte[]> vcsRxQueue, ConcurrentQueue<Barcode> vcsTxQueue, string vcsIP = "", int vcsPort = 26000)
         {
-            try
+            _vcsRxQueue = vcsRxQueue;
+            _vcsTxStack = vcsTxQueue;
+            _vcsPort = vcsPort;
+        }
+
+        public void SendVCSCommands()
+        {
+            while (true)
             {
-                byte[] message = ToBytes(barcode);
+                try
+                {
+                    //Looping here untill we get a barcode to decode.
+                    Barcode result;
+                    bool success = _vcsTxStack.TryDequeue(out result);
+                    if (!success) continue;
 
-                messagetoSend = new Communication.Communication.IPandMessage(IP, message);
+                    //Convert Barcode to bytes.
+                    byte[] message = ToBytes(result);
+                    var messagetoSend = new Communication.Communication.IPandMessage(IP, message);
 
-                Send(vcsPort);
-                return true;
+                    //Send Barcode to VCS.
+                    serverForVcs.sendMessage(messagetoSend);
+
+                    //Create a task entry in the SQL Server.
+                    agvTaskDequer.CreateTask(result);
+                }
+                catch (Exception e)
+                {
+                    e.WriteLog().SaveToDataBase();
+                    break;
+                }
             }
-            catch (Exception e)
-            {
-                e.WriteLog().SaveToDataBase();
-            }
-
-            return false;
         }
 
         public bool SendDequeueTaskCommand(agvTask task, agvStation_Info destination, int vcsPort = 26000)
@@ -42,9 +63,9 @@ namespace CommonLibraries.Models
             {
                 byte[] message = ToBytes(task, destination);
 
-                messagetoSend = new Communication.Communication.IPandMessage(IP, message);
+                var messagetoSend = new Communication.Communication.IPandMessage(IP, message);
 
-                Send(vcsPort);
+                Send(messagetoSend);
                 return true;
             }
             catch (Exception e)
@@ -71,20 +92,44 @@ namespace CommonLibraries.Models
             byte[] messageRAW = Encoding.ASCII.GetBytes(barcode.Comand + barcode.Destination);
 
             byte[] message = new byte[4];
-            message[0] = messageRAW[0];
-            message[1] = messageRAW[1];
-            message[2] = messageRAW[2];
-            message[3] = messageRAW[3];
+            message[0] = messageRAW.Length > 0 ? messageRAW[0] : (byte)0;
+            message[1] = messageRAW.Length > 1 ? messageRAW[1] : (byte)0;
+            message[2] = messageRAW.Length > 2 ? messageRAW[2] : (byte)0;
+            message[3] = messageRAW.Length > 3 ? messageRAW[3] : (byte)0;
             return message;
         }
-        
-        private void Send(int vcsPort)
-        {
-            Client = new CommunicationClient(IP.ToString(), vcsPort);
-            Client.sendMessage(messagetoSend);
-            var response = Client.receiveMessage();
 
-            var responseMesage = response.Message.ToString();
+        public void SetupServer()
+        {
+            if (serverForVcs == null) serverForVcs = new CommunicationServer(_vcsPort);
+        }
+
+        private void Send(Communication.Communication.IPandMessage messagetoSend)
+        {
+            serverForVcs.sendMessage(messagetoSend);
+        }
+
+        public void RecieveVCSCommands()
+        {
+            while (true)
+            {
+                try
+                {
+                    //Loop here until we get a response from VCS.
+                    var response = serverForVcs.receiveMessage();
+                    if (response == null) continue;
+
+                    //Save the response byte[] in the queue
+                    var responseMesage = response.Message.ToArray();
+                    _vcsRxQueue.Enqueue(responseMesage);
+                }
+                catch (Exception e)
+                {
+                    e.WriteLog().SaveToDataBase().Display();
+                    break;
+                }
+               
+            }
         }
     }
 }

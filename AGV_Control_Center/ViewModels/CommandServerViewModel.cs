@@ -5,6 +5,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Socket_Server.Models;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +16,15 @@ namespace AGV_Control_Center.ViewModels
 {
     public class CommandServerViewModel : BindableBase, IRegionMemberLifetime, INavigationAware
     {
-        private agvTaskCreator agvTaskCreator = new agvTaskCreator();
-        private BarcodeDecoder bacrodeDecoder = new BarcodeDecoder();
-        private VCSCommunicator vcsComm = new VCSCommunicator();
-        private RecievedMessagesController rxMessageQueue = new RecievedMessagesController();
+        private ConcurrentQueue<Barcode> vcsTxQueue = new ConcurrentQueue<Barcode>();
+        private ConcurrentQueue<byte[]> vcsRxQueue = new ConcurrentQueue<byte[]>();
+
+        private ConcurrentQueue<string> agvRxQueue = new ConcurrentQueue<string>();
+
+        private VCSCommunicator vcsServer;
+        private BarcodeDecoder bacrodeDecoder;
+        private agvTaskDequer agvTaskDequer;
+
 
         public bool KeepAlive
         {
@@ -43,7 +49,7 @@ namespace AGV_Control_Center.ViewModels
             {
                 if (agvControlSystemServer == null)
                 {
-                    agvControlSystemServer = new AsynchonousServer();
+                    agvControlSystemServer = new AsynchonousServer(agvRxQueue);
                 }
                 return agvControlSystemServer;
             }
@@ -51,7 +57,7 @@ namespace AGV_Control_Center.ViewModels
             {
                 if (agvControlSystemServer == null)
                 {
-                    agvControlSystemServer = new AsynchonousServer();
+                    agvControlSystemServer = new AsynchonousServer(agvRxQueue);
                 }
             }
         }
@@ -59,12 +65,14 @@ namespace AGV_Control_Center.ViewModels
         public DelegateCommand StartServerCommand { get; set; }
         public CommandServerViewModel()
         {
+            vcsServer = new VCSCommunicator(vcsRxQueue, vcsTxQueue);
+            bacrodeDecoder = new BarcodeDecoder(agvRxQueue, vcsTxQueue);
             StartServerCommand = new DelegateCommand(exStartServerCmd, canExStartServerCmd).ObservesProperty(() => UserProperty);
         }
 
         private void exStartServerCmd()
         {
-            //InitializeServer();
+            InitializeServer();
         }
 
         private bool canExStartServerCmd()
@@ -84,39 +92,27 @@ namespace AGV_Control_Center.ViewModels
         private void InitializeServer()
         {
             //Start the server
+            Task.Run(() => AgvControlSystemServer.StartListning());
             //Load values to the messageQueue
-            Task.Run(() => AgvControlSystemServer.StartListning(rxMessageQueue));
 
             //ProcessValues in the message queue
-            byte[] rxMessageArray;
-            rxMessageQueue.TryTake(out rxMessageArray);
-            var vcsCommand = bacrodeDecoder.GetVCSCommand(rxMessageArray);
+            Task.Run(() => bacrodeDecoder.ProcessBarcodes());
 
             //Start VCS Communication server
+            vcsServer.SetupServer();
 
-            //Send Messages to VCS.
-            bool success = false;
-            if (vcsCommand.HasData()) success = vcsComm.SendCommand(vcsCommand);
-
-            //Recieve Messages from VCS
-
-            //Create a Task
-            bool taskCreated = false;
-            if (success) taskCreated = agvTaskCreator.CreateTask(vcsCommand);
+            //Send Commands to VCS and create task.
+            Task.Run(() => vcsServer.SendVCSCommands());
+            
+            //Recieve Commands from VCS
+            Task.Run(() => vcsServer.RecieveVCSCommands());
 
             //Create ACK for Clients
-            //if (success && taskCreated)
-            //{
-            //    recvievedBarcode = (recvievedBarcode.RemoveEOF() + " OK").AddEOF();
-            //}
-            //else
-            //{
-            //    recvievedBarcode = (recvievedBarcode.RemoveEOF() + " ERROR").AddEOF();
-            //}
+
             //Send Client Response.
 
             //Dequeue Tasks
-            agvTaskCreator.DequeueTasks();
+            Task.Run(() => agvTaskDequer.DequeueTasks());
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

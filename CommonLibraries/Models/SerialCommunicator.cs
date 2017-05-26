@@ -181,7 +181,7 @@ namespace CommonLibraries.Models
             {
                 SerialPort SerialPortObj = new SerialPort();
                 BarcodeScanner barcodeScanner = FindBarcodeScanner(scannerConfig);
-                if (!string.IsNullOrWhiteSpace(barcodeScanner.COMPortName))
+                if (barcodeScanner != null && !string.IsNullOrWhiteSpace(barcodeScanner.COMPortName))
                 {
                     OpenSerialPort(SerialPortObj, barcodeScanner.COMPortName);
 

@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace Socket_Server.Models
 {
@@ -15,11 +16,15 @@ namespace Socket_Server.Models
     {
         public ManualResetEvent allDone = new ManualResetEvent(false);
         public Socket listner = null;
-        private RecievedMessagesController _rxMessages;
+        private ConcurrentQueue<string> _agvRxQueue;
 
-        public void StartListning(RecievedMessagesController rxMessages)
+        public AsynchonousServer(ConcurrentQueue<string> agvRxQueue)
         {
-            _rxMessages = rxMessages;
+            _agvRxQueue = agvRxQueue;
+        }
+
+        public void StartListning()
+        {
             byte[] bytes = new byte[1024];
 
             IPHostEntry ipHostEntry = Dns.GetHostEntry(Dns.GetHostName());
@@ -72,13 +77,13 @@ namespace Socket_Server.Models
 
                 if (bytesRead > 0)
                 {
-                    _rxMessages.TryAdd(state.buffer);
                     state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
                     recvievedBarcode = state.sb.ToString();
                 }
 
                 if (recvievedBarcode.IndexOf("<EOF>") > -1)
                 {
+                    _agvRxQueue.Enqueue(recvievedBarcode);
                     Send(handler, recvievedBarcode);
                 }
                 else

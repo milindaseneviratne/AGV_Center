@@ -17,6 +17,7 @@ namespace CommonLibraries.Models
     {
         //public static SerialPort SerialPortObj = new SerialPort();
         private SQLCommunicator sqlComm = new SQLCommunicator();
+
         //Added By Milinda, Universal function to Open the Serial port.
         public static bool OpenSerialPort(SerialPort SerialPortObj, string PortName)
         {
@@ -141,7 +142,7 @@ namespace CommonLibraries.Models
             return rxString;
         }
 
-        public async Task<List<string>> readStringsfromSerialPortAsync(BarcodeScanner barcodeScanner, CancellationToken ct)
+        private async Task<List<string>> readStringsfromSerialPortAsync(BarcodeScanner barcodeScanner, CancellationToken ct)
         {
             List<string> RecCmds = new List<string>();
             byte[] buffer = new byte[1000];

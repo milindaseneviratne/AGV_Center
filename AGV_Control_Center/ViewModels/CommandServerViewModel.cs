@@ -64,7 +64,7 @@ namespace AGV_Control_Center.ViewModels
 
         private void exStartServerCmd()
         {
-            InitializeServer();
+            //InitializeServer();
         }
 
         private bool canExStartServerCmd()
@@ -78,13 +78,14 @@ namespace AGV_Control_Center.ViewModels
 
         /// <summary>
         /// This section is incomeplete as at 25th May 2017.
-        /// The Original communication method with the AGV
+        /// The Original communication method with the AGV Center and VCS was incompatible.
+        /// The VCS needs continous read write communication.
         /// </summary>
         private void InitializeServer()
         {
             //Start the server
             //Load values to the messageQueue
-            AgvControlSystemServer.StartListning(rxMessageQueue);
+            Task.Run(() => AgvControlSystemServer.StartListning(rxMessageQueue));
 
             //ProcessValues in the message queue
             byte[] rxMessageArray;

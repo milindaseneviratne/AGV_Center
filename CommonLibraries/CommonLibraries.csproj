@@ -70,7 +70,6 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Database\sqlDbContextEF.cs" />
-    <Compile Include="Enumerations\BarcodesTypes.cs" />
     <Compile Include="Enumerations\UserGroups.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />

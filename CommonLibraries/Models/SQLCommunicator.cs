@@ -12,6 +12,19 @@ namespace CommonLibraries.Models
     public class SQLCommunicator
     {
         private sqlDbContextEF dbContext = new sqlDbContextEF();
+        private int SaveChanges()
+        {
+            try
+            {
+                return dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                ex.WriteLog().SaveToDataBase().Display();
+            }
+
+            return 0;
+        }
 
         public User GetuserInfo(ApplicationUser user)
         {
@@ -165,20 +178,6 @@ namespace CommonLibraries.Models
             query.LogoutTime = userProperty.LogOut;
 
             SaveChanges();
-        }
-
-        private int SaveChanges()
-        {
-            try
-            {
-                return dbContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                ex.WriteLog().SaveToDataBase().Display();
-            }
-
-            return 0;
         }
 
         public void LogUserIN(ApplicationUser userProperty)

@@ -12,10 +12,10 @@ namespace CommonLibraries.Models
     public class CommunicationLogger
     {
         SQLCommunicator sqlCommunicatior = new SQLCommunicator();
-        public void LogServerClientCommunications(string rxCommand, string qrCode)
+        public void LogServerClientCommunications(string rxCommand, string txCommand)
         {
             ServerClientCommunicationLog serverClientLog = new ServerClientCommunicationLog();
-            serverClientLog.TxCommand = qrCode;
+            serverClientLog.TxCommand = txCommand;
             serverClientLog.RxCommand = rxCommand;
             serverClientLog.Time = DateTime.Now;
 

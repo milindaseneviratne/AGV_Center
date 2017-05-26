@@ -13,9 +13,9 @@ namespace CommonLibraries.Models
     {
         private SQLCommunicator sqlCommunicator = new SQLCommunicator();
         private Barcode barcode;
+
         public string ScannedString { get; set; }
-        public string Command { get; set; }
-        public agvStationTestFlow TestFlow { get; set; }
+
         public Barcode GetVCSCommand(byte[] rxMessageArray)
         {
             var scannedString = Encoding.ASCII.GetString(rxMessageArray, 0, rxMessageArray.Length);

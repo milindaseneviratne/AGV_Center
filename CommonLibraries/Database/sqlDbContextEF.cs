@@ -12,12 +12,14 @@ namespace CommonLibraries.Database
 {
     class sqlDbContextEF : DbContext
     {
+        //Application Data.
         public DbSet<ApplicationErrorLog> ApplicationErrorLog { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserActivityLog> UserActivityLog { get; set; }
         public DbSet<ServerClientCommunicationLog> CommunicationLog { get; set; }
         public DbSet<BarcodeScannerConfig> BarcodeScannerConfigs { get; set; }
 
+        //agv control related data.
         public DbSet<agvStationTestFlow> agvStationTestFlow { get; set; }
         public DbSet<agvAGV_Info> agvAGV_Info { get; set; }
         public DbSet<agvCommand_Type_Info> agvCommand_Type_Info { get; set; }

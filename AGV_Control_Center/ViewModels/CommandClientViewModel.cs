@@ -125,8 +125,6 @@ namespace AGV_Control_Center.ViewModels
             sqlLogger.LogServerClientCommunications(rxCommand, QrCode);
         }
 
-
-
         private bool canSendCmd()
         {
             bool canSendCmd = false;
@@ -149,11 +147,11 @@ namespace AGV_Control_Center.ViewModels
         //    UserProperty = obj.User;
         //}
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public async void OnNavigatedTo(NavigationContext navigationContext)
         {
             UserProperty = (ApplicationUser)navigationContext.Parameters[typeof(ApplicationUser).Name] ?? UserProperty;
             InitializeUI();
-            //InitializeBarcodeScanner();
+            await InitializeBarcodeScanner();
         }
 
         private async Task InitializeBarcodeScanner()

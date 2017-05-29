@@ -84,8 +84,12 @@ namespace AGV_Control_Center.ViewModels
 
         private void exExitCmd()
         {
-            UserProperty.LogOut = DateTime.Now;
-            sqldbCommunicator.LogUserOUT(UserProperty);
+            if (UserProperty != null)
+            {
+                UserProperty.LogOut = DateTime.Now;
+                sqldbCommunicator.LogUserOUT(UserProperty);
+            }
+            
             totalElapsedTimerMVVM.Stop();
             Application.Current.Shutdown();
         }

@@ -17,6 +17,7 @@ namespace AGV_Control_Center.ViewModels
 {
     public class CommandServerViewModel : BindableBase, IRegionMemberLifetime, INavigationAware
     {
+        //Concurrent Queues to save tx and rx values. These can be accessed by the different proceses at the same time.
         private BlockingCollection<Barcode> vcsTxQueue = new BlockingCollection<Barcode>( new ConcurrentQueue<Barcode>());
         private BlockingCollection<byte[]> vcsRxQueue = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>());
 

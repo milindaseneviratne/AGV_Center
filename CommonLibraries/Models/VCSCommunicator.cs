@@ -17,11 +17,11 @@ namespace CommonLibraries.Models
         private agvTaskCreator agvTaskDequer = new agvTaskCreator();
         private CommunicationServer serverForVcs;
         private IPAddress IP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(addresses => addresses.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
-        private ConcurrentQueue<byte[]> _vcsRxQueue;
-        private ConcurrentQueue<Barcode> _vcsTxStack;
+        private BlockingCollection<byte[]> _vcsRxQueue;
+        private BlockingCollection<Barcode> _vcsTxStack;
         private int _vcsPort;
 
-        public VCSCommunicator(ConcurrentQueue<byte[]> vcsRxQueue, ConcurrentQueue<Barcode> vcsTxQueue, string vcsIP = "", int vcsPort = 26000)
+        public VCSCommunicator(BlockingCollection<byte[]> vcsRxQueue, BlockingCollection<Barcode> vcsTxQueue, string vcsIP = "", int vcsPort = 26000)
         {
             _vcsRxQueue = vcsRxQueue;
             _vcsTxStack = vcsTxQueue;
@@ -35,9 +35,10 @@ namespace CommonLibraries.Models
                 try
                 {
                     //Looping here untill we get a barcode to decode.
-                    Barcode result;
-                    bool success = _vcsTxStack.TryDequeue(out result);
-                    if (!success) continue;
+                    //Barcode result;
+                    //bool success = _vcsTxStack.TryDequeue(out result);
+                    //if (!success) continue;
+                    Barcode result = _vcsTxStack.Take();
 
                     //Convert Barcode to bytes.
                     byte[] message = ToBytes(result);
@@ -121,7 +122,7 @@ namespace CommonLibraries.Models
 
                     //Save the response byte[] in the queue
                     var responseMesage = response.Message.ToArray();
-                    _vcsRxQueue.Enqueue(responseMesage);
+                    _vcsRxQueue.Add(responseMesage);
                 }
                 catch (Exception e)
                 {

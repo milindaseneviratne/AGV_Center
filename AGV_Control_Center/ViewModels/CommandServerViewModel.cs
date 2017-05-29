@@ -16,10 +16,10 @@ namespace AGV_Control_Center.ViewModels
 {
     public class CommandServerViewModel : BindableBase, IRegionMemberLifetime, INavigationAware
     {
-        private ConcurrentQueue<Barcode> vcsTxQueue = new ConcurrentQueue<Barcode>();
-        private ConcurrentQueue<byte[]> vcsRxQueue = new ConcurrentQueue<byte[]>();
+        private BlockingCollection<Barcode> vcsTxQueue = new BlockingCollection<Barcode>( new ConcurrentQueue<Barcode>());
+        private BlockingCollection<byte[]> vcsRxQueue = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>());
 
-        private ConcurrentQueue<string> agvRxQueue = new ConcurrentQueue<string>();
+        private BlockingCollection<string> agvRxQueue = new BlockingCollection<string>(new ConcurrentQueue<string>());
 
         private VCSCommunicator vcsServer;
         private BarcodeDecoder bacrodeDecoder;

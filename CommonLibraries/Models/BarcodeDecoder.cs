@@ -14,10 +14,10 @@ namespace CommonLibraries.Models
     {
         private SQLCommunicator sqlCommunicator = new SQLCommunicator();
         private Barcode barcode;
-        private ConcurrentQueue<string> _agvRxQueue;
-        private ConcurrentQueue<Barcode> _vcsTxQueue;
+        private BlockingCollection<string> _agvRxQueue;
+        private BlockingCollection<Barcode> _vcsTxQueue;
 
-        public BarcodeDecoder(ConcurrentQueue<string> agvRxQueue, ConcurrentQueue<Barcode> vcsTxQueue)
+        public BarcodeDecoder(BlockingCollection<string> agvRxQueue, BlockingCollection<Barcode> vcsTxQueue)
         {
             _agvRxQueue = agvRxQueue;
             _vcsTxQueue = vcsTxQueue;
@@ -45,10 +45,13 @@ namespace CommonLibraries.Models
         {
             while (true)
             {
-                string result;
-                bool success = _agvRxQueue.TryDequeue(out result);
-                if (!success) continue;
-                _vcsTxQueue.Enqueue(GetVCSCommand(result));
+                //string result;
+                //bool success = _agvRxQueue.TryDequeue(out result);
+                //if (!success) continue;
+                //_vcsTxQueue.Enqueue(GetVCSCommand(result));
+
+                string result = _agvRxQueue.Take();
+                _vcsTxQueue.Add(GetVCSCommand(result));
             }
             
         }

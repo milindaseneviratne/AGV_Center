@@ -16,9 +16,9 @@ namespace Socket_Server.Models
     {
         public ManualResetEvent allDone = new ManualResetEvent(false);
         public Socket listner = null;
-        private ConcurrentQueue<string> _agvRxQueue;
+        private BlockingCollection<string> _agvRxQueue;
 
-        public AsynchonousServer(ConcurrentQueue<string> agvRxQueue)
+        public AsynchonousServer(BlockingCollection<string> agvRxQueue)
         {
             _agvRxQueue = agvRxQueue;
         }
@@ -83,7 +83,7 @@ namespace Socket_Server.Models
 
                 if (recvievedBarcode.IndexOf("<EOF>") > -1)
                 {
-                    _agvRxQueue.Enqueue(recvievedBarcode);
+                    _agvRxQueue.Add(recvievedBarcode);
                     Send(handler, recvievedBarcode);
                 }
                 else

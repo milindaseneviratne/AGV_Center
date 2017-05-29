@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace AGV_Control_Center.ViewModels
 {
@@ -25,24 +26,24 @@ namespace AGV_Control_Center.ViewModels
         private BarcodeDecoder bacrodeDecoder;
         private agvTaskDequer agvTaskDequer;
 
-
-        public bool KeepAlive
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         private ApplicationUser user;
 
-        public ApplicationUser UserProperty
-        {
-            get { return user; }
-            set { SetProperty(ref user, value); }
-        }
-
         private AsynchonousServer agvControlSystemServer;
+
+        private string _AGV_Server_Status;
+        private string _AGV_Task_Dequer_Status;
+        private string _Barcode_Decoder_Status;
+        private string _VCS_Tx_Server_Status;
+        private string _VCS_Rx_Server_Status;
+
+        private Task agvServerListner;
+        private Task barcodeDecoderProcesor;
+        private Task vcs_tx_CommandProcess;
+        private Task vcs_rx_CommandProcess;
+        private Task agvTaskDequerProcess;
+
+        private DispatcherTimer checkProcessStatusTimer = new DispatcherTimer();
+
         public AsynchonousServer AgvControlSystemServer
         {
             get
@@ -61,13 +62,107 @@ namespace AGV_Control_Center.ViewModels
                 }
             }
         }
-
+        public ApplicationUser UserProperty
+        {
+            get { return user; }
+            set { SetProperty(ref user, value); }
+        }
         public DelegateCommand StartServerCommand { get; set; }
+        public bool KeepAlive
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public string Barcode_Decoder_Status
+        {
+            get
+            {
+                return _Barcode_Decoder_Status;
+            }
+            set
+            {
+                SetProperty(ref _Barcode_Decoder_Status, value);
+            }
+        }
+        public string VCS_Tx_Server_Status
+        {
+            get
+            {
+                return _VCS_Tx_Server_Status;
+            }
+            set
+            {
+                SetProperty(ref _VCS_Tx_Server_Status, value);
+            }
+        }
+        public string VCS_Rx_Server_Status
+        {
+            get
+            {
+                return _VCS_Rx_Server_Status;
+            }
+            set
+            {
+                SetProperty(ref _VCS_Rx_Server_Status, value);
+            }
+        }
+        public string AGV_Task_Dequer_Status
+        {
+            get
+            {
+                return _AGV_Task_Dequer_Status;
+            }
+            set
+            {
+                SetProperty(ref _AGV_Task_Dequer_Status, value);
+            }
+        }
+        public string AGV_Server_Status
+        {
+            get
+            {
+                return _AGV_Server_Status;
+            }
+            set
+            {
+                SetProperty(ref _AGV_Server_Status, value);
+            }
+        }
+
         public CommandServerViewModel()
         {
             vcsServer = new VCSCommunicator(vcsRxQueue, vcsTxQueue);
             bacrodeDecoder = new BarcodeDecoder(agvRxQueue, vcsTxQueue);
+            agvTaskDequer = new agvTaskDequer(vcsServer);
+
             StartServerCommand = new DelegateCommand(exStartServerCmd, canExStartServerCmd).ObservesProperty(() => UserProperty);
+
+            checkProcessStatusTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            checkProcessStatusTimer.Tick += new EventHandler(checkProcessStatusTimer_Tick);
+            checkProcessStatusTimer.Start();
+        }
+
+        private void checkProcessStatusTimer_Tick(object sender, EventArgs e)
+        {
+            if (agvServerListner == null || barcodeDecoderProcesor == null || vcs_tx_CommandProcess == null || vcs_rx_CommandProcess == null || agvTaskDequerProcess == null)
+            {
+                AGV_Server_Status = "AGV Server status: NULL";
+                Barcode_Decoder_Status = "Barcode Decoder Status: NULL";
+                VCS_Tx_Server_Status = "VCS Tx Server Status: NULL";
+                VCS_Rx_Server_Status = "VCS Rx Server Status: NULL";
+                AGV_Task_Dequer_Status = "AGV Task Dequer Status: NULL";
+                return;
+            }
+
+            AGV_Server_Status = "AGV Server status: " + agvServerListner.Status.ToString().ToUpper();
+            Barcode_Decoder_Status = "Barcode Decoder Status: " + barcodeDecoderProcesor.Status.ToString().ToUpper();
+            VCS_Tx_Server_Status = "VCS Tx Server Status: " + vcs_tx_CommandProcess.Status.ToString().ToUpper();
+            VCS_Rx_Server_Status = "VCS Rx Server Status: " + vcs_rx_CommandProcess.Status.ToString().ToUpper();
+            AGV_Task_Dequer_Status = "AGV Task Dequer Status: " + agvTaskDequerProcess.Status.ToString().ToUpper();
+
         }
 
         private void exStartServerCmd()
@@ -91,28 +186,23 @@ namespace AGV_Control_Center.ViewModels
         /// </summary>
         private void InitializeServer()
         {
-            //Start the server
-            Task.Run(() => AgvControlSystemServer.StartListning());
-            //Load values to the messageQueue
+            //Start the server, load values into RxQueue, send Client Response.
+            agvServerListner = Task.Run(() => AgvControlSystemServer.StartListning());
 
-            //ProcessValues in the message queue
-            Task.Run(() => bacrodeDecoder.ProcessBarcodes());
-
+            //ProcessValues in the Rxqueue
+            barcodeDecoderProcesor = Task.Run(() => bacrodeDecoder.ProcessBarcodes());
+            
             //Start VCS Communication server
             vcsServer.SetupServer();
 
             //Send Commands to VCS and create task.
-            Task.Run(() => vcsServer.SendVCSCommands());
-            
+            vcs_tx_CommandProcess = Task.Run(() => vcsServer.SendVCSCommands());
+
             //Recieve Commands from VCS
-            Task.Run(() => vcsServer.RecieveVCSCommands());
-
-            //Create ACK for Clients
-
-            //Send Client Response.
+            vcs_rx_CommandProcess = Task.Run(() => vcsServer.RecieveVCSCommands());
 
             //Dequeue Tasks
-            Task.Run(() => agvTaskDequer.DequeueTasks());
+            agvTaskDequerProcess = Task.Run(() => agvTaskDequer.DequeueTasks());
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

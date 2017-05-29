@@ -34,10 +34,7 @@ namespace CommonLibraries.Models
             {
                 try
                 {
-                    //Looping here untill we get a barcode to decode.
-                    //Barcode result;
-                    //bool success = _vcsTxStack.TryDequeue(out result);
-                    //if (!success) continue;
+                    //Waiting here untill we get a barcode to decode.
                     Barcode result = _vcsTxStack.Take();
 
                     //Convert Barcode to bytes.
@@ -116,7 +113,7 @@ namespace CommonLibraries.Models
             {
                 try
                 {
-                    //Loop here until we get a response from VCS.
+                    //Waiting here until we get a response from VCS.
                     var response = serverForVcs.receiveMessage();
                     if (response == null) continue;
 

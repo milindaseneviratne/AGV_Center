@@ -84,6 +84,7 @@ namespace Socket_Server.Models
                 if (recvievedBarcode.IndexOf("<EOF>") > -1)
                 {
                     _agvRxQueue.Add(recvievedBarcode);
+                    recvievedBarcode = recvievedBarcode + " ACK";
                     Send(handler, recvievedBarcode);
                 }
                 else

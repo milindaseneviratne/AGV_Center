@@ -45,11 +45,6 @@ namespace CommonLibraries.Models
         {
             while (true)
             {
-                //string result;
-                //bool success = _agvRxQueue.TryDequeue(out result);
-                //if (!success) continue;
-                //_vcsTxQueue.Enqueue(GetVCSCommand(result));
-
                 string result = _agvRxQueue.Take();
                 _vcsTxQueue.Add(GetVCSCommand(result));
             }

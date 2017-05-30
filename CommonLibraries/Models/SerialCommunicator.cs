@@ -64,7 +64,6 @@ namespace CommonLibraries.Models
             {
                 //SELECT * FROM Win32_PnPEntity - can get the scanner but cant Find the XYZ Printers.
                 //SELECT * FROM WIN32_SerialPort - can find serialPort devices but not devices that are connected using the USB CDC/ACM driver for windows.
-                //Barcode scanner DeviceID: USBCDCACM\VID_0C2E&PID_092A\1&2B53A856&0&16364B062D_00
                 using (var searcher = new ManagementObjectSearcher(scannerConfig.QueryString))
                 {
                     var availableSerialPortsList = SerialPort.GetPortNames().ToList();
@@ -108,7 +107,8 @@ namespace CommonLibraries.Models
                     }
                     else
                     {
-                        throw new Exception("Could Not find " + scannerConfig.Value2 + " " + scannerConfig.Key1 + " with Value: " + scannerConfig.Value1 + "\n Please Check the configurations!");
+                        var cantFindBarcodeScanner =  new Exception("Could Not find " + scannerConfig.Value2 + " " + scannerConfig.Key1 + " with Value: " + scannerConfig.Value1 + "\n Please Check the configurations!");
+                        cantFindBarcodeScanner.WriteLog().SaveToDataBase().Display();
                     }
                 }
             }

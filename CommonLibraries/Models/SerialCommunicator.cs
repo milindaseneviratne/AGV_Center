@@ -44,7 +44,9 @@ namespace CommonLibraries.Models
             {
                 if (SerialPortObj.IsOpen)
                 {
-                    Task.Delay(200);
+                    Thread.Sleep(200);
+                    SerialPortObj.DiscardInBuffer();
+                    SerialPortObj.DiscardOutBuffer();
                     SerialPortObj.Close();
                 }
             }
@@ -55,8 +57,9 @@ namespace CommonLibraries.Models
             return SerialPortObj.IsOpen;
         }
 
-        public BarcodeScanner FindBarcodeScanner(BarcodeScannerConfig scannerConfig)
+        public List<BarcodeScanner> FindBarcodeScanner(BarcodeScannerConfig scannerConfig)
         {
+            List<BarcodeScanner> barcodeScannerList = new List<BarcodeScanner>();
             BarcodeScanner barcodeScanner = null;
 
             
@@ -72,49 +75,59 @@ namespace CommonLibraries.Models
 
                     var connectedSerialDeviceList = connectedDeviceList.Where(x => x[scannerConfig.Key1].ToString().Contains(scannerConfig.Value1)).ToList();
 
-                    Dictionary<string, string> scannerProperties = new Dictionary<string, string>();
-
-                    foreach (var propertyName in scannerConfig.PropertyNames)
+                    //var detectedDevice = connectedSerialDeviceList.FirstOrDefault();
+                    foreach (var detectedDevice in connectedSerialDeviceList)
                     {
-                        foreach (var detectedDevice in connectedSerialDeviceList)
-                        {
-                            if (detectedDevice[propertyName] != null)
-                            {
-                                scannerProperties.Add(propertyName, detectedDevice[propertyName].ToString());
-                            }
-                        }                        
-                    }
-
-                    string re1 = ".*?"; // Non-greedy match on filler
-                    string re2 = "((?:[a-z][a-z]*[0-9]+[a-z0-9]*))";    // Alphanum 1
-
-                    Regex r = new Regex(re1 + re2, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                    Match m = null;
-
-                    foreach (var propValPair in scannerProperties)
-                    {
-                        m = r.Match(propValPair.Value);
-                        if (m.Success) break;
-                    }
-
-                    if (m != null && m.Success)
-                    {
-                        barcodeScanner = new BarcodeScanner();
-                        barcodeScanner.COMPortName = m.Groups[1].ToString();
-                        barcodeScanner.Description = scannerProperties[scannerConfig.Key2];
-                        barcodeScanner.PNPDeviceID = scannerProperties[scannerConfig.Key1];
-                        barcodeScanner.Properties = scannerProperties;
-                    }
-                    else
-                    {
-                        var cantFindBarcodeScanner =  new Exception("Could Not find " + scannerConfig.Value2 + " " + scannerConfig.Key1 + " with Value: " + scannerConfig.Value1 + "\n Please Check the configurations!");
-                        cantFindBarcodeScanner.WriteLog().SaveToDataBase().Display();
+                        barcodeScanner = CreateBarcodeScannerObject(scannerConfig, barcodeScanner, detectedDevice);
+                        barcodeScannerList.Add(barcodeScanner);
                     }
                 }
             }
             catch (Exception e)
             {
                 e.WriteLog().SaveToDataBase().Display();
+            }
+
+            return barcodeScannerList;
+        }
+
+        private static BarcodeScanner CreateBarcodeScannerObject(BarcodeScannerConfig scannerConfig, BarcodeScanner barcodeScanner, ManagementBaseObject detectedDevice)
+        {
+            Dictionary<string, string> scannerProperties = new Dictionary<string, string>();
+
+            foreach (var propertyName in scannerConfig.PropertyNames)
+            {
+                if (detectedDevice[propertyName] != null)
+                {
+                    var name = detectedDevice[propertyName];
+                    scannerProperties.Add(propertyName, detectedDevice[propertyName].ToString());
+                }
+            }
+
+            string re1 = ".*?"; // Non-greedy match on filler
+            string re2 = "((?:[a-z][a-z]*[0-9]+[a-z0-9]*))";    // Alphanum 1
+
+            Regex r = new Regex(re1 + re2, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            Match m = null;
+
+            foreach (var propValPair in scannerProperties)
+            {
+                m = r.Match(propValPair.Value);
+                if (m.Success) break;
+            }
+
+            if (m != null && m.Success)
+            {
+                barcodeScanner = new BarcodeScanner();
+                barcodeScanner.COMPortName = m.Groups[1].ToString();
+                barcodeScanner.Description = scannerProperties[scannerConfig.Key2];
+                barcodeScanner.PNPDeviceID = scannerProperties[scannerConfig.Key1];
+                barcodeScanner.Properties = scannerProperties;
+            }
+            else
+            {
+                var cantFindBarcodeScanner = new Exception("Could Not find " + scannerConfig.Value2 + " " + scannerConfig.Key1 + " with Value: " + scannerConfig.Value1 + "\n Please Check the configurations!");
+                cantFindBarcodeScanner.WriteLog().SaveToDataBase().Display();
             }
 
             return barcodeScanner;
@@ -179,16 +192,20 @@ namespace CommonLibraries.Models
 
             foreach (var scannerConfig in scannerConfigs)
             {
-                SerialPort SerialPortObj = new SerialPort();
-                BarcodeScanner barcodeScanner = FindBarcodeScanner(scannerConfig);
-                if (barcodeScanner != null && !string.IsNullOrWhiteSpace(barcodeScanner.COMPortName))
+                List<BarcodeScanner> barcodeScannerList = FindBarcodeScanner(scannerConfig);
+
+                foreach (var barcodeScanner in barcodeScannerList)
                 {
-                    OpenSerialPort(SerialPortObj, barcodeScanner.COMPortName);
+                    SerialPort SerialPortObj = new SerialPort();
+                    if (barcodeScanner != null && !string.IsNullOrWhiteSpace(barcodeScanner.COMPortName))
+                    {
+                        OpenSerialPort(SerialPortObj, barcodeScanner.COMPortName);
 
-                    CloseSerialPort(SerialPortObj, barcodeScanner.COMPortName);
+                        CloseSerialPort(SerialPortObj, barcodeScanner.COMPortName);
 
-                    barcodeScanner.SerialPort = SerialPortObj;
-                    barcodeScanners.Add(barcodeScanner);
+                        barcodeScanner.SerialPort = SerialPortObj;
+                        barcodeScanners.Add(barcodeScanner);
+                    }
                 }
             }
             return barcodeScanners;

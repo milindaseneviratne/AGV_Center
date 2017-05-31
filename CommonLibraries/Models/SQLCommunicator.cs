@@ -222,7 +222,7 @@ namespace CommonLibraries.Models
             BarcodeScannerConfig barcodeScannerConfig = new BarcodeScannerConfig();
 
             barcodeScannerConfig.QueryString = "SELECT * FROM Win32_PnPEntity";
-            barcodeScannerConfig.Value1 = @"USBCDCACM\VID_0C2E&PID_092A\1&2B53A856&1&16233B1993_00";
+            barcodeScannerConfig.Value1 = @"USBCDCACM\VID_0C2E&PID_092A";
             barcodeScannerConfig.Key1 = "PNPDeviceID";
             barcodeScannerConfig.Value2 = "Xenon 1902 Wireless Area-Imaging Scanner (COM34)";
             barcodeScannerConfig.Key2 = "Caption";

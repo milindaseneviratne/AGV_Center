@@ -37,15 +37,16 @@ namespace CommonLibraries.Models
                     //Waiting here untill we get a barcode to decode.
                     Barcode result = _vcsTxStack.Take();
 
-                    //Convert Barcode to bytes.
-                    byte[] message = ToBytes(result);
-                    var messagetoSend = new Communication.Communication.IPandMessage(IP, message);
+                    //Create a task entry in the SQL Server.
+                    var agvTask = agvTaskDequer.CreateTask(result);
 
+                    //Convert Barcode to bytes.
+                    byte[] message = ToBytes(agvTask, result);
+                    var messagetoSend = new Communication.Communication.IPandMessage(IP, message);
+                    
                     //Send Barcode to VCS.
                     serverForVcs.sendMessage(messagetoSend);
-
-                    //Create a task entry in the SQL Server.
-                    agvTaskDequer.CreateTask(result);
+                    
                 }
                 catch (Exception e)
                 {
@@ -85,9 +86,11 @@ namespace CommonLibraries.Models
             return message;
         }
 
-        private static byte[] ToBytes(Barcode barcode)
+        private static byte[] ToBytes(agvTask agvTask, Barcode barcode)
         {
-            byte[] messageRAW = Encoding.ASCII.GetBytes(barcode.Comand + barcode.Destination);
+            if(agvTask == null) agvTask = new agvTask() { Id = 0 };
+
+            byte[] messageRAW = Encoding.ASCII.GetBytes(agvTask.Id + barcode.Comand + barcode.Destination);
 
             byte[] message = new byte[4];
             message[0] = messageRAW.Length > 0 ? messageRAW[0] : (byte)0;

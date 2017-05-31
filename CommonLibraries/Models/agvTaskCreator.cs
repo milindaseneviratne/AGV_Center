@@ -13,8 +13,9 @@ namespace CommonLibraries.Models
     {
         private SQLCommunicator sqlComm = new SQLCommunicator();
 
-        public bool CreateTask(Barcode barcode)
+        public agvTask CreateTask(Barcode barcode)
         {
+            agvTask agvTask = null;
             if (barcode != null && barcode.HasData())
             {
                 var model = sqlComm.GetModel();
@@ -24,10 +25,11 @@ namespace CommonLibraries.Models
 
                 if (model != null && currentStation != null && destinationStation != null && !string.IsNullOrEmpty(result))
                 {
-                    return sqlComm.CreateTask(model, currentStation, destinationStation, result);
+                    agvTask = sqlComm.CreateTask(model, currentStation, destinationStation, result);
+                    return agvTask;
                 }
             }
-            return false;
+            return agvTask;
         }
 
         private string GetResult(agvStation_Info destination)

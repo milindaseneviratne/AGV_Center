@@ -74,24 +74,27 @@ namespace CommonLibraries.Models
            
         }
 
-        public bool CreateTask(agvModel_Info model, agvStation_Info currentStation, agvStation_Info destinationStation, string result)
+        public agvTask CreateTask(agvModel_Info model, agvStation_Info currentStation, agvStation_Info destinationStation, string result)
         {
-            dbContext.agvTask.Add(new agvTask
+            var agvTask = new agvTask
             {
                 ModelCode = model.Code,
                 Current_Station = currentStation.Name,
                 Dest_Station = destinationStation.Name,
                 Result = result,
                 StartTime = DateTime.Now
-            });
+            };
+
+            dbContext.agvTask.Add(agvTask);
 
 
             if (SaveChanges() == 1)
             {
-                return true;
+                dbContext.Entry(agvTask).Reload();
+                return agvTask;
             }
 
-            return false;
+            return agvTask;
         }
 
         public List<agvTask> GetTasksInQueue()

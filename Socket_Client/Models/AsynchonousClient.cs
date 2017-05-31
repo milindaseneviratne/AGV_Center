@@ -24,11 +24,11 @@ namespace Socket_Client.Models
         private static string response = string.Empty;
         public static Socket client = null;
 
-        public async Task<string> SendRecTCPCommand(string data, string serverName, int port = 11000)
+        public async Task<string> SendRecTCPCommand(string data, string serverorIPAddress, int port = 11000)
         {
             var result = await Task.Run(()=>
             {
-                ConnectToServer(serverName);
+                ConnectToServer(serverorIPAddress);
 
                 Send(client, data);
                 sendDone.WaitOne(SEND_REC_TIMEOUT);
@@ -44,12 +44,22 @@ namespace Socket_Client.Models
             return response;
         }
 
-        private static void ConnectToServer(string server, int port = 11000)
+        private static void ConnectToServer(string serverorIPAddress, int port = 11000)
         {
             try
             {
-                IPHostEntry ipHostEntry = Dns.GetHostEntry(server);
-                IPAddress ipAddress = ipHostEntry.AddressList.Where(x => x.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
+                IPHostEntry ipHostEntry;
+                IPAddress ipAddress;
+
+                bool success = false;
+                success = IPAddress.TryParse(serverorIPAddress, out ipAddress);
+
+                if(!success)
+                {
+                    ipHostEntry = Dns.GetHostEntry(serverorIPAddress);
+                    ipAddress = ipHostEntry.AddressList.Where(x => x.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
+                }
+
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
                 connectDone.Reset();
